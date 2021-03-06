@@ -96,9 +96,9 @@ class RegisterController extends Controller
       $user = DB::table('users')->where('verify_token','=',$token)->first();
       if($user){
         DB::table('users')->where('verify_token','=',$token)->update(['status'=>'2', 'verify_token'=>null]);
-        return redirect()->route('auth.login')->with('success','Email Id has verified!');
+        return redirect()->route('admin.auth.login')->with('success','Email Id has verified!');
       }
-      return redirect()->route('auth.login')->withErrors(['user does not exist!']);
+      return redirect()->route('admin.auth.login')->withErrors(['user does not exist!']);
 
     }
 }

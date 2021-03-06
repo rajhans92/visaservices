@@ -23,6 +23,6 @@ class HomeController extends Controller
     //        ->get();
       //  }
         //$courses = Course::where('published', 1)->orderBy('id', 'desc')->get();
-        return view('index');
+        return view('admin.index');
     }
 }

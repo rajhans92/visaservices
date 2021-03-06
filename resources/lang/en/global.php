@@ -1,243 +1,0 @@
-<?php
-
-return [
-	'user-management' => [		'title' => 'User Management',		'created_at' => 'Time',		'fields' => [		],	],
-	'permissions' => [		'title' => 'Permissions',		'created_at' => 'Time',		'fields' => [			'title' => 'Title',		],	],
-	'roles' => [		'title' => 'Roles',		'created_at' => 'Time',		'fields' => [			'title' => 'Title',			'permission' => 'Permissions',		],	],
-'exam-management' => [
-	'title' => 'Exam Management',
-	'created_at' => 'Time',
-	'fields' => [
-	],
-],
-'account' => [
-	'title' => 'Account',
-	'created_at' => 'Time',
-	'fields' => [
-		'title' => 'Profile Detail',
-	],
-],
-'exam-slider' => [
-	'title' => 'Exam Slider',
-	'created_at' => 'Time',
-	'fields' => [
-		'title' => 'Silder Detail',
-		'name' => 'Name',
-		'detail' => 'Slider Detail',
-		'status' => 'Status'
-	],
-],
-'language' => [
-	'title' => 'Exam Languages',
-	'created_at' => 'Time',
-	'fields' => [
-		'title' => 'Language',
-		'name' => 'Name',
-		'status' => 'Status'
-	],
-],
-'exam-category' => [
-	'title' => 'Exam Category',
-	'created_at' => 'Time',
-	'fields' => [
-		'title' => 'Category Detail',
-		'name' => 'Name',
-		'status' => 'Status'
-	],
-],
-'question' => [
-	'title' => 'Questions',
-	'created_at' => 'Time',
-	'fields' => [
-		'title' => 'Profile Detail',
-	],
-],
-'exam' => [
-	'title' => 'Exam',
-	'created_at' => 'Time',
-	'upload' => 'Upload Excel',
-	'fields' => [
-		'name' => 'Name',
-		'category' => 'Category',
-		'time' => 'Exam Duration',
-		'questions' => 'No. of Question',
-		'marks' => 'No. of Marks',
-		'negative_marking' => 'Negative Marking',
-		'negative_marking_no' => 'Negative Marking No',
-		'passing_marks' => 'Passing Marks',
-		'status' => 'Status',
-		'education' => 'Education',
-		'teacher' => 'Teacher',
-		'note' => 'Exam Note',
-		'organization' => 'Organization',
-		'video' => 'Video Link'
-	],
-],
-'exam-schedule' => [
-	'title' => 'Exam Schedule',
-	'created_at' => 'Time',
-	'fields' => [
-		'display' => 'Display',
-		'name' => 'Exam Name ',
-		'date' => 'Start End Date',
-		'result_date' => 'Result Date',
-		'limit' => 'User Limit',
-		'sponsored' => 'Sponsored By',
-		'status' => 'Status',
-		'detail' => 'Exam Details',
-		'reminder' => 'User Reminder',
-		'winner' => 'No Of Winners',
-		'prize' => 'Total Prize Amount',
-	],
-],
-'uncheck-paper' => [
-	'title' => 'Uncheck Paper',
-	'papertitle' => 'Paper List',
-	'questiontitle' => 'Question Paper',
-	'submit_Paper_title' => 'Submit Paper By User',
-	'fields' => [
-		'display' => 'Display',
-		'userReview' => 'User Review',
-		'isCheck' => 'Paper Checked',
-		'question' => 'Question Checked',
-		'totalQuestion' => 'Total Questions',
-		'marks' => 'Marks Get',
-		'totalMarks' => 'Total Marks',
-		'name' => 'User Name',
-		'date' => 'Start End Date',
-		'result_date' => 'Result Date',
-		'limit' => 'User Limit',
-		'student_count' => 'Total Paper',
-		'paper' => 'Checked Paper',
-		'sponsored' => 'Sponsored By',
-		'status' => 'Status',
-		'detail' => 'Exam Details',
-		'reminder' => 'User Reminder',
-		'winner' => 'No Of Winners',
-		'prize' => 'Total Prize Amount',
-	],
-],
-'exam-result' => [
-	'title' => 'Result list',
-	'questiontitle' => 'Question Paper',
-	'papertitle' => 'User List',
-	'winnertitle' => 'Winner List',
-	'created_at' => 'Time',
-	'fields' => [
-		'display' => 'Display',
-		'userReview' => 'User Review',
-		'isCheck' => 'Paper Checked',
-		'wrongquestion' => 'Wrong Questions',
-		'question' => 'Correct Questions',
-		'totalQuestion' => 'Total Questions',
-		'marks' => 'Marks Get',
-		'totalMarks' => 'Total Marks',
-		'name' => 'User Name',
-		'date' => 'Start End Date',
-		'result_date' => 'Result Date',
-		'limit' => 'User Limit',
-		'student_count' => 'Total Paper',
-		'paper' => 'Checked Paper',
-		'sponsored' => 'Sponsored By',
-		'status' => 'Status',
-		'detail' => 'Exam Details',
-		'rank' => 'User Rank',
-		'winner' => 'Winners',
-		'prize' => 'Prize Amount',
-	],
-],
-	'subadmin' => [
-		'title' => 'SubAdmin Management',
-		'created_at' => 'Time',
-		'fields' => [
-			'name' => 'Name',
-			'email' => 'Email',
-			'password' => 'Password',
-			'role' => 'Role',
-			'phone' => 'Contact Number',
-			'post' => 'Position',
-			'status' => 'Status',
-			'dob' => 'Date of birth',
-			'detail' => 'About Admin',
-			'remember-token' => 'Remember token',
-		],
-	],
-	'org' => [		'title' => 'Organization Management',		'created_at' => 'Time',		'fields' => [
-			'name' => 'Name',
-			'email' => 'Email',
-			'password' => 'Password',
-			'role' => 'Role',
-			'phone' => 'Contact Number',
-			'status' => 'Status',
-			'established' => 'Established At',
-			'remember-token' => 'Remember token',
-			'website' => 'Website',
-			'address' => 'Address',
-			'teacher_strength' => 'Strength of Teachers',
-			'student_strength' => 'Strength of Student',
-			'overview' => 'Overview',
-			'specialties' => 'Specialties'
-		],	],
-
-	'teacher' => [
-		'title' => 'Teacher Management',
-		'created_at' => 'Time',
-		'fields' => [
-			'name' => 'Name',
-			'email' => 'Email',
-			'password' => 'Password',
-			'role' => 'Role',
-			'phone' => 'Contact Number',
-			'status' => 'Status',
-			'experience' => 'Experience',
-			'education' => 'Education',
-			'specialties' => 'Specialties',
-			'website' => 'Website',
-			'address' => 'Address',
-			'dob' => 'Date of birth',
-			'overview' => 'Overview',
-			'organization' => 'Organization'
-		],
-	],
-	'student' => [
-		'title' => 'Student Management',
-		'created_at' => 'Time',
-		'fields' => [
-			'name' => 'Name',
-			'email' => 'Email',
-			'password' => 'Password',
-			'role' => 'Role',
-			'phone' => 'Contact Number',
-			'status' => 'Status',
-			'education' => 'Education',
-			'teacher' => 'Teacher',
-			'address' => 'Address',
-			'dob' => 'Date of birth',
-			'about' => 'About',
-			'organization' => 'Organization'
-		],
-	],
-'courses' => [		'title' => 'Courses',		'created_at' => 'Time',		'fields' => [			'teachers' => 'Teachers',			'title' => 'Title',			'slug' => 'Slug',			'description' => 'Description',			'price' => 'Price',			'course-image' => 'Course image',			'start-date' => 'Start date',			'published' => 'Published',		],	],
-	'lessons' => [		'title' => 'Lessons',		'created_at' => 'Time',		'fields' => [			'course' => 'Course',			'title' => 'Title',			'slug' => 'Slug',			'lesson-image' => 'Lesson image',			'short-text' => 'Short text',			'full-text' => 'Full text',			'position' => 'Position',			'downloadable-files' => 'Downloadable files',			'free-lesson' => 'Free lesson',			'published' => 'Published',		],	],
-	'questions' => [		'title' => 'Questions',		'created_at' => 'Time',		'fields' => [			'question' => 'Question',			'question-image' => 'Question image',			'score' => 'Score',		],	],
-	'questions-options' => [		'title' => 'Questions options',		'created_at' => 'Time',		'fields' => [			'question' => 'Question',			'option-text' => 'Option text',			'correct' => 'Correct',		],	],
-	'tests' => [		'title' => 'Tests',		'created_at' => 'Time',		'fields' => [			'course' => 'Course',			'lesson' => 'Lesson',			'title' => 'Title',			'description' => 'Description',			'questions' => 'Questions',			'published' => 'Published',		],	],
-	'app_create' => 'Create',
-	'app_save' => 'Save',
-	'app_save_next' => 'Save & Next',
-	'app_paper' => 'Papers',
-	'app_review' => 'Review',
-	'app_edit' => 'Edit',
-	'app_view' => 'View',
-	'app_update' => 'Update',
-	'app_list' => 'List',
-	'app_no_entries_in_table' => 'No entries in table',
-	'custom_controller_index' => 'Custom controller index.',
-	'app_logout' => 'Logout',
-	'app_add_new' => 'Add new',
-	'app_are_you_sure' => 'Are you sure?',
-	'app_back_to_list' => 'Back to list',
-	'app_dashboard' => 'Dashboard',
-	'app_delete' => 'Delete',
-	'global_title' => 'Quick LMS',
-];

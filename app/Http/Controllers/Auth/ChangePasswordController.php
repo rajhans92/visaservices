@@ -35,7 +35,7 @@ class ChangePasswordController extends Controller
     {
         $user = Auth::getUser();
 
-        return view('auth.change_password', compact('user'));
+        return view('admin.auth.change_password', compact('user'));
     }
 
     /**
