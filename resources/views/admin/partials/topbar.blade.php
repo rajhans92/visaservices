@@ -5,11 +5,11 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
 
         <span class="logo-mini">
-          <img src="{{env('IMG_URL')}}/img/logo/logo-white.svg" alt="" height="40px" width="40px">
+          <img src="{{ url('img/logo/logo.jpg') }}" alt="" height="40px" width="40px">
         </span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-           <p><img src="{{env('IMG_URL')}}/img/logo/logo-white.svg" alt="" height="35px" width="35px"> &nbsp;{{ env('APP_NAME') }}</p></span>
+           <p><img src="{{ url('img/logo/logo.jpg') }}" alt="" height="35px" width="35px"> &nbsp;{{ env('APP_NAME') }}</p></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

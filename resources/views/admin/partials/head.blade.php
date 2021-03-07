@@ -9,7 +9,7 @@
       name="viewport"/>
 <meta http-equiv="Content-type"
       content="text/html; charset=utf-8">
-<link href="{{env('IMG_URL')}}/img/logo/logo-dark.svg" rel="icon" type="image/png">
+<link href="{{ url('img/logo/logo.jpg') }}" rel="icon" type="image/png">
 
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

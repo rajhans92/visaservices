@@ -1,6 +1,6 @@
-@extends('layouts.home')
+@extends('admin.layouts.home')
 
-@extends('layouts.auth')
+@extends('admin.layouts.auth')
 
 @section('content')
 <div class="container">
@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('auth.password.reset') }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="redirect_url" value="{{ request('redirect_url', '/') }}">
 

@@ -17,11 +17,11 @@ class CheckStatus
         //If the status is not approved redirect to login
         if(Auth::check() && (Auth::user()->role_id == 3 || Auth::user()->role_id == 0)){
             Auth::logout();
-            return redirect('/login')->withErrors(['Only admin access.']);
+            return redirect('/admin/login')->withErrors(['Only admin access.']);
         }
         if(Auth::check() && Auth::user()->status != 2){
             Auth::logout();
-            return redirect('/login')->withErrors(['This User is not active now. Please verify your email id.']);
+            return redirect('/admin/login')->withErrors(['This User is not active now. Please verify your email id.']);
         }
 
         return $response;

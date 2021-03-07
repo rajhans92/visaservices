@@ -18,10 +18,7 @@ class AdminMiddleware
     public function handle($request, Closure $next, $guard = null)
     {
         if (!Auth::check()) {
-            return redirect('/login');
-        }
-        if (Auth::user()->role()->where('title', 'Student')->count() > 0) {
-            return redirect('/login');
+            return redirect('/admin/login');
         }
 
         return $next($request);

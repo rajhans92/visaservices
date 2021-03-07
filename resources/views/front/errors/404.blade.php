@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('front.layouts.home')
 
 @section('main')
 
@@ -8,7 +8,7 @@
       <h1>Oops!</h1>
       <h2>404 - The Page can't be found</h2>
     </div>
-    <a href="{{url('/admin/')}}">Go TO Homepage</a>
+    <a href="{{url('/')}}">Go TO Homepage</a>
   </div>
 </div>
 

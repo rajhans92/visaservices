@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('partials.head')
+    @include('admin.partials.head')
 </head>
 
 
@@ -10,8 +10,8 @@
 
 <div id="wrapper">
 
-@include('partials.topbar')
-@include('partials.sidebar')
+@include('admin.partials.topbar')
+@include('admin.partials.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    @include('layouts.flash-message')
+                    @include('admin.layouts.flash-message')
 
                     @yield('content')
 
@@ -40,6 +40,6 @@
 <button type="submit">Logout</button>
 {!! Form::close() !!}
 
-@include('partials.javascripts')
+@include('admin.partials.javascripts')
 </body>
 </html>

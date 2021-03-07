@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('partials.head')
+    @include('admin.partials.head')
 </head>
 
 <body class="page-header-fixed">
@@ -18,7 +18,7 @@
         <i class="fa fa-arrow-up"></i>
     </div>
 
-    @include('partials.javascripts')
+    @include('admin.partials.javascripts')
 
 </body>
 </html>

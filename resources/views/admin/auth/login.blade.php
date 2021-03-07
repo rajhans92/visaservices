@@ -1,6 +1,6 @@
 
 
-@extends('layouts.auth')
+@extends('admin.layouts.auth')
 
 @section('content')
     <div class="row">
@@ -24,7 +24,7 @@
                     <form class="form-horizontal"
                           role="form"
                           method="POST"
-                          action="{{ url('login') }}">
+                          action="{{ route('auth.login') }}">
                         <input type="hidden"
                                name="_token"
                                value="{{ csrf_token() }}">
