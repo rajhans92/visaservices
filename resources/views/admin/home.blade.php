@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
-                <div class="panel-body">
+                <!-- <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-6 form-group">
                       <canvas id="myChart" height="230" width="450" ></canvas>
@@ -23,7 +23,7 @@
                       <canvas id="myChart3" height="230" width="450"></canvas>
                     </div>
                   </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
