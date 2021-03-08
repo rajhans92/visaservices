@@ -24,29 +24,37 @@
                 <ul class="treeview-menu">
 
                 <li class="{{ $request->segment(2) == 'home-page' ? 'active active-sub' : '' }}">
-                        <a href="">
-                            <i class="fa fa-briefcase"></i>
-                            <span class="title">
-                                Home Page
-                            </span>
-                        </a>
-                    </li>
+                    <a href="">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="title">
+                            Home Page
+                        </span>
+                    </a>
+                </li>
+                <li class="{{ $request->segment(2) == 'header-section' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.header.index')}}">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="title">
+                            Header Section
+                        </span>
+                    </a>
+                </li>
                 <li class="{{ $request->segment(2) == 'footer-section' ? 'active active-sub' : '' }}">
-                        <a href="">
-                            <i class="fa fa-briefcase"></i>
-                            <span class="title">
-                                Footer Section
-                            </span>
-                        </a>
-                    </li>
+                    <a href="{{route('admin.footer.index')}}">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="title">
+                            Footer Section
+                        </span>
+                    </a>
+                </li>
                 <li class="{{ $request->segment(2) == 'visa-page' ? 'active active-sub' : '' }}">
-                        <a href="">
-                            <i class="fa fa-user"></i>
-                            <span class="title">
-                                Visa Page
-                            </span>
-                        </a>
-                    </li>
+                    <a href="">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Visa Page
+                        </span>
+                    </a>
+                </li>
 
                 </ul>
             </li>

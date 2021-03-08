@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +17,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $querMenu = DB::table('menu')->where('language_id',env('APP_LANG'))->get();
+        $menu = [];
+        foreach ($querMenu as $key => $value) {
+          $menu[$value->title] = $value->name;
+        }
+
+        $footerData = DB::table('footer_detail')->where('language_id',env('APP_LANG'))->first();
+
         Schema::defaultStringLength(191);
+        View::share(['menu'=> $menu,'footerData' => $footerData]);
 
     }
 
