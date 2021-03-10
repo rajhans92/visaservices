@@ -27,6 +27,27 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/header-section/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
     Route::put('/header-section/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;
 
+    Route::get('/home-page', 'Admin\HomeController@index')->name('home.index');
+    Route::get('/home-page/search-section/{lang_id}', 'Admin\HomeController@searchSection')->name('home.searchSection');
+    Route::get('/home-page/client-review/{lang_id}', 'Admin\HomeController@clientReview')->name('home.clientReview');
+    Route::put('/home-page/client-review/{lang_id}', 'Admin\HomeController@clientReviewUpdate')->name('home.clientReviewUpdate');
+
+    Route::get('/home-page/popular-visa/{lang_id}', 'Admin\HomeController@popularVisa')->name('home.popularVisa');
+    Route::put('/home-page/popular-visa/{lang_id}', 'Admin\HomeController@popularVisaUpdate')->name('home.popularVisaUpdate');
+
+    Route::get('/home-page/section-review/{lang_id}', 'Admin\HomeController@sectionReview')->name('home.sectionReview');
+    Route::put('/home-page/section-review/{lang_id}', 'Admin\HomeController@sectionReviewUpdate')->name('home.sectionReviewUpdate');
+
+
+    Route::get('/home-page/section-2/{lang_id}', 'Admin\HomeController@section2List')->name('home.section2List');
+    Route::put('/home-page/section-2/{lang_id}', 'Admin\HomeController@section2Update')->name('home.section2Update');
+
+    Route::get('/home-page/section-3/{lang_id}', 'Admin\HomeController@section3List')->name('home.section3List');
+    Route::put('/home-page/section-3/{lang_id}', 'Admin\HomeController@section3Update')->name('home.section3Update');
+
+    Route::get('/home-page/section-info/{lang_id}', 'Admin\HomeController@infoList')->name('home.infoList');
+    Route::put('/home-page/section-info/{lang_id}', 'Admin\HomeController@infoUpdate')->name('home.infoUpdate');
+
     Route::get('/footer-section', 'Admin\HeaderFooterController@footerList')->name('footer.index');
     Route::get('/footer-section/tags/{lang_id}', 'Admin\HeaderFooterController@footerTagEdit')->name('footer.tags');
     Route::put('/footer-section/tags/{lang_id}', 'Admin\HeaderFooterController@footerTagUpdate')->name('footer.tagsUpdate');

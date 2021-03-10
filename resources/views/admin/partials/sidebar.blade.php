@@ -24,7 +24,7 @@
                 <ul class="treeview-menu">
 
                 <li class="{{ $request->segment(2) == 'home-page' ? 'active active-sub' : '' }}">
-                    <a href="">
+                    <a href="{{route('admin.home.index')}}">
                         <i class="fa fa-briefcase"></i>
                         <span class="title">
                             Home Page
