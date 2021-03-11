@@ -58,8 +58,14 @@ class HeaderFooterController extends Controller
 
     public function footerTagEdit($lang_id){
 
-      $footerTag = DB::table('footer_detail')->select('id','language_id','tag_1','tag_2','tag_3','tag_4')->where('language_id',$lang_id)->first();
-      return view('admin.headerFooter.footerTagEdit',compact('footerTag'));
+      $footerTag = DB::table('footer_detail')
+      ->select(
+        'id','language_id','tag_1','tag_2','tag_3','tag_4','tag_link_1','tag_link_2','tag_link_3','tag_link_4')
+      ->where('language_id',$lang_id)
+      ->first();
+      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+
+      return view('admin.headerFooter.footerTagEdit',compact('footerTag','urlSet'));
     }
 
     public function footerTagUpdate(Request $request, $lang_id)
@@ -69,6 +75,10 @@ class HeaderFooterController extends Controller
                'tag_2' => $request['tag_2'],
                'tag_3' => $request['tag_3'],
                'tag_4' => $request['tag_4'],
+               'tag_link_1' => $request['tag_link_1'],
+               'tag_link_2' => $request['tag_link_2'],
+               'tag_link_3' => $request['tag_link_3'],
+               'tag_link_4' => $request['tag_link_4'],
                'updated_at' => date('Y-m-d')
             ];
 

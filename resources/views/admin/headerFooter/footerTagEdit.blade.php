@@ -23,6 +23,22 @@
                     @endif
                 </div>
                 <div class="col-xs-3 form-group">
+                    {!! Form::label('tag_link_1', 'Select Link*', ['class' => 'control-label']) !!}
+                    <select class="form-control selectpicker" required name="tag_link_1" value="" >
+                      @foreach($urlSet as $key => $val)
+                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_1 ? 'selected' : '' }}>{{$val}}</option>
+                      @endforeach
+                    </select>
+                    <p class="help-block"></p>
+                    @if($errors->has('tag_link_1'))
+                        <p class="help-block">
+                            {{ $errors->first('tag_link_1') }}
+                        </p>
+                    @endif
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-3 form-group">
                     {!! Form::label('tag_2', 'Tag 2*', ['class' => 'control-label']) !!}
                     {!! Form::text('tag_2', old('tag_2'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -32,6 +48,22 @@
                         </p>
                     @endif
                 </div>
+                <div class="col-xs-3 form-group">
+                    {!! Form::label('tag_link_2', 'Select Link*', ['class' => 'control-label']) !!}
+                    <select class="form-control selectpicker" required name="tag_link_2" value="" >
+                      @foreach($urlSet as $key => $val)
+                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_2 ? 'selected' : '' }}>{{$val}}</option>
+                      @endforeach
+                    </select>
+                    <p class="help-block"></p>
+                    @if($errors->has('tag_link_2'))
+                        <p class="help-block">
+                            {{ $errors->first('tag_link_2') }}
+                        </p>
+                    @endif
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-xs-3 form-group">
                     {!! Form::label('tag_3', 'Tag 3*', ['class' => 'control-label']) !!}
                     {!! Form::text('tag_3', old('tag_3'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
@@ -43,6 +75,22 @@
                     @endif
                 </div>
                 <div class="col-xs-3 form-group">
+                    {!! Form::label('tag_link_3', 'Select Link*', ['class' => 'control-label']) !!}
+                    <select class="form-control selectpicker" required name="tag_link_3" value="" >
+                      @foreach($urlSet as $key => $val)
+                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_3 ? 'selected' : '' }}>{{$val}}</option>
+                      @endforeach
+                    </select>
+                    <p class="help-block"></p>
+                    @if($errors->has('tag_link_3'))
+                        <p class="help-block">
+                            {{ $errors->first('tag_link_3') }}
+                        </p>
+                    @endif
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-3 form-group">
                     {!! Form::label('tag_4', 'Tag 4*', ['class' => 'control-label']) !!}
                     {!! Form::text('tag_4', old('tag_4'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                     <p class="help-block"></p>
@@ -52,7 +100,22 @@
                         </p>
                     @endif
                 </div>
+                <div class="col-xs-3 form-group">
+                    {!! Form::label('tag_link_4', 'Select Link*', ['class' => 'control-label']) !!}
+                    <select class="form-control selectpicker" required name="tag_link_4" value="" >
+                      @foreach($urlSet as $key => $val)
+                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_4 ? 'selected' : '' }}>{{$val}}</option>
+                      @endforeach
+                    </select>
+                    <p class="help-block"></p>
+                    @if($errors->has('tag_link_4'))
+                        <p class="help-block">
+                            {{ $errors->first('tag_link_4') }}
+                        </p>
+                    @endif
+                </div>
             </div>
+          </div>
 
         </div>
     </div>
