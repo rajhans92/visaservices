@@ -23,6 +23,13 @@
                 <tbody>
                   <tr data-entry-id="">
                       <td></td>
+                      <td>Search Section</td>
+                      <td>
+                          <a href="{{ route('admin.home.sectionSearch',[env('APP_LANG')]) }}" class="btn btn-xs btn-info">Edit</a>
+                      </td>
+                  </tr>
+                  <tr data-entry-id="">
+                      <td></td>
                       <td>Review Section</td>
                       <td>
                           <a href="{{ route('admin.home.sectionReview',[env('APP_LANG')]) }}" class="btn btn-xs btn-info">Edit</a>

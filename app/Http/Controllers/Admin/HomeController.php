@@ -526,4 +526,103 @@ class HomeController extends Controller
       return redirect()->route('admin.home.index');
     }
 
+    public function sectionSearch($lang_id){
+      $homeData = DB::table('home_page')
+      ->select('home_page.id as id',
+      'home_page.language_id as language_id',
+      'home_page.main_title_1 as main_title_1',
+      'home_page.main_title_2 as main_title_2',
+      'home_page.main_img as main_img',
+      'home_page.dropdown_1 as dropdown_1',
+      'home_page.dropdown_2 as dropdown_2',
+      'home_page.main_button_name as main_button_name',
+      'home_page.popular as popular',
+      'home_popular_section.title_1 as title_1',
+      'home_popular_section.title_2 as title_2',
+      'home_popular_section.title_3 as title_3',
+      'home_popular_section.title_4 as title_4',
+      'home_popular_section.link_1 as link_1',
+      'home_popular_section.link_2 as link_2',
+      'home_popular_section.link_3 as link_3',
+      'home_popular_section.link_4 as link_4'
+      )
+      ->join('home_popular_section','home_popular_section.language_id','=','home_page.language_id')
+      ->where('home_page.language_id',$lang_id)
+      ->first();
+
+      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+
+      return view('admin.home.sectionSearch',compact('homeData','urlSet'));
+    }
+
+    public function sectionSearchUpdate(Request $request, $lang_id)
+    {
+      $homeData = DB::table('home_page')
+      ->select('home_page.id as id',
+      'home_page.language_id as language_id',
+      'home_page.main_title_1 as main_title_1',
+      'home_page.main_title_2 as main_title_2',
+      'home_page.main_img as main_img',
+      'home_page.dropdown_1 as dropdown_1',
+      'home_page.dropdown_2 as dropdown_2',
+      'home_page.main_button_name as main_button_name',
+      'home_page.popular as popular',
+      'home_popular_section.title_1 as title_1',
+      'home_popular_section.title_2 as title_2',
+      'home_popular_section.title_3 as title_3',
+      'home_popular_section.title_4 as title_4',
+      'home_popular_section.link_1 as link_1',
+      'home_popular_section.link_2 as link_2',
+      'home_popular_section.link_3 as link_3',
+      'home_popular_section.link_4 as link_4'
+      )
+      ->join('home_popular_section','home_popular_section.language_id','=','home_page.language_id')
+      ->where('home_page.language_id',$lang_id)
+      ->first();
+
+        $data =  [
+             'main_title_1' => $request['main_title_1'],
+             'main_title_2' => $request['main_title_2'],
+             'dropdown_1' => $request['dropdown_1'],
+             'dropdown_2' => $request['dropdown_2'],
+             'main_button_name' => $request['main_button_name'],
+             'popular' => $request['popular']
+          ];
+
+        if ($request->hasFile('main_img')) {
+            if($homeData->main_img != ""){
+              $oldImagePath = public_path('images/home/').$homeData->main_img;
+              if (file_exists($oldImagePath)) {
+                @unlink($oldImagePath);
+              }
+            }
+            $images = $request->main_img->getClientOriginalName();
+            $images = time().'_main_img_'.$images; // Add current time before image name
+            $main_img = $images;
+            $request->main_img->move(public_path('images/home'),$main_img);
+            $data['main_img'] = $main_img;
+        }
+        DB::table('home_page')->where('language_id','=',$lang_id)->update($data);
+
+
+
+        $data = [];
+
+        $data['title_1'] = $request['title_1'];
+        $data['link_1'] = $request['link_1'];
+
+        $data['title_2'] = $request['title_2'];
+        $data['link_2'] = $request['link_2'];
+
+        $data['title_3'] = $request['title_3'];
+        $data['link_3'] = $request['link_3'];
+
+        $data['title_4'] = $request['title_4'];
+        $data['link_4'] = $request['link_4'];
+
+        DB::table('home_popular_section')->where('language_id','=',$lang_id)->update($data);
+
+        return redirect()->route('admin.home.index');
+    }
+
 }

@@ -2,16 +2,16 @@
 
 @section('content')
 <!-- Banner Section -->
-<section class="banner-section" style="background-image:url(images/banner.jpeg);">
+<section class="banner-section" style="background-image:url({{ url('images/home/'.$mainData->main_img) }});">
    <div class="container">
      <div class="row">
         <div class="col-sm-12">
-           <h1>Get your Visa Approved.<br> Simple & Reliable</h1>
+           <h1>{{$mainData->main_title_1}}<br>{{$mainData->main_title_2}}</h1>
            <!--<h4>Check Travel Requirements</h4>-->
            <div class="search-form">
              <form class="d-flex">
                <div class="form-group">
-                 <label for="locationfrom" class="form-label">Where am I From?</label>
+                 <label for="locationfrom" class="form-label">{{$mainData->dropdown_1}}</label>
                  <select class="form-select" aria-label="Where am I From?">
                   <option selected>INDIA (IN)</option>
                   <option value="1">EGYPT (EG)</option>
@@ -19,7 +19,7 @@
                 </select>
                </div>
                <div class="form-group">
-                 <label for="locationto" class="form-label">Where am I Going?</label>
+                 <label for="locationto" class="form-label">{{$mainData->dropdown_2}}</label>
                  <select class="form-select" aria-label="Where am I Going?">
                   <option selected>INDIA (IN)</option>
                   <option value="1">EGYPT (EG)</option>
@@ -27,16 +27,16 @@
                 </select>
                </div>
                <div class="form-group">
-                  <button type="button" class="btn apply-btn">Apply</button>
+                  <button type="button" class="btn apply-btn">{{$mainData->main_button_name}}</button>
                </div>
              </form>
            </div>
-           <div class="popular">Popular:
+           <div class="popular">{{$mainData->popular}}:
            <ul>
-           <li><a href="#">Web and Mobile Design</a></li>
-           <li><a href="#">WordPress</a></li>
-           <li><a href="#">Web and Mobile Design</a></li>
-           <li><a href="#">WordPress</a></li>
+           <li><a href="{{$mainData->link_1 != "" ? $mainData->link_1 : '#' }}">{{$mainData->title_1}}</a></li>
+           <li><a href="{{$mainData->link_2 != "" ? $mainData->link_2 : '#' }}">{{$mainData->title_2}}</a></li>
+           <li><a href="{{$mainData->link_3 != "" ? $mainData->link_3 : '#' }}">{{$mainData->title_3}}</a></li>
+           <li><a href="{{$mainData->link_4 != "" ? $mainData->link_4 : '#' }}">{{$mainData->title_4}}</a></li>
            </ul>
            </div>
            <div class="google-ratings">

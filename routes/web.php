@@ -38,6 +38,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/home-page/section-review/{lang_id}', 'Admin\HomeController@sectionReview')->name('home.sectionReview');
     Route::put('/home-page/section-review/{lang_id}', 'Admin\HomeController@sectionReviewUpdate')->name('home.sectionReviewUpdate');
 
+    Route::get('/home-page/section-search/{lang_id}', 'Admin\HomeController@sectionSearch')->name('home.sectionSearch');
+    Route::put('/home-page/section-search/{lang_id}', 'Admin\HomeController@sectionSearchUpdate')->name('home.sectionSearchUpdate');
+
 
     Route::get('/home-page/section-2/{lang_id}', 'Admin\HomeController@section2List')->name('home.section2List');
     Route::put('/home-page/section-2/{lang_id}', 'Admin\HomeController@section2Update')->name('home.section2Update');
