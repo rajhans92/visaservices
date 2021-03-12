@@ -3,19 +3,29 @@
 @section('content')
     <h3 class="page-title">Country</h3>
 
-    {!! Form::model($countryData, ['method' => 'POST', 'route' => ['admin.country.create'], 'files'=>true]) !!}
+    {!! Form::model($countryData, ['method' => 'PUT', 'route' => ['admin.country.edit',$countryData->id], 'files'=>true]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
-          Create
+          Edit
         </div>
 
         <div class="panel-body">
           <div class="row">
+              <div class="col-xs-6 form-group">
+                @if($countryData->country_flag != "")
+                  {!! Form::label('country_flag','Left Image')!!}
+                  <div>
+                    <img src="{{url('images/country/'.$countryData->country_flag) }}" onerror="this.src='{{ url('images/default.png') }}'" id="img_left" width="100" height="100"/>
+                  </div>
+                @endif
+              </div>
+            </div>
+          <div class="row">
             <div class="col-xs-4 form-group">
               {!! Form::label('country_flag','Image')!!}
               <div class="input-group date">
-                  <input type="file" class='form-control file_name' size="1" name="country_flag" required accept="image/*" />
+                  <input type="file" class='form-control file_name' size="1" name="country_flag" {{$countryData->country_flag == "" ? 'required':""}} accept="image/*" />
               </div>
               <p class="help-block file_name_error">
               </p>
@@ -46,8 +56,8 @@
             <div class="col-xs-4 form-group">
                 {!! Form::label('', 'Select Popular Visa*', ['class' => 'control-label']) !!}
                 <select class="form-control selectpicker multipleSelect" required multiple name="country_popular_visa[]" data-live-search="true" >
-                  @foreach($countryData as $val)
-                    <option value="{{$val->country_name}}">{{$val->country_name}}</option>
+                  @foreach($countrylist as $val)
+                    <option value="{{$val->country_name}}" {{ in_array($val->country_name, $countrySelectedlist) ? 'selected' : '' }}>{{$val->country_name}}</option>
                   @endforeach
                 </select>
             </div>
@@ -56,7 +66,7 @@
         </div>
     </div>
 
-    {!! Form::submit('Add', ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit('Update', ['class' => 'btn btn-danger']) !!}
     <a href="{{ route('admin.footer.index') }}" class="btn btn-primary">Cancel</a>
     {!! Form::close() !!}
 @stop

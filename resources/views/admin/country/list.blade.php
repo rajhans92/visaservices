@@ -33,7 +33,10 @@
                         <td></td>
                         <td>{{$val->country_name}}</td>
                         <td>{{$val->country_code}}</td>
-                        <td>{{($val->country_flag !="" ? url('images/country/'.$val->country_flag) : "-")}}</td>
+                        <td>
+                        @if($val->country_flag != "")
+                          <img src="{{url('images/country/'.$val->country_flag)}}" onerror="this.src='{{ url('images/default.png') }}'" id="img_left" width="50" height="50"/>
+                        @endif
                         <td>
                           {{$val->popular_visa}}
                         </td>

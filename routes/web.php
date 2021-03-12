@@ -25,8 +25,10 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/', 'Admin\DashboardController@index');
 
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');
-    Route::post('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
-    Route::put('/country/edit/{id}', 'Admin\CountryController@editCountry')->name('country.edit');
+    Route::get('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
+    Route::post('/country/add', 'Admin\CountryController@storeCountry')->name('country.create');
+    Route::get('/country/edit/{id}', 'Admin\CountryController@editCountry')->name('country.edit');
+    Route::put('/country/edit/{id}', 'Admin\CountryController@updateCountry')->name('country.edit');
     Route::put('/country/status', 'Admin\CountryController@editStatusCountry')->name('country.status');
     Route::delete('/country/destroy/{id}', 'Admin\CountryController@destroyCountry')->name('country.destroy');
 
