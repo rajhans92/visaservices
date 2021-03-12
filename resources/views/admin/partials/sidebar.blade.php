@@ -59,6 +59,26 @@
                 </ul>
             </li>
 
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span class="title">Country Management</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="{{ $request->segment(2) == 'country' ? 'active active-sub' : '' }}">
+                  <a href="{{route('admin.country.index')}}">
+                    <i class="fa fa-briefcase"></i>
+                    <span class="title">
+                      Country List
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
 
         </ul>
     </section>

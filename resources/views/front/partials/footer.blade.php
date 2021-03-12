@@ -65,11 +65,11 @@
       </div>
       <div class="col-lg-4 col-md-12 col-sm-12">
         <div class="connect">
-          <h5>Connect with us:</h5>
+          <h5>{{$footerData->social_network_title}}</h5>
           <ul class="social-links d-flex">
-            <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-            <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
+            <li><a href="{{$footerData->social_network_link1}}"><i class="fab fa-facebook-square"></i></a></li>
+            <li><a href="{{$footerData->social_network_link2}}"><i class="fab fa-twitter-square"></i></a></li>
+            <li><a href="{{$footerData->social_network_link3}}"><i class="fab fa-instagram-square"></i></a></li>
           </ul>
           @if($footerData->disclaimer_title != "")
             <h5>{{$footerData->disclaimer_title}}</h5>

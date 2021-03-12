@@ -87,6 +87,26 @@ class HeaderFooterController extends Controller
           return redirect()->route('admin.footer.index');
     }
 
+    public function footerSocialEdit($lang_id){
+
+      $footerData = DB::table('footer_detail')->select('id','language_id','social_network_title','social_network_link1','social_network_link2','social_network_link3')->where('language_id',$lang_id)->first();
+      return view('admin.headerFooter.footerSocialEdit',compact('footerData'));
+    }
+
+    public function footerSocialUpdate(Request $request, $lang_id)
+    {
+          $data =  [
+               'social_network_title' => $request['social_network_title'],
+               'social_network_link1' => $request['social_network_link1'],
+               'social_network_link2' => $request['social_network_link2'],
+               'social_network_link3' => $request['social_network_link3']
+            ];
+
+          DB::table('footer_detail')->where('language_id','=',$lang_id)->update($data);
+
+          return redirect()->route('admin.footer.index');
+    }
+
     public function footerLogoEdit($lang_id){
 
       $footerLogo = DB::table('footer_detail')->select('id','language_id','img_left','img_right')->where('language_id',$lang_id)->first();

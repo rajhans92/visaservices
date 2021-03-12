@@ -23,6 +23,13 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
     Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
     Route::get('/', 'Admin\DashboardController@index');
+
+    Route::get('/country', 'Admin\CountryController@index')->name('country.index');
+    Route::post('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
+    Route::put('/country/edit/{id}', 'Admin\CountryController@editCountry')->name('country.edit');
+    Route::put('/country/status', 'Admin\CountryController@editStatusCountry')->name('country.status');
+    Route::delete('/country/destroy/{id}', 'Admin\CountryController@destroyCountry')->name('country.destroy');
+
     Route::get('/header-section', 'Admin\HeaderFooterController@index')->name('header.index');
     Route::get('/header-section/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
     Route::put('/header-section/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;
@@ -59,6 +66,7 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/footer-section/office/{lang_id}', 'Admin\HeaderFooterController@footerOfficeEdit')->name('footer.office');
     Route::put('/footer-section/office/{lang_id}', 'Admin\HeaderFooterController@footerOfficeUpdate')->name('footer.officeUpdate');
     Route::get('/footer-section/social/{lang_id}', 'Admin\HeaderFooterController@footerSocialEdit')->name('footer.social');
+    Route::put('/footer-section/social/{lang_id}', 'Admin\HeaderFooterController@footerSocialUpdate')->name('footer.social');
     Route::get('/footer-section/disclaimer/{lang_id}', 'Admin\HeaderFooterController@footerDisclaimerEdit')->name('footer.disclaimer');
     Route::put('/footer-section/disclaimer/{lang_id}', 'Admin\HeaderFooterController@footerDisclaimerUpdate')->name('footer.disclaimerUpdate');
     Route::get('/footer-section/company/{lang_id}', 'Admin\HeaderFooterController@footerCompanyEdit')->name('footer.company');
