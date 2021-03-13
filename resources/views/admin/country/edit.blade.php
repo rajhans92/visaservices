@@ -47,9 +47,9 @@
                 {!! Form::label('country_code', 'Country Code*', ['class' => 'control-label']) !!}
                 {!! Form::text('country_code', old('country_code'), ['class' => 'form-control', 'placeholder' => '', 'required' => '','maxlength' => 2]) !!}
                 <p class="help-block"></p>
-                @if($errors->has('country_name'))
+                @if($errors->has('country_code'))
                     <p class="help-block">
-                        {{ $errors->first('country_name') }}
+                        {{ $errors->first('country_code') }}
                     </p>
                 @endif
             </div>

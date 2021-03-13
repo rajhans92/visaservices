@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Admin\UpdateCountryRequest;
 
 class CountryController extends Controller
 {
@@ -91,7 +92,7 @@ class CountryController extends Controller
       return redirect()->route('admin.country.index');
     }
 
-    public function updateCountry(Request $request, $id){
+    public function updateCountry(UpdateCountryRequest $request, $id){
 
       $countryData = DB::table('country')->where('id',$id)->where('country.language_id',env('APP_LANG'))
       ->first();
