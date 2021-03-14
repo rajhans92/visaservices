@@ -13,18 +13,18 @@
                <div class="form-group">
                  <label for="locationfrom" class="form-label">{{$mainData->dropdown_1}}</label>
                  <select class="form-select" aria-label="Where am I From?">
-                  <option selected>INDIA (IN)</option>
-                  <option value="1">EGYPT (EG)</option>
-                  <option value="2">MEXICO (MX)</option>
+                   @foreach($countryData as $key => $val)
+                     <option value="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
+                   @endforeach
                 </select>
                </div>
                <div class="form-group">
                  <label for="locationto" class="form-label">{{$mainData->dropdown_2}}</label>
                  <select class="form-select" aria-label="Where am I Going?">
-                  <option selected>INDIA (IN)</option>
-                  <option value="1">EGYPT (EG)</option>
-                  <option value="2">MEXICO (MX)</option>
-                </select>
+                   @foreach($countryData as $key => $val)
+                     <option value="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
+                   @endforeach
+                 </select>
                </div>
                <div class="form-group">
                   <button type="button" class="btn apply-btn">{{$mainData->main_button_name}}</button>
@@ -54,6 +54,7 @@
    </div>
 </section>
 <!-- VISA COUNTRY -->
+@if(isset($countryVisa[0]->id))
 <section class="visa-section">
    <div class="container">
      <div class="row">
@@ -145,6 +146,7 @@
      </div>
    </div>
 </section>
+@endif
 <!-- WHY CHOOSE US -->
 <section class="why-choose-section section-spacing">
   <div class="container">

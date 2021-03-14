@@ -47,8 +47,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="{{ $request->segment(2) == 'visa-page' ? 'active active-sub' : '' }}">
-                    <a href="">
+                <li class="{{ $request->segment(2) == 'visa' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.visa.index')}}">
                         <i class="fa fa-user"></i>
                         <span class="title">
                             Visa Page

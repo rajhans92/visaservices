@@ -24,6 +24,14 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
     Route::get('/', 'Admin\DashboardController@index');
 
+    Route::get('/visa', 'Admin\VisaController@index')->name('visa.index');
+    Route::get('/visa/add', 'Admin\VisaController@createVisa')->name('visa.create');
+    Route::post('/visa/add', 'Admin\VisaController@storeVisa')->name('visa.create');
+    Route::get('/visa/edit/{id}', 'Admin\VisaController@editVisa')->name('visa.edit');
+    Route::post('/visa/edit/{id}', 'Admin\VisaController@updateVisa')->name('visa.edit');
+    Route::delete('/visa/destroy/{id}', 'Admin\VisaController@destroyVisa')->name('visa.destroy');
+
+
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');
     Route::get('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
     Route::post('/country/add', 'Admin\CountryController@storeCountry')->name('country.create');

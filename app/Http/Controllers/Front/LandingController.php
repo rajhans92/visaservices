@@ -60,6 +60,18 @@ class LandingController extends Controller
       ->where('home_page.language_id',env('APP_LANG'))
       ->first();
 
-      return view('front.home',compact('homeData','section2Data','mainData'));
+      $countryData = DB::table('country')
+      ->where('country.language_id',env('APP_LANG'))
+      ->get();
+
+      $countryVisa = [];
+      if(isset($countryData[0]->id)){
+        $countryVisa = DB::table('country_popular_visa')
+        ->where('country_popular_visa.language_id',env('APP_LANG'))
+        ->where('country_name_one',$countryData[0]->country_name)
+        ->get();
+      }
+
+      return view('front.home',compact('homeData','section2Data','mainData','countryData','countryVisa'));
     }
 }

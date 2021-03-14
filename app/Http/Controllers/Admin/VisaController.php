@@ -6,9 +6,9 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\Admin\UpdateCountryRequest;
+// use App\Http\Requests\Admin\UpdateVisaRequest;
 
-class CountryController extends Controller
+class VisaController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,69 +27,78 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countryData = DB::table('country')
-        ->where('country.language_id',env('APP_LANG'))
+        $visaData = DB::table('visa_pages')
+        ->select(
+          'visa_pages.id as id',
+          'visa_pages.country_name as country_name',
+          'visa_pages.visa_heading as visa_heading',
+          'visa_pages.visa_landing_img as visa_landing_img',
+          'route_visa.visa_url as visa_url'
+          )
+        ->where('visa_pages.language_id',env('APP_LANG'))
+        ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
         ->get();
 
-        foreach ($countryData as $key => $value) {
-          $temp = DB::table('country_popular_visa')
-          ->where('country_popular_visa.language_id',env('APP_LANG'))
-          ->where('country_popular_visa.country_name_one',$value->country_name)
+        foreach ($visaData as $key => $value) {
+          $temp = DB::table('visa_faqs')
+          ->where('visa_faqs.language_id',env('APP_LANG'))
+          ->where('visa_faqs.visa_id',$value->id)
           ->get();
-          $temStr = "";
-          foreach ($temp as $key1 => $value1) {
-            $temStr .= $value1->country_name_many.",\n";
-          }
-          $temStr = trim($temStr,",\n");
-          $value->popular_visa = $temStr;
+          $value->faq = $temp;
         }
-        return view('admin.country.list',compact('countryData'));
+        return view('admin.visa.list',compact('visaData'));
     }
 
-    public function createCountry(){
-      $countryData = DB::table('country')->select('country_name')->where('country.language_id',env('APP_LANG'))
+    public function createVisa(){
+      $visaData = DB::table('visa_pages')
+      ->where('visa_pages.language_id',env('APP_LANG'))
       ->get();
-      return view('admin.Country.create',compact('countryData'));
+
+      // $countryData = DB::table('country')->select('country_name')->where('country.language_id',env('APP_LANG'))->whereNotIn('country_name',function($qa){
+      //
+      // })
+      // ->get();
+
+      $countryData = DB::table('country')->whereNotIn('country_name', function($q){
+        $q->select('country_name')->from('visa_pages')->where('visa_pages.language_id',env('APP_LANG'));
+      })->get();
+
+      return view('admin.visa.create',compact('countryData','visaData'));
     }
 
-    public function storeCountry(Request $request){
-      $tempNm = DB::table('country')->where("language_id",env('APP_LANG'))->where('country_name',$request['country_name'])->count();
-      if($tempNm > 0){
-          return redirect()->back()->with('error','Country Name should be unique!');
-      }
+    public function storeVisa(Request $request){
 
-      $tempCd = DB::table('country')->where("language_id",env('APP_LANG'))->where('country_code',$request['country_code'])->count();
-      if($tempCd > 0){
-          return redirect()->back()->with('error','Country Code should be unique!');
-      }
-      // exit(print_r($request->all()));
       $data =  [
            'language_id' => env('APP_LANG'),
            'country_name' => $request['country_name'],
-           'country_code' => $request['country_code'],
-           'status' => 0
+           'visa_heading' => $request['visa_heading'],
+           'visa_content_1' => $request['visa_content_1'],
+           'visa_content_2' => $request['visa_content_2'],
+           'visa_main_button' => $request['visa_main_button'],
+           'visa_faqs' => $request['visa_faqs'],
+           'visa_nationality_title' => $request['visa_nationality_title'],
+           'visa_type_title' => $request['visa_type_title'],
+           'visa_popular_title' => $request['visa_popular_title']
         ];
 
-      if ($request->hasFile('country_flag')) {
-          $images = $request->country_flag->getClientOriginalName();
-          $images = time().'_flag_'.$images; // Add current time before image name
-          $country_flag = $images;
-          $request->country_flag->move(public_path('images/country'),$country_flag);
-          $data['country_flag'] = $country_flag;
+      if ($request->hasFile('visa_landing_img')) {
+          $images = $request->visa_landing_img->getClientOriginalName();
+          $images = time().'_visa_'.$images; // Add current time before image name
+          $visa_landing_img = $images;
+          $request->visa_landing_img->move(public_path('images/visa'),$visa_landing_img);
+          $data['visa_landing_img'] = $visa_landing_img;
       }
-      DB::table('country')->insert($data);
+      $visa_id = DB::table('visa_pages')->insertGetId($data);
 
-      if(isset($request['country_popular_visa']) && count($request['country_popular_visa'])){
-        $data = [];
-          foreach ($request['country_popular_visa'] as $key => $value) {
-            $data['language_id'] = env('APP_LANG');
-            $data['country_name_one'] = $request['country_name'];
-            $data['country_name_many'] = $value;
-          }
-          DB::table('country_popular_visa')->insert($data);
-      }
+      DB::table('route_visa')->insert([
+        'language_id' => env('APP_LANG'),
+        'class' => 'Front\VisaController',
+        'method' => 'pages',
+        'visa_id' => $visa_id,
+        'visa_url' => $request['visa_url']
+      ]);
 
-      return redirect()->route('admin.country.index');
+      return redirect()->route('admin.visa.index');
     }
 
     public function updateCountry(UpdateCountryRequest $request, $id){
