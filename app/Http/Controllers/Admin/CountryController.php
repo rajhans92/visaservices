@@ -163,9 +163,18 @@ class CountryController extends Controller
     }
 
     public function destroyCountry(Request $request){
+      $countryData = DB::table('country')->where('id',$request->id)->where('country.language_id',env('APP_LANG'))
+      ->first();
+
         DB::table('country')->where('id', $request->id)->limit(1)
         ->delete();
 
+        if($countryData->country_flag != ""){
+          $oldImagePath = public_path('images/country/').$countryData->country_flag;
+          if (file_exists($oldImagePath)) {
+            @unlink($oldImagePath);
+          }
+        }
         return redirect()->route('admin.country.index');
     }
 }

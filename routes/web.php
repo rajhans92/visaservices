@@ -28,8 +28,15 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/visa/add', 'Admin\VisaController@createVisa')->name('visa.create');
     Route::post('/visa/add', 'Admin\VisaController@storeVisa')->name('visa.create');
     Route::get('/visa/edit/{id}', 'Admin\VisaController@editVisa')->name('visa.edit');
-    Route::post('/visa/edit/{id}', 'Admin\VisaController@updateVisa')->name('visa.edit');
+    Route::put('/visa/edit/{id}', 'Admin\VisaController@updateVisa')->name('visa.edit');
     Route::delete('/visa/destroy/{id}', 'Admin\VisaController@destroyVisa')->name('visa.destroy');
+
+    Route::get('/visa/faq/{id}', 'Admin\VisaController@faqVisa')->name('visa.faqList');
+    Route::get('/visa/faq-create/{id}', 'Admin\VisaController@faqCreateVisa')->name('visa.faqCreate');
+    Route::post('/visa/faq-create/{id}', 'Admin\VisaController@faqStoreVisa')->name('visa.faqCreate');
+    Route::get('/visa/faq-edit/{id}/{faqId}', 'Admin\VisaController@faqEditVisa')->name('visa.faqEdit');
+    Route::put('/visa/faq-edit/{id}/{faqId}', 'Admin\VisaController@faqUpdateVisa')->name('visa.faqUpdate');
+    Route::delete('/visa/faq-delete/{id}/{faqId}', 'Admin\VisaController@faqDeleteVisa')->name('visa.faqDelete');
 
 
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');

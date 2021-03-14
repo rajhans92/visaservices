@@ -6,7 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-// use App\Http\Requests\Admin\UpdateVisaRequest;
+use App\Http\Requests\Admin\UpdateVisaRequest;
 
 class VisaController extends Controller
 {
@@ -50,14 +50,7 @@ class VisaController extends Controller
     }
 
     public function createVisa(){
-      $visaData = DB::table('visa_pages')
-      ->where('visa_pages.language_id',env('APP_LANG'))
-      ->get();
-
-      // $countryData = DB::table('country')->select('country_name')->where('country.language_id',env('APP_LANG'))->whereNotIn('country_name',function($qa){
-      //
-      // })
-      // ->get();
+      $visaData = [];
 
       $countryData = DB::table('country')->whereNotIn('country_name', function($q){
         $q->select('country_name')->from('visa_pages')->where('visa_pages.language_id',env('APP_LANG'));
@@ -105,80 +98,171 @@ class VisaController extends Controller
       return redirect()->route('admin.visa.index');
     }
 
-    public function updateCountry(UpdateCountryRequest $request, $id){
+    public function updateVisa(Request $request, $id){
 
-      $countryData = DB::table('country')->where('id',$id)->where('country.language_id',env('APP_LANG'))
+      $tempNm = DB::table('route_visa')
+      ->where("language_id",env('APP_LANG'))
+      ->where('visa_url',$request['visa_url'])
+      ->whereNotIn('visa_id',[$id])->count();
+      if($tempNm > 0){
+          return redirect()->back()->with('error','Visa URL should be unique!');
+      }
+
+      $visaData = DB::table('visa_pages')
+      ->select(
+        'visa_pages.id as id',
+        'visa_pages.country_name as country_name',
+        'visa_pages.visa_heading as visa_heading',
+        'visa_pages.visa_landing_img as visa_landing_img',
+        'visa_pages.visa_main_button as visa_main_button',
+        'visa_pages.visa_faqs as visa_faqs',
+        'visa_pages.visa_nationality_title as visa_nationality_title',
+        'visa_pages.visa_type_title as visa_type_title',
+        'visa_pages.visa_popular_title as visa_popular_title',
+        'visa_pages.visa_content_1 as visa_content_1',
+        'visa_pages.visa_content_2 as visa_content_2',
+        'route_visa.visa_url as visa_url'
+        )
+      ->where('visa_pages.language_id',env('APP_LANG'))
+      ->where('visa_pages.id',$id)
+      ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
 
       $data =  [
-           'country_name' => $request['country_name'],
-           'country_code' => $request['country_code'],
+          'country_name' => $request['country_name'],
+          'visa_heading' => $request['visa_heading'],
+          'visa_content_1' => $request['visa_content_1'],
+          'visa_content_2' => $request['visa_content_2'],
+          'visa_main_button' => $request['visa_main_button'],
+          'visa_faqs' => $request['visa_faqs'],
+          'visa_nationality_title' => $request['visa_nationality_title'],
+          'visa_type_title' => $request['visa_type_title'],
+          'visa_popular_title' => $request['visa_popular_title']
         ];
 
-      if ($request->hasFile('country_flag')) {
-        if($countryData->country_flag != ""){
-          $oldImagePath = public_path('images/country/').$countryData->country_flag;
+      if ($request->hasFile('visa_landing_img')) {
+        if($visaData->visa_landing_img != ""){
+          $oldImagePath = public_path('images/visa/').$visaData->visa_landing_img;
           if (file_exists($oldImagePath)) {
             @unlink($oldImagePath);
           }
         }
-          $images = $request->country_flag->getClientOriginalName();
-          $images = time().'_flag_'.$images; // Add current time before image name
-          $country_flag = $images;
-          $request->country_flag->move(public_path('images/country'),$country_flag);
-          $data['country_flag'] = $country_flag;
-      }
-      DB::table('country')->where('id',$id)->where('language_id',env('APP_LANG'))->update($data);
-
-      if(isset($request['country_popular_visa']) && count($request['country_popular_visa'])){
-        DB::table('country_popular_visa')->where('language_id',env('APP_LANG'))->where('country_name_one',$countryData->country_name)->delete();
-
-        $data = [];
-          foreach ($request['country_popular_visa'] as $key => $value) {
-            $data[] = [
-            'language_id'=> env('APP_LANG'),
-            'country_name_one' => $request['country_name'],
-            'country_name_many' => $value
-            ];
-          }
-          DB::table('country_popular_visa')->insert($data);
+          $images = $request->visa_landing_img->getClientOriginalName();
+          $images = time().'_visa_'.$images; // Add current time before image name
+          $visa_landing_img = $images;
+          $request->visa_landing_img->move(public_path('images/visa'),$visa_landing_img);
+          $data['visa_landing_img'] = $visa_landing_img;
       }
 
-      if($countryData->country_name != $request['country_name']){
-        $recheck = DB::table('country_popular_visa')->where('language_id',env('APP_LANG'))->where('country_name_many',$countryData->country_name)->count();
-        if($recheck  > 0){
-          DB::table('country_popular_visa')->where('country_name_many',$countryData->country_name)->where('language_id',env('APP_LANG'))->update(['country_name_many'=>$request['country_name']]);
-        }
+      DB::table('visa_pages')->where('id',$id)->where('language_id',env('APP_LANG'))->update($data);
+
+      if($visaData->visa_url != $request['visa_url']){
+        DB::table('route_visa')
+        ->where('visa_id',$id)
+        ->where('language_id',env('APP_LANG'))
+        ->update([
+          'visa_url' => $request['visa_url']
+        ]);
       }
-      return redirect()->route('admin.country.index');
+
+      return redirect()->route('admin.visa.index');
     }
 
-    public function editCountry($id){
-      $countryData = DB::table('country')->where('id',$id)->where('country.language_id',env('APP_LANG'))
+    public function editVisa($id){
+      $countryData = DB::table('country')->whereNotIn('country_name', function($q){
+        $q->select('country_name')->from('visa_pages')->where('visa_pages.language_id',env('APP_LANG'));
+      })->get();
+
+      $visaData = DB::table('visa_pages')
+      ->select(
+        'visa_pages.id as id',
+        'visa_pages.country_name as country_name',
+        'visa_pages.visa_heading as visa_heading',
+        'visa_pages.visa_landing_img as visa_landing_img',
+        'visa_pages.visa_main_button as visa_main_button',
+        'visa_pages.visa_faqs as visa_faqs',
+        'visa_pages.visa_nationality_title as visa_nationality_title',
+        'visa_pages.visa_type_title as visa_type_title',
+        'visa_pages.visa_popular_title as visa_popular_title',
+        'visa_pages.visa_content_1 as visa_content_1',
+        'visa_pages.visa_content_2 as visa_content_2',
+        'route_visa.visa_url as visa_url'
+        )
+      ->where('visa_pages.language_id',env('APP_LANG'))
+      ->where('visa_pages.id',$id)
+      ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
 
-      $country = DB::table('country_popular_visa')->where('country_name_one',$countryData->country_name)->where('language_id',env('APP_LANG'))
-      ->get();
-      $countrylist = DB::table('country')->select('country_name')->where('country.language_id',env('APP_LANG'))
-      ->get();
-      $countrySelectedlist = [];
-      foreach ($country as $key => $value) {
-        $countrySelectedlist[] = $value->country_name_many;
-       }
-      return view('admin.Country.edit',compact('countryData','countrylist','countrySelectedlist'));
+      return view('admin.visa.edit',compact('countryData','visaData'));
     }
 
-    public function editStatusCountry(Request $request){
-        DB::table('country')->where('id', $request->id)->limit(1)
-        ->update(array('status' => $request->status));
+    public function destroyVisa(Request $request){
+        $visaData = DB::table('visa_pages')->where('id', $request->id)->first();
 
-        return redirect()->route('admin.country.index');
-    }
-
-    public function destroyCountry(Request $request){
-        DB::table('country')->where('id', $request->id)->limit(1)
+        DB::table('visa_pages')->where('id', $request->id)->limit(1)
         ->delete();
 
-        return redirect()->route('admin.country.index');
+        DB::table('route_visa')->where('language_id',env('APP_LANG'))->where('visa_id', $request->id)->limit(1)
+        ->delete();
+
+        DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id', $request->id)->delete();
+
+        if($visaData->visa_landing_img != ""){
+          $oldImagePath = public_path('images/visa/').$visaData->visa_landing_img;
+          if (file_exists($oldImagePath)) {
+            @unlink($oldImagePath);
+          }
+        }
+        return redirect()->route('admin.visa.index');
+    }
+
+    public function faqVisa($id){
+      $faqData = DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id',$id)->get();
+
+      return view('admin.visa.faqlist',compact('faqData','id'));
+    }
+
+    public function faqCreateVisa($id){
+      $faqData = [];
+
+      return view('admin.visa.faqCreate',compact('faqData','id'));
+    }
+
+    public function faqStoreVisa(Request $request,$id){
+      DB::table('visa_faqs')->insert([
+        'language_id' => env('APP_LANG'),
+        'visa_id' => $id,
+        'question' => $request['question'],
+        'answer' => $request['answer']
+      ]);
+      return redirect()->route('admin.visa.faqList',$id);
+
+    }
+
+    public function faqEditVisa($id,$faqId){
+      $faqData = DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id',$id)->where('id',$faqId)->first();
+
+      return view('admin.visa.faqEdit',compact('faqData','id'));
+    }
+    public function faqUpdateVisa(Request $request,$id,$faqId){
+      DB::table('visa_faqs')
+      ->where('language_id',env('APP_LANG'))
+      ->where('visa_id',$id)
+      ->where('id',$faqId)
+      ->update([
+        'language_id' => env('APP_LANG'),
+        'visa_id' => $id,
+        'question' => $request['question'],
+        'answer' => $request['answer']
+      ]);
+      return redirect()->route('admin.visa.faqList',$id);
+
+    }
+    public function faqDeleteVisa($id,$faqId){
+
+      DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id',$id)->where('id',$faqId)->delete();
+
+      return redirect()->route('admin.visa.faqList',$id);
+
     }
 }

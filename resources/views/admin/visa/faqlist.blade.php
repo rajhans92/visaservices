@@ -2,9 +2,9 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <h3 class="page-title">Visa Pages</h3>
+    <h3 class="page-title">Visa Faqs</h3>
     <p>
-        <a href="{{ route('admin.visa.create') }}" class="btn btn-success">Create</a>
+        <a href="{{ route('admin.visa.faqCreate',[$id]) }}" class="btn btn-success">Create</a>
 
     </p>
 
@@ -18,29 +18,24 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>Visa Country</th>
-                        <th>Visa URL</th>
-                        <th>Visa Headline</th>
+                        <th>Visa Faq Question</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                  @foreach($visaData as $key => $val)
+                  @foreach($faqData as $key => $val)
                     <tr data-entry-id="">
                         <td></td>
-                        <td>{{$val->country_name}}</td>
-                        <td>{{$val->visa_url}}</td>
-                        <td>{{$val->visa_heading}}</td>
+                        <td>{{$val->question}}</td>
                         <td>
-                          <a href="{{ route('admin.visa.edit',[$val->id]) }}" class="btn btn-xs btn-info">Edit</a>
-                          <a href="{{ route('admin.visa.faqList',[$val->id]) }}" class="btn btn-xs btn-info">Faq List</a>
+                          <a href="{{ route('admin.visa.faqEdit',[$id,$val->id]) }}" class="btn btn-xs btn-info">Edit</a>
 
                           {!! Form::open(array(
                               'style' => 'display: inline-block;',
                               'method' => 'DELETE',
                               'onsubmit' => "return confirm('Are you sure?');",
-                              'route' => ['admin.visa.destroy', $val->id])) !!}
+                              'route' => ['admin.visa.faqDelete', $id,$val->id])) !!}
                           {!! Form::submit('Delete', array('class' => 'btn btn-xs btn-danger')) !!}
                           {!! Form::close() !!}
                         </td>
