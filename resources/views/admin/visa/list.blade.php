@@ -18,8 +18,8 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>Visa Url</th>
                         <th>Visa Country</th>
+                        <th>Visa URL</th>
                         <th>Visa Headline</th>
                         <th>&nbsp;</th>
                     </tr>

@@ -67,6 +67,10 @@ class VisaController extends Controller
     }
 
     public function storeVisa(Request $request){
+      $tempNm = DB::table('route_visa')->where("language_id",env('APP_LANG'))->where('visa_url',$request['visa_url'])->count();
+      if($tempNm > 0){
+          return redirect()->back()->with('error','Visa URL should be unique!');
+      }
 
       $data =  [
            'language_id' => env('APP_LANG'),
