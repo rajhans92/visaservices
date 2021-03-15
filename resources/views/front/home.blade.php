@@ -54,93 +54,14 @@
    </div>
 </section>
 <!-- VISA COUNTRY -->
-@if(isset($countryVisa[0]->id))
+@if($temp != "")
 <section class="visa-section">
    <div class="container">
      <div class="row">
         <div class="col-sm-12 text-center">
            <h2 class="section-head text-center">{{$homeData->section_1_title}}</h2>
-           <ul>
-              <li>
-                <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/1.png" />
-                 </div>
-                 <div class="cont">
-                     <h6>Colombia</h6>
-                     <a href="#">{{$homeData->section_button_name}}</a>
-                 </div>
-                 </div>
-                 <div class="flag-main">
-                  <div class="flag-image">
-                    <img src="images/flags/5.jpg" />
-                 </div>
-                 <div class="cont">
-                     <h6>Turkey</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                 </div>
-              </li>
-              <li>
-                 <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/2.png" />
-                 </div>
-                 <div class="cont">
-                     <h6>India</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                 </div>
-                 <div class="flag-main">
-                    <div class="flag-image">
-                    <img src="images/flags/5.jpg" />
-                 </div>
-                 <div class="cont">
-                     <h6>Turkey</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                 </div>
-              </li>
-              <li>
-                  <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/3.png" />
-                 </div>
-                 <div class="cont">
-                     <h6>Egypt</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                 </div>
-                 <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/5.jpg" />
-                 </div>
-                 <div class="cont">
-                     <h6>Turkey</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                </div>
-              </li>
-              <li>
-                <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/4.png" />
-                 </div>
-                 <div class="cont">
-                     <h6>Mexico</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                </div>
-                <div class="flag-main">
-                 <div class="flag-image">
-                    <img src="images/flags/5.jpg" />
-                 </div>
-                 <div class="cont">
-                     <h6>Turkey</h6>
-                     <a href="#">Apply</a>
-                 </div>
-                </div>
-              </li>
+           <ul id="popularVisa">
+             {!! $temp !!}
            </ul>
         </div>
      </div>
@@ -302,11 +223,29 @@
 @section('javascript')
 
 <script type="text/javascript">
+var url = "{{url('/')}}";
 $(function(){
     $("#applyBtn").click(function(){
         let url = $("#secondDropdown").val();
         if(url.length > 0)
           window.location = window.location.origin + '/'+ url;
+    });
+
+    $("#firstDropdown").change(function(){
+        let country = $(this).val();
+        if(country.length > 0){
+          $.ajax({
+            type: "get",
+            url: url+'/api/country-list/'+country,
+            success: function(html) {
+              let returnJsonData = JSON.parse(html);
+              let status = returnJsonData.status;
+              let totalData =  returnJsonData.data;
+              if(status)
+                $("#popularVisa").html(totalData);
+            }
+          });
+        }
     });
 });
 

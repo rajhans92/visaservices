@@ -67,6 +67,6 @@
     </div>
 
     {!! Form::submit('Update', ['class' => 'btn btn-danger']) !!}
-    <a href="{{ route('admin.footer.index') }}" class="btn btn-primary">Cancel</a>
+    <a href="{{ route('admin.country.index') }}" class="btn btn-primary">Cancel</a>
     {!! Form::close() !!}
 @stop

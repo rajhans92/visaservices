@@ -106,7 +106,66 @@ class LandingController extends Controller
       ->join('route_visa','route_visa.visa_id',"=","visa_pages.id")
       ->get();
 
+      $temp = "";
+      $count = 1;
+      foreach ($countryVisa as $key => $value) {
+        if( $count%2 != 0){
+          $temp .= '<li><div class="flag-main"> <div class="flag-image"> <img src="'.url('images/country/'.$value->country_flag).'" /> </div> <div class="cont"> <h6>'.$value->country_name.'</h6> <a href="'. url("/".$value->visa_url) .'">'.$homeData->section_button_name.'</a> </div> </div>';
+        }else{
+          $temp .= '<div class="flag-main"> <div class="flag-image"> <img src="'.url('images/country/'.$value->country_flag).'" /> </div> <div class="cont"> <h6>'.$value->country_name.'</h6> <a href="'. url("/".$value->visa_url) .'">'.$homeData->section_button_name.'</a> </div> </div></li>';
+        }
+        $count++;
+        // code...
+      }
       // exit(print_r($countryVisa));
-      return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','countryVisa'));
+      return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','temp'));
+    }
+
+    public function apiCountryList($country){
+      $data = ['status'=>false,'data'=>""];
+      $homeData = DB::table('home_page')
+      ->join('home_client_review','home_client_review.language_id','=','home_page.language_id')
+      ->join('home_section_2','home_section_2.language_id','=','home_page.language_id')
+      ->join('home_section_3','home_section_3.language_id','=','home_page.language_id')
+      ->join('home_info_section','home_info_section.language_id','=','home_page.language_id')
+      ->where('home_page.language_id',env('APP_LANG'))
+      ->first();
+      $countryVisa = DB::table('country')
+      ->select(
+          'country.id as id',
+          'country.country_name as country_name',
+          'country.country_code as country_code',
+          'country.country_flag as country_flag',
+          'route_visa.visa_url as visa_url'
+        )
+      ->where('country.language_id',env('APP_LANG'))
+      ->where('country_popular_visa.country_name_one',$country)
+      ->whereIn('country_popular_visa.country_name_many',function($db){
+        $db->select('visa_pages.country_name')
+            ->from('visa_pages')
+            ->where('visa_pages.language_id',env('APP_LANG'))
+            ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
+      })
+      ->join('country_popular_visa','country_popular_visa.country_name_many',"=",'country.country_name')
+      ->join('visa_pages','visa_pages.country_name',"=","country.country_name")
+      ->join('route_visa','route_visa.visa_id',"=","visa_pages.id")
+      ->get();
+
+      $temp = "";
+      $count = 1;
+      foreach ($countryVisa as $key => $value) {
+        if( $count%2 != 0){
+          $temp .= '<li><div class="flag-main"> <div class="flag-image"> <img src="'.url('images/country/'.$value->country_flag).'" /> </div> <div class="cont"> <h6>'.$value->country_name.'</h6> <a href="'. url("/".$value->visa_url) .'">'.$homeData->section_button_name.'</a> </div> </div>';
+        }else{
+          $temp .= '<div class="flag-main"> <div class="flag-image"> <img src="'.url('images/country/'.$value->country_flag).'" /> </div> <div class="cont"> <h6>'.$value->country_name.'</h6> <a href="'. url("/".$value->visa_url) .'">'.$homeData->section_button_name.'</a> </div> </div></li>';
+        }
+        $count++;
+        // code...
+      }
+      if( $temp != "" ){
+        $data['status'] = true;
+        $data['data'] = $temp;
+      }
+      return json_encode($data);
     }
 }

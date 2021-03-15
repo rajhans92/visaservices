@@ -63,7 +63,12 @@ class HeaderFooterController extends Controller
         'id','language_id','tag_1','tag_2','tag_3','tag_4','tag_link_1','tag_link_2','tag_link_3','tag_link_4')
       ->where('language_id',$lang_id)
       ->first();
-      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+
+      $data = DB::table('route_visa')->get();
+      $urlSet=[];
+      foreach ($data as $key => $value) {
+        $urlSet[$value->visa_url] = $value->visa_url;
+      }
 
       return view('admin.headerFooter.footerTagEdit',compact('footerTag','urlSet'));
     }

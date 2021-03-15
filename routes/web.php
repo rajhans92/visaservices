@@ -6,6 +6,7 @@ $pages = DB::table('route_visa')->get();
 
 $this->get('/', 'Front\LandingController@index');
 $this->get('/about', 'Front\AboutController@index');
+$this->get("/api/country-list/{country}", 'Front\LandingController@apiCountryList');
 
 if(!empty($pages)){
   foreach ($pages as $page){

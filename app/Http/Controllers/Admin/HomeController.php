@@ -178,7 +178,11 @@ class HomeController extends Controller
       ->join('home_section_3','home_section_3.language_id','=','home_page.language_id')
       ->where('home_page.language_id',$lang_id)
       ->first();
-      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+      $data = DB::table('route_visa')->get();
+      $urlSet=[];
+      foreach ($data as $key => $value) {
+        $urlSet[$value->visa_url] = $value->visa_url;
+      }
       return view('admin.home.section3List',compact('homeData','urlSet'));
     }
 
@@ -352,7 +356,12 @@ class HomeController extends Controller
       ->join('home_section_2','home_section_2.language_id','=','home_page.language_id')
       ->where('home_page.language_id',$lang_id)
       ->first();
-      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+      $data = DB::table('route_visa')->get();
+      $urlSet=[];
+      foreach ($data as $key => $value) {
+        $urlSet[$value->visa_url] = $value->visa_url;
+      }
+
       return view('admin.home.section2List',compact('homeData','urlSet'));
     }
 
@@ -550,7 +559,11 @@ class HomeController extends Controller
       ->where('home_page.language_id',$lang_id)
       ->first();
 
-      $urlSet = ["-",'blog/how-to-get-visa','blog/how-to-save-money','visa/india','visa/singapore'];
+      $data = DB::table('route_visa')->get();
+      $urlSet=[];
+      foreach ($data as $key => $value) {
+        $urlSet[$value->visa_url] = $value->visa_url;
+      }
 
       return view('admin.home.sectionSearch',compact('homeData','urlSet'));
     }
