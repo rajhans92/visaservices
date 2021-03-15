@@ -66,12 +66,47 @@ class LandingController extends Controller
 
       $countryVisa = [];
       if(isset($countryData[0]->id)){
-        $countryVisa = DB::table('country_popular_visa')
-        ->where('country_popular_visa.language_id',env('APP_LANG'))
-        ->where('country_name_one',$countryData[0]->country_name)
+        $countryVisa = DB::table('country')
+        ->select(
+            'country.id as id',
+            'country.country_name as country_name',
+            'country.country_code as country_code',
+            'country.country_flag as country_flag',
+            'route_visa.visa_url as visa_url'
+          )
+        ->where('country.language_id',env('APP_LANG'))
+        ->where('country_popular_visa.country_name_one',$countryData[0]->country_name)
+        ->whereIn('country_popular_visa.country_name_many',function($db){
+          $db->select('visa_pages.country_name')
+              ->from('visa_pages')
+              ->where('visa_pages.language_id',env('APP_LANG'))
+              ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
+        })
+        ->join('country_popular_visa','country_popular_visa.country_name_many',"=",'country.country_name')
+        ->join('visa_pages','visa_pages.country_name',"=","country.country_name")
+        ->join('route_visa','route_visa.visa_id',"=","visa_pages.id")
         ->get();
       }
 
-      return view('front.home',compact('homeData','section2Data','mainData','countryData','countryVisa'));
+      $secondDropdown = DB::table('country')
+      ->select(
+          'country.id as id',
+          'country.country_name as country_name',
+          'country.country_code as country_code',
+          'route_visa.visa_url as visa_url'
+        )
+      ->where('country.language_id',env('APP_LANG'))
+      ->whereIn('country.country_name',function($db){
+        $db->select('visa_pages.country_name')
+            ->from('visa_pages')
+            ->where('visa_pages.language_id',env('APP_LANG'))
+            ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
+      })
+      ->join('visa_pages','visa_pages.country_name',"=","country.country_name")
+      ->join('route_visa','route_visa.visa_id',"=","visa_pages.id")
+      ->get();
+
+      // exit(print_r($countryVisa));
+      return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','countryVisa'));
     }
 }

@@ -12,7 +12,7 @@
              <form class="d-flex">
                <div class="form-group">
                  <label for="locationfrom" class="form-label">{{$mainData->dropdown_1}}</label>
-                 <select class="form-select" aria-label="Where am I From?">
+                 <select class="form-select" aria-label="Where am I From?"  id="firstDropdown">
                    @foreach($countryData as $key => $val)
                      <option value="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
                    @endforeach
@@ -20,14 +20,14 @@
                </div>
                <div class="form-group">
                  <label for="locationto" class="form-label">{{$mainData->dropdown_2}}</label>
-                 <select class="form-select" aria-label="Where am I Going?">
-                   @foreach($countryData as $key => $val)
-                     <option value="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
+                 <select class="form-select" aria-label="Where am I Going?" id="secondDropdown">
+                   @foreach($secondDropdown as $key => $val)
+                     <option value="{{$val->visa_url}}">{{$val->country_name}} ({{$val->country_code}})</option>
                    @endforeach
                  </select>
                </div>
                <div class="form-group">
-                  <button type="button" class="btn apply-btn">{{$mainData->main_button_name}}</button>
+                  <button type="button" class="btn apply-btn" id="applyBtn">{{$mainData->main_button_name}}</button>
                </div>
              </form>
            </div>
@@ -298,6 +298,17 @@
     </div>
    </div>
 </section>
+@stop
+@section('javascript')
 
+<script type="text/javascript">
+$(function(){
+    $("#applyBtn").click(function(){
+        let url = $("#secondDropdown").val();
+        if(url.length > 0)
+          window.location = window.location.origin + '/'+ url;
+    });
+});
 
+</script>
 @endsection

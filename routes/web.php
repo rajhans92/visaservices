@@ -1,8 +1,17 @@
 <?php
+use Illuminate\Support\Facades\DB;
+
 // Route::get('/', 'HomeController@index');
+$pages = DB::table('route_visa')->get();
 
 $this->get('/', 'Front\LandingController@index');
 $this->get('/about', 'Front\AboutController@index');
+
+if(!empty($pages)){
+  foreach ($pages as $page){
+    Route::get('/'.$page->visa_url, $page->class.'@'.$page->method);
+   }
+}
 
 // Authentication Routes...
 $this->get('verify-email/{token}', 'Auth\RegisterController@showVerifyScreen');
