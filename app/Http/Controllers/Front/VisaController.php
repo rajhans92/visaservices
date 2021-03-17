@@ -86,6 +86,38 @@ class VisaController extends Controller
 
     public function applyOnline($country)
     {
-      // code...
+        $countryFound = false;
+        $visaProcessingType = DB::table('visa_process_type')
+                              ->select('visa_process_type.name as name','visa_process_type.duration as duration','duration_type.name as duration_type')
+                              ->where('visa_process_type.language_id',env('APP_LANG'))
+                              ->where('visa_process_type.name',env('APP_VISA_TYPE'))
+                              ->join("duration_type","duration_type.id","=","visa_process_type.duration_type_id")
+                              ->get();
+        $allVisaData = [];
+        $tableName = DB::table('visa_type_name')->where('language_id',env('APP_LANG'))->get();
+        $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
+        foreach ($tableName as $key => $value) {
+            $countryCount = DB::table(strtolower($value->visa_type_table))->where('country_name',$country)->count();
+            if($countryCount >= 1){
+              $countryFound = true;
+            }
+
+           $tempVisaTable = DB::table(strtolower($value->visa_type_table))->get();
+           foreach ($tempVisaTable as $key1 => $value1) {
+              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['standard'] = number_format($value1->st_usd_price,2);
+              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['rush'] = number_format($value1->ru_usd_price,2);
+              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['superrush'] = number_format($value1->super_ru_usd_price,2);
+              foreach ($currencyRate as $key2 => $value2) {
+                $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['standard']   = number_format($value2->rate * $value1->st_usd_price,2);
+                $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['rush']      = number_format($value2->rate * $value1->ru_usd_price,2);
+                $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['superrush'] = number_format($value2->rate * $value1->super_ru_usd_price,2);
+
+              }
+
+           }
+        }
+
+        return view('front.apply.calculator',compact('allVisaData','countryFound','visaProcessingType'));
+
     }
 }
