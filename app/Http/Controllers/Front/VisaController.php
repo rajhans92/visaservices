@@ -61,7 +61,7 @@ class VisaController extends Controller
       $tableName = DB::table('visa_type_name')->where('language_id',env('APP_LANG'))->get();
       $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
       foreach ($tableName as $key => $value) {
-         $tempVisaTable = DB::table($value->visa_type_table)->get();
+         $tempVisaTable = DB::table(strtolower($value->visa_type_table))->get();
          foreach ($tempVisaTable as $key1 => $value1) {
             $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['standard'] = number_format($value1->st_usd_price,2);
             $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['rush'] = number_format($value1->ru_usd_price,2);
