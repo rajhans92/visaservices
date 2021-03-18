@@ -58,6 +58,14 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::put('/country/status', 'Admin\CountryController@editStatusCountry')->name('country.status');
     Route::delete('/country/destroy/{id}', 'Admin\CountryController@destroyCountry')->name('country.destroy');
 
+    Route::get('/country/port-of-arrival/{country_id}', 'Admin\CountryController@portOfArrivalCountry')->name('country.portOfArrivalCountry');
+    Route::get('/country/port-of-arrival-add/{country_id}', 'Admin\CountryController@portOfArrivalAddCountry')->name('country.portOfArrivalAddCountry');
+    Route::post('/country/port-of-arrival-add/{country_id}', 'Admin\CountryController@portOfArrivalStoreCountry')->name('country.portOfArrivalStoreCountry');
+    Route::get('/country/port-of-arrival-edit/{country_id}/{port_id}', 'Admin\CountryController@portOfArrivalEditCountry')->name('country.portOfArrivalEditCountry');
+    Route::put('/country/port-of-edit/{country_id}/{port_id}', 'Admin\CountryController@portOfArrivalUpdateCountry')->name('country.portOfArrivalUpdateCountry');
+    Route::delete('/country/port-of-edit/{country_id}/{port_id}', 'Admin\CountryController@portOfArrivalDeleteCountry')->name('country.portOfArrivalDeleteCountry');
+
+
     Route::get('/header-section', 'Admin\HeaderFooterController@index')->name('header.index');
     Route::get('/header-section/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
     Route::put('/header-section/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;

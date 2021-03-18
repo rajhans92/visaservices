@@ -169,6 +169,11 @@ class CountryController extends Controller
         DB::table('country')->where('id', $request->id)->limit(1)
         ->delete();
 
+        DB::table('port_of_arrival')
+       ->where('port_of_arrival.country_id',$request->id)
+       ->where('port_of_arrival.language_id',env('APP_LANG'))
+       ->delete();
+
         if($countryData->country_flag != ""){
           $oldImagePath = public_path('images/country/').$countryData->country_flag;
           if (file_exists($oldImagePath)) {
@@ -176,5 +181,64 @@ class CountryController extends Controller
           }
         }
         return redirect()->route('admin.country.index');
+    }
+
+    public function portOfArrivalCountry($country_id)
+    {
+        $countryData = DB::table('port_of_arrival')
+        ->where('port_of_arrival.country_id',$country_id)
+        ->where('port_of_arrival.language_id',env('APP_LANG'))
+        ->get();
+
+        return view('admin.country.portOfArrival',compact('countryData','country_id'));
+    }
+
+    public function portOfArrivalAddCountry($country_id)
+    {
+        return view('admin.country.portOfArrivalAdd',compact('country_id'));
+    }
+
+    public function portOfArrivalStoreCountry(Request $request,$country_id){
+
+      DB::table('port_of_arrival')->insert([
+        'language_id' => env('APP_LANG'),
+        'country_id' => $country_id,
+        'port_name' => $request['port_name']
+      ]);
+
+      return redirect()->route('admin.country.portOfArrivalCountry',[$country_id]);
+
+    }
+
+    public function portOfArrivalEditCountry($country_id,$port_id)
+    {
+        $countryData = DB::table('port_of_arrival')
+        ->where('port_of_arrival.id',$port_id)
+        ->where('port_of_arrival.country_id',$country_id)
+        ->where('port_of_arrival.language_id',env('APP_LANG'))
+        ->first();
+
+        return view('admin.country.portOfArrivalEdit',compact('countryData','country_id'));
+    }
+
+    public function portOfArrivalUpdateCountry(Request $request,$country_id,$port_id){
+        DB::table('port_of_arrival')
+        ->where('id',$port_id)
+        ->update([
+          'port_name' => $request['port_name']
+        ]);
+
+        return redirect()->route('admin.country.portOfArrivalCountry',[$country_id]);
+    }
+
+    public function portOfArrivalDeleteCountry(Request $request,$country_id,$port_id){
+
+        DB::table('port_of_arrival')
+        ->where('id',$port_id)
+       ->where('country_id',$country_id)
+       ->where('language_id',env('APP_LANG'))
+       ->delete();
+
+        return redirect()->route('admin.country.portOfArrivalCountry',[$country_id]);
     }
 }

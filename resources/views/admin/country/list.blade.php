@@ -56,6 +56,8 @@
                           {!! Form::submit($val->status == 1 ? "Inactived" : "Activated", array('class' => strtolower($val->status) == 1 ? "btn btn-xs btn-warning" : "btn btn-xs btn-success")) !!}
                           {!! Form::close() !!}
 
+                          <a href="{{ route('admin.country.portOfArrivalCountry',[$val->id]) }}" class="btn btn-xs btn-info">Port Of Arrival</a>
+
                           {!! Form::open(array(
                               'style' => 'display: inline-block;',
                               'method' => 'DELETE',
