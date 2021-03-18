@@ -226,7 +226,7 @@
 var url = "{{url('/')}}";
 $(function(){
     $("#applyBtn").click(function(){
-        let url = $("#secondDropdown").val();
+        let url = $("#firstDropdown").val();
         if(url.length > 0)
           window.location = window.location.origin + '/'+ url;
     });
