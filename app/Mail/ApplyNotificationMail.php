@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class verifyEmail extends Mailable
+class ApplyNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,6 +29,6 @@ class verifyEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.sendView');
+        return $this->view('front.email.applyNotificationMail');
     }
 }
