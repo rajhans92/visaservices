@@ -79,6 +79,26 @@
               </ul>
             </li>
 
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span class="title">Visa Management</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="{{ $request->segment(2) == 'visa-application' ? 'active active-sub' : '' }}">
+                  <a href="{{route('admin.application.index')}}">
+                    <i class="fa fa-briefcase"></i>
+                    <span class="title">
+                      Visa Application
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
 
         </ul>
     </section>

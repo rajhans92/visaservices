@@ -212,6 +212,8 @@ class VisaController extends Controller
     }
 
     public function applyOnlineReview($slug){
-        exit($slug);
+
+
+      return view('front.apply.review');
     }
 }

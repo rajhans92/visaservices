@@ -1527,74 +1527,6 @@ html .register-section:before {
     grid-template-columns: auto auto;
     grid-column-gap: 20px;
 }
-/* INFO PAGE */
-.info-section{
-	background:#f8f8f8;
-	padding:0 0 60px;
-	border-bottom:2px solid #dedede;
-}
-.info-section .inner-head {
-    margin-top: 0;
-}
-.general-info-main{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 40px;
-}
-.general-info-main .form-group label{
-    min-width: 200px;
-    max-width: 200px;
-    padding-right: 30px;
-    font-size: 15px;
-    font-weight: 600;
-    position: relative;
-}
-.general-info-main .form-group input, 
-.general-info-main .form-group select{
-    height: 40px;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dedede;
-    border-radius: 4px;
-}
-.general-info-main .form-group{
-    display: flex;
-}
-.general-info-main .form-group label::before{content: ":";position: absolute;right: 40px;font-weight: bold;}
-.upload-documents-inner {
-    display: grid;
-    grid-template-columns: 2fr repeat(4, 1fr);
-	grid-column-gap: 15px;
-	padding-top: 30px;
-}
-.document_box .inner-head {
-    font-size: 25px;
-    padding:20px 0;
-    margin: 0;
-}
-.document_box button {
-    background: #008790;
-    border: 0;
-    color: #fff;
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-weight: 600;
-}
-.document_box label:last-child {
-    font-weight: normal;
-    display: block;
-}
-.document_box label {
-    font-weight: 600;
-    font-size: 16px;
-}
-.document_box input[type=file] {
-    margin-bottom: 10px;
-}
-.document_box .hint {
-    color: #008790;
-}
 /* RESPONSIVE */
 @media(max-width:767px){
   .banner-section h1,
@@ -2028,31 +1960,6 @@ html .register-section:before {
 .navbar-light .navbar-toggler-icon{
     background-image:url(../images/menu.svg);
     margin-top: 5px;
-}
-.general-info-main{
-    grid-template-columns: 1fr;
-	grid-gap: 20px;
-}
-.general-info-main .form-group {
-    flex-direction: column;
-}
-.general-info-main .form-group label {
-    min-width: 100%;
-    max-width: 100%;
-    padding-right: 0;
-    margin-bottom: 5px;
-}
-.document_box button {
-    display: block;
-    width: 100%;
-    padding: 15px 20px;
-    margin-top: 20px;
-}
-.general-info-main .form-group label::before{
-	display:none;
-}
-.upload-documents-inner{
-	grid-template-columns: 1fr;
 }
 }
 @media(min-width:768px) and (max-width:900px){

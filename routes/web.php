@@ -72,6 +72,10 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/header-section/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
     Route::put('/header-section/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;
 
+    Route::get('/visa-application/list', 'Admin\ApplicationController@index')->name('application.index');
+    Route::get('/visa-application/detail/{application_id}', 'Admin\ApplicationController@applicationDetail')->name('application.detail');
+
+
     Route::get('/home-page', 'Admin\HomeController@index')->name('home.index');
     Route::get('/home-page/search-section/{lang_id}', 'Admin\HomeController@searchSection')->name('home.searchSection');
     Route::get('/home-page/client-review/{lang_id}', 'Admin\HomeController@clientReview')->name('home.clientReview');
@@ -110,11 +114,5 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/footer-section/company/{lang_id}', 'Admin\HeaderFooterController@footerCompanyEdit')->name('footer.company');
     Route::put('/footer-section/company/{lang_id}', 'Admin\HeaderFooterController@footerCompanyUpdate')->name('footer.companyUpdate');
 
-    // Route::resource('user-profile', 'Admin\UserProfileController');
-    //
-    // Route::resource('permissions', 'Admin\PermissionsController');
-    // Route::post('permissions_mass_destroy', ['uses' => 'Admin\PermissionsController@massDestroy', 'as' => 'permissions.mass_destroy']);
-    // Route::resource('roles', 'Admin\RolesController');
-    // Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
 
 });
