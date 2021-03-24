@@ -83,25 +83,9 @@
     <div class="footer-bottom d-flex">
       <div class="_links">
         <ul class="d-flex">
-          @if($menu['about'] != "")
-            <li> <a href="/about">{{$menu['about']}}</a> </li>
-          @endif
-          @if($menu['affiliates'] != "")
-            <li> <a href="/about">{{$menu['affiliates']}}</a> </li>
-          @endif
-          @if($menu['blog'] != "")
-            <li> <a href="/blog">{{$menu['blog']}}</a> </li>
-          @endif
-          @if($menu['tnc'] != "")
-            <li> <a href="/blog">{{$menu['tnc']}}</a> </li>
-          @endif
-          @if($menu['contact'] != "")
-            <li> <a href="/contact-us">{{$menu['contact']}}</a> </li>
-          @endif
-          @if($menu['policy'] != "")
-            <li> <a href="/contact-us">{{$menu['policy']}}</a> </li>
-          @endif
-
+          @foreach($menu['footer'] as $key => $val)
+            <li> <a href="{{$val['url']}}">{{$val['name']}}</a> </li>
+          @endforeach
         </ul>
       </div>
       @if($footerData->company_detail != "")

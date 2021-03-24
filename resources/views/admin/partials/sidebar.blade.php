@@ -35,7 +35,7 @@
                     <a href="{{route('admin.header.index')}}">
                         <i class="fa fa-briefcase"></i>
                         <span class="title">
-                            Header Section
+                            Menu Section
                         </span>
                     </a>
                 </li>

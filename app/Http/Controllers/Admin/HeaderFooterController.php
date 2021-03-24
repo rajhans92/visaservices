@@ -26,23 +26,40 @@ class HeaderFooterController extends Controller
      */
     public function index()
     {
-        $menuData = DB::table('menu')->where('language_id',env('APP_LANG'))->get();
+        $menuData = DB::table('menu')
+        ->select(
+            "menu.id as id",
+            "menu.name as name",
+            "menu.menu_type as menu_type",
+            "menu.status as status",
+            "route_visa.visa_url as url"
+          )
+        ->where('menu.language_id',env('APP_LANG'))
+        ->join('route_visa',"route_visa.id","=","menu.url")
+        ->get();
 
         return view('admin.headerFooter.headerList',compact('menuData'));
     }
+    public function createHeader()
+    {
+        $links = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
 
+        return view('admin.headerFooter.headerCreate',compact('links'));
+    }
     public function editHeader($id)
     {
         $menuData = DB::table('menu')->where('language_id',env('APP_LANG'))->where('id',$id)->first();
+        $links = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
 
-        return view('admin.headerFooter.headerEdit',compact('menuData'));
+        return view('admin.headerFooter.headerEdit',compact('menuData','links'));
     }
 
     public function updateHeader(Request $request, $id)
     {
-
           $data =  [
                'name' => $request['name'],
+               'url' => $request['url'],
+               'menu_type' => $request['menu_type'],
                'updated_at' => date('Y-m-d')
             ];
 
@@ -50,7 +67,32 @@ class HeaderFooterController extends Controller
 
           return redirect()->route('admin.header.index');
     }
+    public function storeHeader(Request $request)
+    {
+          $data =  [
+               'language_id' => env('APP_LANG'),
+               'name' => $request['name'],
+               'url' => $request['url'],
+               'menu_type' => $request['menu_type'],
+               'created_at' => date('Y-m-d')
+            ];
 
+          DB::table('menu')->insert($data);
+
+          return redirect()->route('admin.header.index');
+    }
+    public function updateStatusMenu(Request $request)
+    {
+        DB::table('menu')->where('id','=',$request->id)->update(['status'=>$request->status]);
+
+        return redirect()->route('admin.header.index');
+    }
+    public function deleteMenu(Request $request)
+    {
+        DB::table('menu')->where('id','=',$request->id)->delete();
+
+        return redirect()->route('admin.header.index');
+    }
     public function footerList()
     {
         return view('admin.headerFooter.footerList');

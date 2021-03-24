@@ -69,8 +69,12 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
 
 
     Route::get('/header-section', 'Admin\HeaderFooterController@index')->name('header.index');
-    Route::get('/header-section/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
-    Route::put('/header-section/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;
+    Route::get('/header-section/add', 'Admin\HeaderFooterController@createHeader')->name('header.create');
+    Route::post('/header-section/add', 'Admin\HeaderFooterController@storeHeader')->name('header.store');
+    Route::get('/header-section/edit/{menu_id}', 'Admin\HeaderFooterController@editHeader')->name('header.edit');
+    Route::put('/header-section/edit/{menu_id}', 'Admin\HeaderFooterController@updateHeader')->name('header.update');;
+    Route::post('/header-section/status', 'Admin\HeaderFooterController@updateStatusMenu')->name('header.updateMenuStatus');;
+    Route::delete('/header-section/delete/{menu_id}', 'Admin\HeaderFooterController@deleteMenu')->name('header.destroyMenu');;
 
     Route::get('/visa-application/list', 'Admin\ApplicationController@index')->name('application.index');
     Route::get('/visa-application/detail/{application_id}', 'Admin\ApplicationController@applicationDetail')->name('application.detail');
