@@ -117,8 +117,14 @@ class LandingController extends Controller
         $count++;
         // code...
       }
+      $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
+      $urlSet=[];
+      foreach ($data as $key => $value) {
+        $urlSet[$value->id] = $value->visa_url;
+      }
+
       // exit(print_r($countryVisa));
-      return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','temp'));
+      return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','temp','urlSet'));
     }
 
     public function apiCountryList($country){

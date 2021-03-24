@@ -37,8 +37,14 @@ class AppServiceProvider extends ServiceProvider
         }
         // exit(print_r($menu));
         $footerData = DB::table('footer_detail')->where('language_id',env('APP_LANG'))->first();
+
+        $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
+        $urlSet=[];
+        foreach ($data as $key => $value) {
+          $urlSet[$value->id] = $value->visa_url;
+        }
         Schema::defaultStringLength(191);
-        View::share(['menu'=> $menu,'footerData' => $footerData]);
+        View::share(['menu'=> $menu,'footerData' => $footerData,'urlSet' => $urlSet]);
 
     }
 

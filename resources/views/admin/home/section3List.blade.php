@@ -63,7 +63,7 @@
                     {!! Form::label('link_1', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="link_1" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $homeData->link_1 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $homeData->link_1 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>
@@ -116,7 +116,7 @@
                     {!! Form::label('link_2', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="link_2" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $homeData->link_2 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $homeData->link_2 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>
@@ -168,7 +168,7 @@
                     {!! Form::label('link_3', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="link_3" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $homeData->link_3 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $homeData->link_3 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>

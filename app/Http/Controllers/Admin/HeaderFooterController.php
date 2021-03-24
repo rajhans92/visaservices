@@ -106,10 +106,10 @@ class HeaderFooterController extends Controller
       ->where('language_id',$lang_id)
       ->first();
 
-      $data = DB::table('route_visa')->get();
+      $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
-        $urlSet[$value->visa_url] = $value->visa_url;
+        $urlSet[$value->id] = $value->visa_url;
       }
 
       return view('admin.headerFooter.footerTagEdit',compact('footerTag','urlSet'));

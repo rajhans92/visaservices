@@ -26,7 +26,7 @@
                     {!! Form::label('tag_link_1', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="tag_link_1" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_1 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $footerTag->tag_link_1 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>
@@ -52,7 +52,7 @@
                     {!! Form::label('tag_link_2', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="tag_link_2" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_2 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $footerTag->tag_link_2 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>
@@ -78,7 +78,7 @@
                     {!! Form::label('tag_link_3', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="tag_link_3" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_3 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $footerTag->tag_link_3 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>
@@ -104,7 +104,7 @@
                     {!! Form::label('tag_link_4', 'Select Link*', ['class' => 'control-label']) !!}
                     <select class="form-control selectpicker" required name="tag_link_4" value="" >
                       @foreach($urlSet as $key => $val)
-                        <option value="{{$val}}" {{ $val == $footerTag->tag_link_4 ? 'selected' : '' }}>{{$val}}</option>
+                        <option value="{{$key}}" {{ $key == $footerTag->tag_link_4 ? 'selected' : '' }}>{{$val}}</option>
                       @endforeach
                     </select>
                     <p class="help-block"></p>

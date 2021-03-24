@@ -181,7 +181,7 @@ class HomeController extends Controller
       $data = DB::table('route_visa')->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
-        $urlSet[$value->visa_url] = $value->visa_url;
+        $urlSet[$value->id] = $value->visa_url;
       }
       return view('admin.home.section3List',compact('homeData','urlSet'));
     }
@@ -359,7 +359,7 @@ class HomeController extends Controller
       $data = DB::table('route_visa')->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
-        $urlSet[$value->visa_url] = $value->visa_url;
+        $urlSet[$value->id] = $value->visa_url;
       }
 
       return view('admin.home.section2List',compact('homeData','urlSet'));
@@ -559,10 +559,10 @@ class HomeController extends Controller
       ->where('home_page.language_id',$lang_id)
       ->first();
 
-      $data = DB::table('route_visa')->get();
+      $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
-        $urlSet[$value->visa_url] = $value->visa_url;
+        $urlSet[$value->id] = $value->visa_url;
       }
 
       return view('admin.home.sectionSearch',compact('homeData','urlSet'));
