@@ -16,7 +16,7 @@
           <div class="_des">
           <p>{{$visaData->visa_content_2}}</p>
           @if($isAvailable)
-            <a href="{{url('/apply-online/'.$visaData->country_name)}}">{{$visaData->visa_main_button}}</a>
+            <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
           @endif
          </div>
          <h1 style="margin-top: 80px;">{{$visaData->visa_faqs}}</h1>
@@ -52,7 +52,7 @@
                   <span><img src="images/rush.png">{{$visaData->visa_type_title}}:</span>
                   <span><b>{{$visaProcessingType->duration}} {{$visaProcessingType->duration_type}}</b></span>
             </div>
-             <a href="{{url('/apply-online/'.$visaData->country_name)}}">{{$visaData->visa_main_button}}</a>
+             <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
           </div>
           <h5 class="top-articles-heading">{{$visaData->visa_popular_title}}</h5>
           <ul class="top-articles" id="currency">

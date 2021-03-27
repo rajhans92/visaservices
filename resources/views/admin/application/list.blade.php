@@ -33,7 +33,7 @@
                         <td>{{$val->order_id}}</td>
                         <td>{{$val->email_id}}</td>
                         <td>{{$val->total_payment}}</td>
-                        <td>{{$val->visa_type_name}}</td>
+                        <td>{{$val->type_of_visa}}</td>
                         <td>{{$val->visa_process_type}}</td>
                         <td>{{date('d-m-Y',strtotime($val->submission_date))}}</td>
                         <td>{{$val->payment_status == 1 ? "Paid":"Panding"}}</td>

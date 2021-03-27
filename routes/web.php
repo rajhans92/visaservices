@@ -7,7 +7,7 @@ $pages = DB::table('route_visa')->get();
 $this->get('/', 'Front\LandingController@index');
 $this->get('/about', 'Front\AboutController@index');
 $this->get("/api/country-list/{country}", 'Front\LandingController@apiCountryList');
-$this->get("/apply-online/{country}", 'Front\VisaController@applyOnline');
+$this->get("/apply-online/{url}", 'Front\VisaController@applyOnline');
 $this->post("/apply-online", 'Front\VisaController@applyOnlineSave')->name('apply.save');
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
 

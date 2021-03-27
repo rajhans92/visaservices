@@ -24,9 +24,14 @@
                             <td>
                                 {{$visaData->order_id}}
                             </td>
-                            <th>Email Id</th>
-                            <td>{{$visaData->email_id}}</td>
-
+                            <th>Visa Country</th>
+                            <td><b>{{ ucfirst($visaData->visa_country_name) }}</b></td>
+                        </tr>
+                        <tr>
+                          <th>Email Id</th>
+                          <td>{{$visaData->email_id}}</td>
+                          <th>Contact No</th>
+                          <td>{{ $visaData->contact_no }}</td>
                         </tr>
                         <tr>
                             <th>Arrival Date</th>
@@ -36,7 +41,7 @@
                         </tr>
                         <tr>
                             <th>Visa Type</th>
-                            <td>{{ $visaData->visa_type_name }}</td>
+                            <td>{{ $visaData->type_of_visa }}</td>
                             <th>Visa Processing Type</th>
                             <td>{{ $visaData->visa_process_type }}</td>
                         </tr>
@@ -48,13 +53,8 @@
 
                         </tr>
                         <tr>
-                          <th>Contact No</th>
-                          <td>{{ $visaData->contact_no }}</td>
                           <th>Total Payment</th>
                           <td>{{ $visaData->total_payment }}</td>
-
-                        </tr>
-                        <tr>
                           <th>Payment Status</th>
                           <td>{{ $visaData->payment_status == 1 ? "Paid" : "Panding" }}</td>
 
@@ -80,21 +80,33 @@
                         </tr>
                         <tr>
                             <th>Visa Type</th>
-                            <td>{{ $visaData->visa_type_name }}</td>
+                            <td>{{ $visaData->type_of_visa }}</td>
                             <th>Visa Nationality</th>
                             <td>{{$val->nationality}}</td>
                         </tr>
                         <tr>
                             <th>Date Of Birth</th>
                             <td>{{ date('d-m-Y',strtotime($val->date_of_birth)) }}</td>
+                            <th>Gender</th>
+                            <td>{{ $val->gender }}</td>
+                        </tr>
+                        <tr>
+                            <th>Country Residence</th>
+                            <td>{{$val->applicant_country_residence}} </td>
+                            <th>Country Birth</th>
+                            <td>{{$val->applicant_country_birth}} </td>
+                        </tr>
+                        <tr>
+                          <th>Passport Issue Date</th>
+                          <td>{{ date('d-m-Y',strtotime($val->passport_issue_date)) }}</td>
                             <th>Passport Expiry Date</th>
-                            <td>{{ date('d-m-Y',strtotime($val->passport_expiry_date)) }}</td>
+                            <td>{{ date('d-m-Y',strtotime($val->passport_issue_date)) }}</td>
 
                         </tr>
                         <tr>
-                            <th>Gender</th>
-                            <td>{{ $val->gender }}</td>
-                            <th>Payment (Applicant fee + Tax)</th>
+                            <th>Phone No</th>
+                            <td>{{$val->applicant_phone}} </td>
+                            <th>Payment (Applicant fee + Govt. fee)</th>
                             <td>{{$val->applicant_payment}} + {{$val->govt_fee}} = {{ $val->applicant_payment + $val->govt_fee }}</td>
                         </tr>
                         <tr>
