@@ -157,6 +157,8 @@ class VisaController extends Controller
                               ->get();
 
         $allVisaData = [];
+        $allVisaDataAlter = [];
+
         $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
         $tempVisaTable = DB::table('visa_type_detail')
                         ->where('visa_country_name',$visaData->country_name)
@@ -175,6 +177,13 @@ class VisaController extends Controller
           $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
           $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
           $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          //-------------------------------------------------------------------------------------------------------------------
+
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = number_format($value->standard_usd_price,2);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = number_format($value->rush_usd_price,2);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = number_format($value->express_usd_price,2);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = number_format($value->govt_fee,2);
+
 
           foreach ($currencyRate as $key2 => $value2) {
 
@@ -185,12 +194,19 @@ class VisaController extends Controller
             $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
 
             $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            //-------------------------------------------------------------------------------------------------------------------
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
 
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
           }
 
         }
 
-        return view('front.apply.calculator',compact('allVisaData','visaProcessingType','portOfArrival','countryName','default_visa_type','default_nationality','default_visa','default_currency','currencyRate'));
+        return view('front.apply.calculator',compact('allVisaData','visaProcessingType','portOfArrival','countryName','default_visa_type','default_nationality','default_visa','default_currency','currencyRate','allVisaDataAlter'));
 
     }
 
