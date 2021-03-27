@@ -14,7 +14,7 @@
                  <label for="locationfrom" class="form-label">{{$mainData->dropdown_1}}</label>
                  <select class="form-select" aria-label="Where am I From?"  id="firstDropdown">
                    @foreach($countryData as $key => $val)
-                     <option value="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
+                     <option value="{{$val->country_name}}" data="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
                    @endforeach
                 </select>
                </div>
@@ -22,7 +22,7 @@
                  <label for="locationto" class="form-label">{{$mainData->dropdown_2}}</label>
                  <select class="form-select" aria-label="Where am I Going?" id="secondDropdown">
                    @foreach($secondDropdown as $key => $val)
-                     <option value="{{$val->visa_url}}">{{$val->country_name}} ({{$val->country_code}})</option>
+                     <option value="{{$val->visa_url}}" data="{{$val->country_name}}">{{$val->country_name}} ({{$val->country_code}})</option>
                    @endforeach
                  </select>
                </div>
@@ -227,8 +227,21 @@ var url = "{{url('/')}}";
 $(function(){
     $("#applyBtn").click(function(){
         let url = $("#secondDropdown").val();
+
+        var d = new Date();
+        d.setTime(d.getTime() + (2*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+
+        let goname = "go_country";
+        let fromname = "from_country";
+        let govalue = $("#secondDropdown option").filter(":selected").attr("data");
+        let fromvalue = $("#firstDropdown option").filter(":selected").attr("data");
+
+        document.cookie = fromname + "=" + fromvalue + ";" + expires + ";path=/";
+        document.cookie = goname + "=" + govalue + ";" + expires + ";path=/";
         if(url.length > 0)
           window.location = window.location.origin + '/'+ url;
+
     });
 
     $("#firstDropdown").change(function(){

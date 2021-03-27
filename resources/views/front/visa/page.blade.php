@@ -42,9 +42,9 @@
           <div class="box-content">
              <div class="form-group">
                  <label>{{$visaData->visa_nationality_title}}</label>
-                 <select id="nationality" value={{$visaData->country_name}}>
+                 <select id="nationality" value={{$default_nationality}}>
                    @foreach($allVisaData as $key => $val)
-                     <option value="{{$key}}" {{$key == $visaData->country_name ? 'selected' : ''}}>{{$key}}</option>
+                     <option value="{{$key}}" {{$key == $default_nationality ? 'selected' : ''}}>{{$key}}</option>
                    @endforeach
                  </select>
              </div>
@@ -57,7 +57,7 @@
           <h5 class="top-articles-heading">{{$visaData->visa_popular_title}}</h5>
           <ul class="top-articles" id="currency">
              <?php $count = 1; ?>
-              @foreach($allVisaData[strtolower($visaData->country_name)] as $key => $val)
+              @foreach($allVisaData[strtolower($default_nationality)] as $key => $val)
               <li><a>{{$key}}
                 <select class="currency" value="USD">
                   @foreach($val as $key1 => $val1)

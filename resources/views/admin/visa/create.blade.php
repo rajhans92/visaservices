@@ -134,6 +134,20 @@
               @endif
             </div>
           </div>
+          <div class="row">
+            <div class="col-xs-4 form-group">
+              {!! Form::label('reuired_doc', 'Required Documents*', ['class' => 'control-label']) !!}
+              <div class="checkbox">
+                <label><input type="checkbox" name="isPassportDocRequired" value="1">Passport Document</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" name="isApplicantPhotoRequired" value="1">Applicat Photo</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" name="isOtherDocRequired" value="1">Other Document</label>
+              </div>
+            </div>
+          </div>
 
 
         </div>

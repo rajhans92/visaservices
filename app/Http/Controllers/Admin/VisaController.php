@@ -60,6 +60,7 @@ class VisaController extends Controller
     }
 
     public function storeVisa(Request $request){
+
       $tempNm = DB::table('route_visa')->where("language_id",env('APP_LANG'))->where('visa_url',$request['visa_url'])->count();
       if($tempNm > 0){
           return redirect()->back()->with('error','Visa URL should be unique!');
@@ -75,7 +76,10 @@ class VisaController extends Controller
            'visa_faqs' => $request['visa_faqs'],
            'visa_nationality_title' => $request['visa_nationality_title'],
            'visa_type_title' => $request['visa_type_title'],
-           'visa_popular_title' => $request['visa_popular_title']
+           'visa_popular_title' => $request['visa_popular_title'],
+           'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
+           'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
+           'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
         ];
 
       if ($request->hasFile('visa_landing_img')) {
@@ -137,7 +141,10 @@ class VisaController extends Controller
           'visa_faqs' => $request['visa_faqs'],
           'visa_nationality_title' => $request['visa_nationality_title'],
           'visa_type_title' => $request['visa_type_title'],
-          'visa_popular_title' => $request['visa_popular_title']
+          'visa_popular_title' => $request['visa_popular_title'],
+          'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
+          'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
+          'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
         ];
 
       if ($request->hasFile('visa_landing_img')) {
@@ -186,6 +193,9 @@ class VisaController extends Controller
         'visa_pages.visa_popular_title as visa_popular_title',
         'visa_pages.visa_content_1 as visa_content_1',
         'visa_pages.visa_content_2 as visa_content_2',
+        'visa_pages.isPassportDocRequired as isPassportDocRequired',
+        'visa_pages.isApplicantPhotoRequired as isApplicantPhotoRequired',
+        'visa_pages.isOtherDocRequired as isOtherDocRequired',
         'route_visa.visa_url as visa_url'
         )
       ->where('visa_pages.language_id',env('APP_LANG'))

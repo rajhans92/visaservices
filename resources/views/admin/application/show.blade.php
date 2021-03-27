@@ -94,8 +94,8 @@
                         <tr>
                             <th>Gender</th>
                             <td>{{ $val->gender }}</td>
-                            <th>Payment</th>
-                            <td>{{ $val->applicant_payment }}</td>
+                            <th>Payment (Applicant fee + Tax)</th>
+                            <td>{{$val->applicant_payment}} + {{$val->govt_fee}} = {{ $val->applicant_payment + $val->govt_fee }}</td>
                         </tr>
                         <tr>
                           @if($val->passport_file != "")

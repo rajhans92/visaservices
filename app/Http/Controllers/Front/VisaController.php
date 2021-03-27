@@ -27,6 +27,10 @@ class VisaController extends Controller
      */
     public function pages(Request $request)
     {
+
+      $default_visa = isset($_COOKIE['go_country']) ? $_COOKIE['go_country'] : env('APP_DEFAULT_COUNTRY');
+      $default_nationality = isset($_COOKIE['from_country']) ? $_COOKIE['from_country'] : env('APP_DEFAULT_COUNTRY');
+
       $uri = $request->path();
       $visaData = DB::table('visa_pages')
       ->select(
@@ -60,29 +64,40 @@ class VisaController extends Controller
                             ->join("duration_type","duration_type.id","=","visa_process_type.duration_type_id")
                             ->first();
       $allVisaData = [];
-      $tableName = DB::table('visa_type_name')->where('language_id',env('APP_LANG'))->get();
       $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
-      foreach ($tableName as $key => $value) {
-         $tempVisaTable = DB::table(strtolower($value->visa_type_table))->get();
-         foreach ($tempVisaTable as $key1 => $value1) {
-            $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['standard'] = number_format($value1->st_usd_price,2);
-            $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['rush'] = number_format($value1->ru_usd_price,2);
-            $allVisaData[strtolower($value1->country_name)][$value->visa_type_name]['USD']['superrush'] = number_format($value1->super_ru_usd_price,2);
-            foreach ($currencyRate as $key2 => $value2) {
-              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['standard']   = number_format($value2->rate * $value1->st_usd_price,2);
-              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['rush']      = number_format($value2->rate * $value1->ru_usd_price,2);
-              $allVisaData[strtolower($value1->country_name)][$value->visa_type_name][strtoupper($value2->code)]['superrush'] = number_format($value2->rate * $value1->super_ru_usd_price,2);
 
-            }
+      $tempVisaTable = DB::table('visa_type_detail')
+                      ->where('visa_country_name',$default_visa)
+                      ->where('language_id',env('APP_LANG'))
+                      ->get();
 
-         }
+      foreach ($tempVisaTable as $key => $value) {
+
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = number_format($value->standard_usd_price,2);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = number_format($value->rush_usd_price,2);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = number_format($value->express_usd_price,2);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = number_format($value->govt_fee,2);
+
+        foreach ($currencyRate as $key2 => $value2) {
+
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+
+        }
+
       }
+
       $isAvailable = false;
-      if(array_key_exists(strtolower($visaData->country_name),$allVisaData)){
+      if(isset($tempVisaTable[0])){
         $isAvailable = true;
       }
-      // exit(print_r($allVisaData));
-      return view('front.visa.page',compact('visaData','visaFaqs','allVisaData','isAvailable','visaProcessingType'));
+
+      return view('front.visa.page',compact('visaData','visaFaqs','allVisaData','isAvailable','visaProcessingType','default_visa','default_nationality'));
 
     }
 
