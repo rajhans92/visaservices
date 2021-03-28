@@ -77,6 +77,7 @@ class VisaController extends Controller
            'visa_nationality_title' => $request['visa_nationality_title'],
            'visa_type_title' => $request['visa_type_title'],
            'visa_popular_title' => $request['visa_popular_title'],
+           'payment_method' => $request['payment_method'],
            'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
            'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
            'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
@@ -125,6 +126,7 @@ class VisaController extends Controller
         'visa_pages.visa_popular_title as visa_popular_title',
         'visa_pages.visa_content_1 as visa_content_1',
         'visa_pages.visa_content_2 as visa_content_2',
+        'visa_pages.payment_method as payment_method',
         'route_visa.visa_url as visa_url'
         )
       ->where('visa_pages.language_id',env('APP_LANG'))
@@ -142,6 +144,7 @@ class VisaController extends Controller
           'visa_nationality_title' => $request['visa_nationality_title'],
           'visa_type_title' => $request['visa_type_title'],
           'visa_popular_title' => $request['visa_popular_title'],
+          'payment_method' => $request['payment_method'],
           'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
           'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
           'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
@@ -196,6 +199,7 @@ class VisaController extends Controller
         'visa_pages.isPassportDocRequired as isPassportDocRequired',
         'visa_pages.isApplicantPhotoRequired as isApplicantPhotoRequired',
         'visa_pages.isOtherDocRequired as isOtherDocRequired',
+        'visa_pages.payment_method as payment_method',
         'route_visa.visa_url as visa_url'
         )
       ->where('visa_pages.language_id',env('APP_LANG'))

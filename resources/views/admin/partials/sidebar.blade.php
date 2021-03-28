@@ -47,14 +47,6 @@
                         </span>
                     </a>
                 </li>
-                <li class="{{ $request->segment(2) == 'visa' ? 'active active-sub' : '' }}">
-                    <a href="{{route('admin.visa.index')}}">
-                        <i class="fa fa-user"></i>
-                        <span class="title">
-                            Visa Page
-                        </span>
-                    </a>
-                </li>
 
                 </ul>
             </li>
@@ -88,6 +80,15 @@
                 </span>
               </a>
               <ul class="treeview-menu">
+
+                <li class="{{ $request->segment(2) == 'visa' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.visa.index')}}">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Visa Page
+                        </span>
+                    </a>
+                </li>
                 <li class="{{ $request->segment(2) == 'visa-application' ? 'active active-sub' : '' }}">
                   <a href="{{route('admin.application.index')}}">
                     <i class="fa fa-briefcase"></i>

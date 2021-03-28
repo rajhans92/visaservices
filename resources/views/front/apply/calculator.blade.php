@@ -724,7 +724,7 @@ $(function(){
       let totalApplicantAmount = 0.00;
       let totalGovtAmount = 0.00;
 
-      console.log(visaTypeId,nationality,countCal,visaProcessingType);
+      // console.log(visaTypeId,nationality,countCal,visaProcessingType);
       if(visaTypeId.length > 0 && nationality.length >0){
         totalApplicantAmount = parseFloat(allVisaDataAlter[nationality.toLowerCase()][visaTypeId][default_currency_cal][visaProcessingType.toLowerCase()]) * countCal;
 

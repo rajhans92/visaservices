@@ -10,6 +10,7 @@ $this->get("/api/country-list/{country}", 'Front\LandingController@apiCountryLis
 $this->get("/apply-online/{url}", 'Front\VisaController@applyOnline');
 $this->post("/apply-online", 'Front\VisaController@applyOnlineSave')->name('apply.save');
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
+$this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReviewSave')->name('apply.reviewSave');
 
 if(!empty($pages)){
   foreach ($pages as $page){

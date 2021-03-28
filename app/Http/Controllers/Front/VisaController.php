@@ -316,7 +316,66 @@ class VisaController extends Controller
 
     public function applyOnlineReview($slug){
 
+      $visaDetail = DB::table('visa_apply_detail')->where('slug',$slug)->where('payment_status',0)->first();
 
-      return view('front.apply.review');
+      if(!isset($visaDetail->id)){
+        return redirect('/');
+      }
+      $default_currency = env('APP_DEFAULT_CURRENCY');
+
+      $visaPages = DB::table('visa_pages')->where('country_name',$visaDetail->visa_country_name)->first();
+
+      $visaApplicantDetail = DB::table('visa_apply_applicant')->where('order_id',$visaDetail->order_id)->get();
+
+      $currencyRateTemp = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
+      $currencyRate = ["USD"=>1];
+      foreach ($currencyRateTemp as $key => $value) {
+         $currencyRate[strtoupper($value->code)] = $value->rate;
+      }
+
+      return view('front.apply.review',compact('currencyRate','visaDetail','visaPages','visaApplicantDetail','slug','default_currency'));
+    }
+
+    public function applyOnlineReviewSave(Request $request,$slug){
+      $visaDetail = DB::table('visa_apply_detail')->where('slug',$slug)->where('payment_status',0)->first();
+      // exit(print_r($request->all()));
+      if(!isset($visaDetail->id)){
+        return redirect('/');
+      }
+      $visaApplicantDetail = DB::table('visa_apply_applicant')->where('order_id',$visaDetail->order_id)->get();
+
+      foreach ($visaApplicantDetail as $key => $value) {
+          $passportDoc = "";
+          $photoDoc = "";
+          $otherDoc = "";
+          if ($request->hasFile('upload_passport'.$value->id)) {
+              $images = $request['upload_passport'.$value->id]->getClientOriginalName();
+              $images = $value->id.time().'_passport_'.$images; // Add current time before image name
+              $request['upload_passport'.$value->id]->move(public_path('images/application/file'),$images);
+              $passportDoc = $images;
+          }
+          if ($request->hasFile('upload_photo'.$value->id)) {
+              $images = $request['upload_photo'.$value->id]->getClientOriginalName();
+              $images = $value->id.time().'_photo_'.$images; // Add current time before image name
+              $request['upload_photo'.$value->id]->move(public_path('images/application/photo'),$images);
+              $photoDoc = $images;
+          }
+          if ($request->hasFile('upload_other'.$value->id)) {
+              $images = $request['upload_other'.$value->id]->getClientOriginalName();
+              $images = $value->id.time().'_photo_'.$images; // Add current time before image name
+              $request['upload_other'.$value->id]->move(public_path('images/application/other'),$images);
+              $otherDoc = $images;
+          }
+          DB::table('visa_apply_applicant')->where('id',$value->id)->update([
+              "passport_file" => $passportDoc,
+              "applicant_photo" => $photoDoc,
+              "other_files" => $otherDoc
+          ]);
+      }
+      DB::table('visa_apply_detail')->where('order_id',$visaDetail->order_id)->update([
+        "payment_status" => isset($request['payment_method']) ? $request['payment_method'] : 0
+      ]);
+
+      return view('front.apply.thankyou',compact('visaDetail','slug'));
     }
 }

@@ -147,8 +147,15 @@
                 <label><input type="checkbox" name="isOtherDocRequired" value="1">Other Document</label>
               </div>
             </div>
+            <div class="col-xs-4 form-group">
+              {!! Form::label('payment_method', 'Payment Method*', ['class' => 'control-label']) !!}
+              <select class="form-control selectpicker" required name="payment_method" value="" >
+                  <option value="" >Select</option>
+                  <option value="0" >Contact Us</option>
+                  <option value="1" >Online Payment</option>
+              </select>
+            </div>
           </div>
-
 
         </div>
     </div>
