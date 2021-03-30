@@ -49,7 +49,7 @@ class CountryController extends Controller
     public function createCountry(){
       $countryData = DB::table('country')->select('country_name')->where('country.language_id',env('APP_LANG'))
       ->get();
-      return view('admin.Country.create',compact('countryData'));
+      return view('admin.country.create',compact('countryData'));
     }
 
     public function storeCountry(Request $request){
@@ -152,7 +152,7 @@ class CountryController extends Controller
       foreach ($country as $key => $value) {
         $countrySelectedlist[] = $value->country_name_many;
        }
-      return view('admin.Country.edit',compact('countryData','countrylist','countrySelectedlist'));
+      return view('admin.country.edit',compact('countryData','countrylist','countrySelectedlist'));
     }
 
     public function editStatusCountry(Request $request){
