@@ -194,9 +194,9 @@
                   @endforeach
                 </select>
             <span id="totalAmount">{{$visaDetail->total_payment}}</span></span></h4>
-            <button class="btn" type="submit">{{$visaPages->payment_method == 1 ? "Online Pay" : "Contact Us"}}</button>
+            <button class="btn" type="submit">{{isset($visaPages->payment_method) && $visaPages->payment_method == 1 ? "Online Pay" : "Contact Us"}}</button>
         </div>
-        <input type="hidden" name="payment_method" value="{{$visaPages->payment_method}}"/>
+        <input type="hidden" name="payment_method" value="{{isset($visaPages->payment_method) ? $visaPages->payment_method : 0}}"/>
       </form>
       </div>
     </div>

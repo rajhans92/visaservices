@@ -36,7 +36,7 @@
                         <td>{{$val->type_of_visa}}</td>
                         <td>{{$val->visa_process_type}}</td>
                         <td>{{date('d-m-Y',strtotime($val->submission_date))}}</td>
-                        <td>{{$val->payment_status == 1 ? "Paid":"Panding"}}</td>
+                        <td>{{$val->payment_status == 1 ? "Paid": $val->payment_status == 2 ? "Contact Us" : "Panding"}}</td>
                         <td>
                           <a href="{{ route('admin.application.detail',[$val->id]) }}" class="btn btn-xs btn-info">Show DetailS</a>
                         </td>

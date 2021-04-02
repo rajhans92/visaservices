@@ -56,7 +56,8 @@
                           <th>Total Payment</th>
                           <td>{{ $visaData->total_payment }}</td>
                           <th>Payment Status</th>
-                          <td>{{ $visaData->payment_status == 1 ? "Paid" : "Panding" }}</td>
+                          <td>{{$visaData->payment_status == 1 ? "Paid": $visaData->payment_status == 2 ? "Contact Us" : "Panding"}}
+                          </td>
 
                         </tr>
                     </table>
@@ -112,13 +113,20 @@
                         <tr>
                           @if($val->passport_file != "")
                             <th>Passport File</th>
-                            <td><a href="{{url('images/application/file/'.$val->passport_file)}}" download="passport_file"></td>
+                            <td><a href="{{url('images/application/file/'.$val->passport_file)}}" download="passport_file">Download</a></td>
                           @endif
                           @if($val->applicant_photo != "")
                             <th>Passport Photo</th>
-                            <td><img src="{{url('images/application/photo/'.$val->applicant_photo)}}" onerror="this.src='{{ url('images/default.png') }}'" width="100" height="100"/></td>
+                            <td>
+                              <a href="{{url('images/application/photo/'.$val->applicant_photo)}}" download="passport_photo">Download</a></td>
                           @endif
 
+                        </tr>
+                        <tr>
+                          @if($val->passport_file != "")
+                            <th>Other File</th>
+                            <td><a href="{{url('images/application/other/'.$val->other_files)}}" download="other_file">Download</a></td>
+                          @endif
                         </tr>
                     </table>
 
