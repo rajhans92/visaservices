@@ -45,6 +45,13 @@ class VisaController extends Controller
         'visa_pages.visa_nationality_title as visa_nationality_title',
         'visa_pages.visa_type_title as visa_type_title',
         'visa_pages.visa_popular_title as visa_popular_title',
+        'visa_pages.whatsapp_number as whatsapp_number',
+        'visa_pages.whatsapp_status as whatsapp_status',
+        'visa_pages.call_number as call_number',
+        'visa_pages.call_status as call_status',
+        'visa_pages.meta_title as meta_title',
+        'visa_pages.meta_description as meta_description',
+        'visa_pages.meta_keywords as meta_keywords',
         'route_visa.visa_url as visa_url'
         )
       ->where('visa_pages.language_id',env('APP_LANG'))

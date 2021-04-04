@@ -78,6 +78,13 @@ class VisaController extends Controller
            'visa_type_title' => $request['visa_type_title'],
            'visa_popular_title' => $request['visa_popular_title'],
            'payment_method' => $request['payment_method'],
+           'meta_title' => $request['meta_title'],
+           'meta_description' => $request['meta_description'],
+           'meta_keywords' => $request['meta_keywords'],
+           'call_status' => $request['call_status'],
+           'whatsapp_number' => $request['whatsapp_number'],
+           'whatsapp_status' => $request['whatsapp_status'],
+           'call_number' => $request['call_number'],
            'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
            'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
            'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
@@ -145,6 +152,13 @@ class VisaController extends Controller
           'visa_type_title' => $request['visa_type_title'],
           'visa_popular_title' => $request['visa_popular_title'],
           'payment_method' => $request['payment_method'],
+          'meta_title' => $request['meta_title'],
+          'meta_description' => $request['meta_description'],
+          'meta_keywords' => $request['meta_keywords'],
+          'call_status' => $request['call_status'],
+          'whatsapp_number' => $request['whatsapp_number'],
+          'whatsapp_status' => $request['whatsapp_status'],
+          'call_number' => $request['call_number'],
           'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
           'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
           'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0
@@ -200,6 +214,13 @@ class VisaController extends Controller
         'visa_pages.isApplicantPhotoRequired as isApplicantPhotoRequired',
         'visa_pages.isOtherDocRequired as isOtherDocRequired',
         'visa_pages.payment_method as payment_method',
+        'visa_pages.meta_title as meta_title',
+        'visa_pages.meta_description as meta_description',
+        'visa_pages.meta_keywords as meta_keywords',
+        'visa_pages.whatsapp_number as whatsapp_number',
+        'visa_pages.whatsapp_status as whatsapp_status',
+        'visa_pages.call_number as call_number',
+        'visa_pages.call_status as call_status',
         'route_visa.visa_url as visa_url'
         )
       ->where('visa_pages.language_id',env('APP_LANG'))

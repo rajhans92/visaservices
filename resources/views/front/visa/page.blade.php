@@ -1,5 +1,9 @@
 @extends('front.layouts.app')
 
+@section('title', $visaData->meta_title)
+@section('meta_keywords', $visaData->meta_keywords)
+@section('meta_description', $visaData->meta_description)
+
 @section('content')
 
 <section class="register-section blogs-section">
@@ -7,20 +11,23 @@
   <div class="inner-content">
       <div class="right-content">
           <h1>{{$visaData->visa_heading}}</h1>
-          <p class="slogan">{{$visaData->visa_content_1}}</p>
+          <p class="slogan">{!! $visaData->visa_content_1 !!}</p>
           @if($visaData->visa_landing_img != "")
             <div class="_img">
               <img src="{{url('images/visa/'.$visaData->visa_landing_img)}}" />
             </div>
           @endif
           <div class="_des">
-          <p>{{$visaData->visa_content_2}}</p>
+          <p>{!! $visaData->visa_content_2 !!}</p>
           @if($isAvailable)
             <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
           @endif
          </div>
          <h1 style="margin-top: 80px;">{{$visaData->visa_faqs}}</h1>
          <div class="accordion faq-section" id="accordionExample">
+           <?php
+            $faq = [];
+           ?>
            @foreach($visaFaqs as $key => $val)
              <div class="accordion-item">
                <h2 class="accordion-header" id="heading{{$val->id}}">
@@ -30,14 +37,24 @@
                </h2>
                <div id="collapse{{$val->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$val->id}}" data-bs-parent="#accordionExample">
                  <div class="accordion-body">
-                  {{$val->answer}}
+                  {!! $val->answer !!}
                 </div>
                </div>
              </div>
+             <?php
+              $faq[] = [
+                 "@type"=>"Question",
+                 "name"=>$val->question,
+                 "acceptedAnswer"=>[
+                   "@type"=>"Answer",
+                   "text"=> $val->answer
+                 ]
+              ];
+             ?>
            @endforeach
          </div>
       </div>
-      @if($isAvailable)
+      @if($isAvailable && isset($allVisaData[strtolower($default_nationality)]))
       <div class="left-sidebar">
           <div class="box-content">
              <div class="form-group">
@@ -73,17 +90,13 @@
 
 </section>
 
-<!-- <div class="mobile-apply-btn">
-    <span><b>2000</b> /Applicant</span>
-    <button class="btn">Apply</button>
-</div> -->
-
 
 @stop
 @section('javascript')
 
 <script type="text/javascript">
 let datSet = <?php echo json_encode($allVisaData); ?>;
+let faq = <?php echo json_encode($faq); ?>;
 $(function(){
   $(document).on("change","#nationality",function(){
      let nationality = $(this).val();
@@ -101,17 +114,23 @@ $(function(){
      }
   });
   $(document).on("change",".currency",function(){
-    console.log($(this).val());
      let currency = $(this).val();
      let nationality = $("#nationality").val();
      let table = $('option:selected', this).attr('table');
      let count = $('option:selected', this).attr('count');
-     console.log(count,table,currency,nationality);
      if(nationality.length > 0 && currency.length > 0 && table.length > 0 && count.length > 0){
         $("#"+count).text(datSet[nationality.toLowerCase()][table][currency]['{{env("APP_VISA_TYPE")}}'.toLowerCase()]);
      }
   });
 });
 
+</script>
+<script type="application/ld+json">
+   {
+       "@context":"https://schema.org",
+       "@type":"FAQPage",
+       "mainEntity":faq
+
+   }
 </script>
 @endsection

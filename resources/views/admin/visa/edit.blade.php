@@ -70,24 +70,24 @@
                 @endif
             </div>
             <div class="col-xs-4 form-group">
-                {!! Form::label('visa_content_1', 'Visa Page Content 1*', ['class' => 'control-label']) !!}
-                {!! Form::text('visa_content_1', old('visa_content_1'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-                <p class="help-block"></p>
-                @if($errors->has('visa_content_1'))
-                    <p class="help-block">
-                        {{ $errors->first('visa_content_1') }}
-                    </p>
-                @endif
+              {!! Form::label('visa_type_title', 'Visa Type Title*', ['class' => 'control-label']) !!}
+              {!! Form::text('visa_type_title', old('visa_type_title'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+              <p class="help-block"></p>
+              @if($errors->has('visa_type_title'))
+              <p class="help-block">
+                {{ $errors->first('visa_type_title') }}
+              </p>
+              @endif
             </div>
             <div class="col-xs-4 form-group">
-                {!! Form::label('visa_content_2', 'Visa Page Content 2*', ['class' => 'control-label']) !!}
-                {!! Form::text('visa_content_2', old('visa_content_2'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-                <p class="help-block"></p>
-                @if($errors->has('visa_content_2'))
-                    <p class="help-block">
-                        {{ $errors->first('visa_content_2') }}
-                    </p>
-                @endif
+              {!! Form::label('visa_popular_title', 'Visa Popular Title*', ['class' => 'control-label']) !!}
+              {!! Form::text('visa_popular_title', old('visa_popular_title'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+              <p class="help-block"></p>
+              @if($errors->has('visa_popular_title'))
+              <p class="help-block">
+                {{ $errors->first('visa_popular_title') }}
+              </p>
+              @endif
             </div>
           </div>
 
@@ -123,30 +123,96 @@
                 @endif
             </div>
           </div>
-
           <div class="row">
             <div class="col-xs-4 form-group">
-              {!! Form::label('visa_type_title', 'Visa Type Title*', ['class' => 'control-label']) !!}
-              {!! Form::text('visa_type_title', old('visa_type_title'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-              <p class="help-block"></p>
-              @if($errors->has('visa_type_title'))
-              <p class="help-block">
-                {{ $errors->first('visa_type_title') }}
-              </p>
-              @endif
+                {!! Form::label('meta_title', 'Meta Title*', ['class' => 'control-label']) !!}
+                {!! Form::text('meta_title', old('meta_title'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('meta_title'))
+                    <p class="help-block">
+                        {{ $errors->first('meta_title') }}
+                    </p>
+                @endif
             </div>
             <div class="col-xs-4 form-group">
-              {!! Form::label('visa_popular_title', 'Visa Popular Title*', ['class' => 'control-label']) !!}
-              {!! Form::text('visa_popular_title', old('visa_popular_title'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-              <p class="help-block"></p>
-              @if($errors->has('visa_popular_title'))
-              <p class="help-block">
-                {{ $errors->first('visa_popular_title') }}
-              </p>
-              @endif
+                {!! Form::label('meta_description', 'Meta Description*', ['class' => 'control-label']) !!}
+                {!! Form::text('meta_description', old('meta_description'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('meta_description'))
+                    <p class="help-block">
+                        {{ $errors->first('meta_description') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('meta_keywords', 'Meta Keywords', ['class' => 'control-label']) !!}
+                {!! Form::text('meta_keywords', old('meta_keywords'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('meta_keywords'))
+                    <p class="help-block">
+                        {{ $errors->first('meta_keywords') }}
+                    </p>
+                @endif
             </div>
           </div>
           <div class="row">
+            <div class="col-xs-4 form-group">
+                {!! Form::label('whatsapp_number', 'Whatsapp Number*', ['class' => 'control-label']) !!}
+                {!! Form::text('whatsapp_number', old('whatsapp_number'), ['class' => 'form-control',"maxlength"=>14, 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('whatsapp_number'))
+                    <p class="help-block">
+                        {{ $errors->first('whatsapp_number') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('whatsapp_status', 'Show Whatsapp No.*', ['class' => 'control-label']) !!}
+                <select name="whatsapp_status" class="form-control whatsapp_status">
+                   <option value="0" {{$visaData->whatsapp_status == 0 ? "selected":""}}>No</option>
+                   <option value="1" {{$visaData->whatsapp_status == 1 ? "selected":""}}>Yes</option>
+                </select>
+                <p class="help-block"></p>
+                @if($errors->has('whatsapp_status'))
+                    <p class="help-block">
+                        {{ $errors->first('whatsapp_status') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('call_number', 'Support Number*', ['class' => 'control-label']) !!}
+                {!! Form::text('call_number', old('call_number'), ['class' => 'form-control','maxlength'=>'14', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('call_number'))
+                    <p class="help-block">
+                        {{ $errors->first('call_number') }}
+                    </p>
+                @endif
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4 form-group">
+                {!! Form::label('call_status', 'Show Support No.*', ['class' => 'control-label']) !!}
+                <select name="call_status" class="form-control whatsapp_status">
+                   <option value="0" {{$visaData->call_status == 0 ? "selected":""}}>No</option>
+                   <option value="1" {{$visaData->call_status == 1 ? "selected":""}}>Yes</option>
+                </select>
+                <p class="help-block"></p>
+                @if($errors->has('call_status'))
+                    <p class="help-block">
+                        {{ $errors->first('call_status') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+              {!! Form::label('payment_method', 'Payment Method*', ['class' => 'control-label']) !!}
+              <select class="form-control selectpicker" required name="payment_method" value="" >
+                  <option value="">Select</option>
+                  <option value="0" {{$visaData->payment_method == 0 ? "selected" : ""}}>Contact Us</option>
+                  <option value="1" {{$visaData->payment_method == 1 ? "selected" : ""}}>Online Payment</option>
+              </select>
+            </div>
             <div class="col-xs-4 form-group">
               {!! Form::label('reuired_doc', 'Required Documents*', ['class' => 'control-label']) !!}
               <div class="checkbox">
@@ -159,13 +225,27 @@
                 <label><input type="checkbox" name="isOtherDocRequired" {{$visaData->isOtherDocRequired == 1 ? "checked" :""}} value="1">Other Document</label>
               </div>
             </div>
-            <div class="col-xs-4 form-group">
-              {!! Form::label('payment_method', 'Payment Method*', ['class' => 'control-label']) !!}
-              <select class="form-control selectpicker" required name="payment_method" value="" >
-                  <option value="">Select</option>
-                  <option value="0" {{$visaData->payment_method == 0 ? "selected" : ""}}>Contact Us</option>
-                  <option value="1" {{$visaData->payment_method == 1 ? "selected" : ""}}>Online Payment</option>
-              </select>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 form-group">
+                {!! Form::label('visa_content_1', 'Visa Page Content 1*', ['class' => 'control-label']) !!}
+                {!! Form::textarea('visa_content_1', old('visa_content_1'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('visa_content_1'))
+                    <p class="help-block">
+                        {{ $errors->first('visa_content_1') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-6 form-group">
+                {!! Form::label('visa_content_2', 'Visa Page Content 2*', ['class' => 'control-label']) !!}
+                {!! Form::textarea('visa_content_2', old('visa_content_2'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('visa_content_2'))
+                    <p class="help-block">
+                        {{ $errors->first('visa_content_2') }}
+                    </p>
+                @endif
             </div>
           </div>
         </div>

@@ -27,7 +27,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
               {!! Form::label('answer', 'Visa Faq Answer*', ['class' => 'control-label']) !!}
-              {!! Form::text('answer', old('answer'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+              {!! Form::textarea('answer', old('answer'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
               <p class="help-block"></p>
               @if($errors->has('answer'))
               <p class="help-block">

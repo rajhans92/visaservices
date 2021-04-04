@@ -1,7 +1,8 @@
 <meta charset="utf-8">
-<title>
-      {{ env('APP_NAME') }}
-</title>
+<title>@yield('title')</title>
+<meta name="description" content="@yield('meta_description')">
+<meta name="keywords" content="@yield('meta_keywords')">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="{{ url('images/logo/logo.jpg') }}" rel="icon" type="image/png">
 <link href="{{ url('images/favicon.png') }}" rel="icon">
