@@ -26,7 +26,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $visaData = DB::table("visa_apply_detail")
+        $visaData = DB::table("visa_apply_detail")->orderBy('id', 'DESC')
         ->get();
         return view('admin.application.list',compact('visaData'));
     }
@@ -46,4 +46,12 @@ class ApplicationController extends Controller
 
         return view('admin.application.show',compact('visaData','visaApplicant'));
     }
+
+    public function contactList()
+    {
+        $visaData = DB::table("visa_contact_us")->orderBy('id', 'DESC')
+        ->get();
+        return view('admin.application.contactList',compact('visaData'));
+    }
+
 }

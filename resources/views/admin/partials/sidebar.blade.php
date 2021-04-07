@@ -97,6 +97,14 @@
                     </span>
                   </a>
                 </li>
+                <li class="{{ $request->segment(2) == 'visa-contact' ? 'active active-sub' : '' }}">
+                  <a href="{{route('admin.application.contactList')}}">
+                    <i class="fa fa-briefcase"></i>
+                    <span class="title">
+                      Contact Query
+                    </span>
+                  </a>
+                </li>
               </ul>
             </li>
 

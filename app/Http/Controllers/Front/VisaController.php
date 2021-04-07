@@ -42,6 +42,7 @@ class VisaController extends Controller
         'visa_pages.visa_content_2 as visa_content_2',
         'visa_pages.visa_main_button as visa_main_button',
         'visa_pages.visa_faqs as visa_faqs',
+        'visa_pages.payment_method as payment_method',
         'visa_pages.visa_nationality_title as visa_nationality_title',
         'visa_pages.visa_type_title as visa_type_title',
         'visa_pages.visa_popular_title as visa_popular_title',
@@ -383,7 +384,13 @@ class VisaController extends Controller
         "payment_status" => isset($request['payment_method']) ? $request['payment_method'] : 0
       ]);
 
-      return view('front.apply.thankyou',compact('visaDetail','slug'));
+      $visaPage = DB::table('visa_pages')->where('country_name', strtolower($visaDetail->visa_country_name))->first();
+      $applyData = DB::table('visa_apply_page_content')->where('visa_id', $visaPage->id)->first();
+      if(isset($applyData->id)){
+        $applyData->thank_you_content = str_replace('{{order_id}}',$visaDetail->order_id,$applyData->thank_you_content);
+      }
+
+      return view('front.apply.thankyou',compact('applyData','slug'));
     }
 
     public function applyOnlineEdit(Request $request,$url,$slug)
@@ -619,4 +626,19 @@ class VisaController extends Controller
         return redirect()->route('apply.review', ['slug' => $slug]);
     }
 
+
+    public function applyContactUs(Request $request){
+        $data = ["status"=>true];
+        DB::table('visa_contact_us')->insert([
+            'language_id' => env('APP_LANG'),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'contact_number' => $request['mobile'],
+            'message' => $request['msg'],
+            'visa_country' => strtolower($request['visa_country']),
+            'nationality' => strtolower($request['nationality']),
+            'submission_date' => date('Y-m-d H:i:s')
+        ]);
+        return json_encode($data);
+    }
 }

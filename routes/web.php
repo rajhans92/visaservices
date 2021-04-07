@@ -13,6 +13,7 @@ $this->post("/apply-online-update/{url}/{slug}", 'Front\VisaController@applyOnli
 $this->get("/apply-online/{url}/{slug}", 'Front\VisaController@applyOnlineEdit')->name('apply.edit');
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
 $this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReviewSave')->name('apply.reviewSave');
+$this->post("/apply-contact-us", 'Front\VisaController@applyContactUs')->name('apply.cotactUs');
 
 if(!empty($pages)){
   foreach ($pages as $page){
@@ -46,6 +47,10 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/visa/edit/{id}', 'Admin\VisaController@editVisa')->name('visa.edit');
     Route::put('/visa/edit/{id}', 'Admin\VisaController@updateVisa')->name('visa.edit');
     Route::delete('/visa/destroy/{id}', 'Admin\VisaController@destroyVisa')->name('visa.destroy');
+
+    Route::get('/visa/apply/{visa_id}', 'Admin\VisaController@applyDetailList')->name('visa.applyDetailList');
+    Route::post('/visa/apply/{visa_id}', 'Admin\VisaController@applyDetailSave')->name('visa.applyDetailSave');
+
 
     Route::get('/visa/faq/{id}', 'Admin\VisaController@faqVisa')->name('visa.faqList');
     Route::get('/visa/faq-create/{id}', 'Admin\VisaController@faqCreateVisa')->name('visa.faqCreate');
@@ -81,6 +86,8 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
 
     Route::get('/visa-application/list', 'Admin\ApplicationController@index')->name('application.index');
     Route::get('/visa-application/detail/{application_id}', 'Admin\ApplicationController@applicationDetail')->name('application.detail');
+
+    Route::get('/visa-contact/list', 'Admin\ApplicationController@contactList')->name('application.contactList');
 
 
     Route::get('/home-page', 'Admin\HomeController@index')->name('home.index');

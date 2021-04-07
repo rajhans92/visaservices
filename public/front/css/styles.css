@@ -103,7 +103,7 @@ ul {
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
-.navbar-light .navbar-nav .nav-link.active, 
+.navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .show>.nav-link {
   color: rgb(0 176 173);
 }
@@ -1789,7 +1789,7 @@ html .register-section:before {
   position: relative;
 }
 
-.general-info-main .form-group input, 
+.general-info-main .form-group input,
 .general-info-main .form-group select {
   height: 40px;
   width: 100%;
@@ -1973,7 +1973,7 @@ html .register-section:before {
     -moz-user-select: none;
     -ms-user-select: none;
 }
-.calculator-inner .qty input{  
+.calculator-inner .qty input{
     border: 0;
     width: 2%;
 }
@@ -2030,13 +2030,50 @@ html .register-section:before {
     padding: 0;
     line-height: 0;
 }
-         
+.whatsapp-btn > a {
+    position: fixed;
+    right: 0;
+    top: 25%;
+    background: #4ac85b;
+    color: #fff;
+    padding: 10px;
+    font-size: 20px;
+    display: none;
+}
+.contact-form .from-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contact-form .from-group {
+    margin-bottom: 15px;
+}
+
+.contact-form .from-group input[type=text],.contact-form .from-group input[type=email], .contact-form .from-group textarea {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width: 100%;
+    padding: 8px;
+}
+
+.contact-form .from-group input[type=submit] {
+    padding: 7px 23px;
+}
+
+.contact-form {
+    padding: 25px;
+}
+
 /* RESPONSIVE */
 @media(max-width:767px) {
   .banner-section h1,
   .blogs-section:before {
     display: none;
   }
+  .whatsapp-btn > a {
+  display:block;
+}
 .modal-title{
     font-size:1.1rem;
 }
@@ -2260,7 +2297,7 @@ html .register-section:before {
     background-position: center center;
   }
 
-  .why-choose-section .row, 
+  .why-choose-section .row,
 	.app-section .row {
     display: inline-block;
     width: 100%;
@@ -2275,7 +2312,7 @@ html .register-section:before {
     display: none;
   }
 
-  .why-choose-section .container, 
+  .why-choose-section .container,
 	.app-section .container,
 	.visa-section .container {
     padding-left: 24px;
@@ -2436,13 +2473,13 @@ html .register-section:before {
     margin: 0 0 20px !important;
   }
 
-  .about-content-section .list-with-img li:nth-child(3n+1) .cont, 
+  .about-content-section .list-with-img li:nth-child(3n+1) .cont,
 .about-content-section .list-with-img li:nth-child(3n+3) .cont,
 .list-two li:nth-child(3n+2) .cont {
     order: 2;
   }
 
-  .about-content-section .list-with-img li:nth-child(3n+1) .img, 
+  .about-content-section .list-with-img li:nth-child(3n+1) .img,
 .about-content-section .list-with-img li:nth-child(3n+3) .img,
 .list-two  li:nth-child(3n+2) .img {
     order: 1;
@@ -2575,7 +2612,7 @@ html .register-section:before {
   }
 
   .navbar-light .navbar-toggler-icon {
-    background-image: url(../images/menu.svg);
+    background-image: url(../../images/menu.svg);
     margin-top: 5px;
   }
 

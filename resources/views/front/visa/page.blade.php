@@ -20,7 +20,11 @@
           <div class="_des">
           <p>{!! $visaData->visa_content_2 !!}</p>
           @if($isAvailable)
-            <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
+            @if(isset($visaData->payment_method) && $visaData->payment_method == 1)
+              <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
+            @else
+              <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
+            @endif
           @endif
          </div>
          <h1 style="margin-top: 80px;">{{$visaData->visa_faqs}}</h1>
@@ -69,7 +73,11 @@
                   <span><img src="images/rush.png">{{$visaData->visa_type_title}}:</span>
                   <span><b>{{$visaProcessingType->duration}} {{$visaProcessingType->duration_type}}</b></span>
             </div>
+            @if(isset($visaData->payment_method) && $visaData->payment_method == 1)
              <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
+            @else
+              <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
+            @endif
           </div>
           <h5 class="top-articles-heading">{{$visaData->visa_popular_title}}</h5>
           <ul class="top-articles" id="currency">
@@ -89,15 +97,98 @@
   </div>
 
 </section>
+<!-- Whatsapp Btn -->
+@if(isset($visaData->whatsapp_status) && $visaData->whatsapp_status == 1 && isset($visaData->whatsapp_number) && $visaData->whatsapp_number != "")
+  <div class="whatsapp-btn">
+      <a href="tel:https://api.whatsapp.com/send?phone={{$visaData->whatsapp_number}}&text=Hi, I contacted you Through your website."><i class="fab fa-whatsapp"></i></a>
+  </div>
+@endif
+<!-- CONTACT MODAL -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Contact Us</h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body contact-form">
+        <form>
+            <div class="from-group">
+                <label>Name</label>
+                <input type="text" required  id="name"/>
+            </div>
+            <div class="from-group">
+                <label>Email</label>
+                <input type="email" required id="email"/>
+            </div>
+            <div class="from-group">
+                <label>Mobile</label>
+                <input type="text"  maxlength="14" id="mobile"/>
+            </div>
+            <div class="from-group">
+                <label>Message</label>
+                <textarea rows="1" columns="4" id="msg"></textarea>
+            </div>
+             <div class="from-group">
+                 <input type="button" id="submitBtn" class="btn" value="Submit">
+            </div>
+            <div class="from-group" id="msgSection">
 
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 @stop
 @section('javascript')
 
 <script type="text/javascript">
+function contactBox() {
+  $('#contactModal').modal('show');
+}
+function closeModal() {
+  $('#contactModal').modal('hide');
+}
 let datSet = <?php echo json_encode($allVisaData); ?>;
 let faq = <?php echo json_encode($faq); ?>;
 $(function(){
+  $("#submitBtn").click(function(){
+        let name = $("#name").val();
+        let email = $("#email").val();
+        let mobile = $("#mobile").val();
+        let msg = $("#msg").val();
+        let visa_country = "{{$default_visa}}";
+        let nationality = "{{$default_nationality}}";
+        if(name.length > 0 && email.length > 0 && mobile.length > 0 && msg.length > 0){
+          $.ajax({
+            type: "POST",
+            url: '{{url("/apply-contact-us")}}',
+            data: {
+              "_token": "{{ csrf_token() }}",
+              "name":name,"email":email,"mobile":mobile,"msg":msg,"visa_country":visa_country,"nationality":nationality
+            },
+            success: function(data) {
+              returnJsonData = JSON.parse(data);
+              if(returnJsonData.status == true){
+                $('#contactModal').modal('hide');
+                  $("#name").val("");
+                  $("#email").val("");
+                  $("#mobile").val("");
+                  $("#msg").val("");
+                  alert("Thank You. We contact You Soon.");
+              }else {
+                $("#msgSection").html('<label style="text-align:center;color:red;">Something went wrong!</label>');
+              }
+            }
+          });
+        }else{
+          $("#msgSection").html('<label style="text-align:center;color:red;">All fields are required.</label>');
+        }
+  });
   $(document).on("change","#nationality",function(){
      let nationality = $(this).val();
      if(nationality.length > 0){

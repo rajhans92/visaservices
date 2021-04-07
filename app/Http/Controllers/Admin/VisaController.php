@@ -107,6 +107,11 @@ class VisaController extends Controller
         'visa_url' => $request['visa_url']
       ]);
 
+      DB::table('visa_apply_page_content')->insert([
+        'language_id' => env('APP_LANG'),
+        'visa_id' => $visa_id
+      ]);
+
       return redirect()->route('admin.visa.index');
     }
 
@@ -242,8 +247,19 @@ class VisaController extends Controller
 
         DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id', $request->id)->delete();
 
+        $applyData = DB::table('visa_apply_page_content')->where('visa_id', $request->id)->first();
+
+        DB::table('visa_apply_page_content')->where('visa_id', $request->id)->limit(1)
+        ->delete();
+
         if($visaData->visa_landing_img != ""){
           $oldImagePath = public_path('images/visa/').$visaData->visa_landing_img;
+          if (file_exists($oldImagePath)) {
+            @unlink($oldImagePath);
+          }
+        }
+        if($applyData->thank_you_img != ""){
+          $oldImagePath = public_path('images/visa/apply/').$applyData->thank_you_img;
           if (file_exists($oldImagePath)) {
             @unlink($oldImagePath);
           }
@@ -300,4 +316,37 @@ class VisaController extends Controller
       return redirect()->route('admin.visa.faqList',$id);
 
     }
+    public function applyDetailList($visa_id){
+      $applyData = DB::table('visa_apply_page_content')->where('visa_id', $visa_id)->first();
+      return view('admin.visa.applyDetailList',compact('applyData'));
+    }
+
+    public function applyDetailSave(Request $request, $visa_id){
+
+
+      $applyData = DB::table('visa_apply_page_content')->where('visa_id', $visa_id)->first();
+
+      $data =  [
+          'thank_you_content' => $request['thank_you_content'],
+        ];
+
+      if ($request->hasFile('thank_you_img')) {
+        if($applyData->thank_you_img != ""){
+          $oldImagePath = public_path('images/visa/apply/').$applyData->thank_you_img;
+          if (file_exists($oldImagePath)) {
+            @unlink($oldImagePath);
+          }
+        }
+        $images = $request->thank_you_img->getClientOriginalName();
+        $images = time().'_visa_'.$images; // Add current time before image name
+        $thank_you_img = $images;
+        $request->thank_you_img->move(public_path('images/visa/apply'),$thank_you_img);
+        $data['thank_you_img'] = $thank_you_img;
+      }
+
+      DB::table('visa_apply_page_content')->where('visa_id',$visa_id)->where('language_id',env('APP_LANG'))->update($data);
+
+      return redirect()->route('admin.visa.index');
+    }
+
 }
