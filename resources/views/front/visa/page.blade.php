@@ -100,7 +100,12 @@
 <!-- Whatsapp Btn -->
 @if(isset($visaData->whatsapp_status) && $visaData->whatsapp_status == 1 && isset($visaData->whatsapp_number) && $visaData->whatsapp_number != "")
   <div class="whatsapp-btn">
-      <a href="tel:https://api.whatsapp.com/send?phone={{$visaData->whatsapp_number}}&text=Hi, I contacted you Through your website."><i class="fab fa-whatsapp"></i></a>
+      <a href="https://api.whatsapp.com/send?phone={{$visaData->whatsapp_number}}&text=Hi, I contacted you Through your website."><i class="fab fa-whatsapp"></i></a>
+  </div>
+@endif
+@if(isset($visaData->call_status) && $visaData->call_status == 1 && isset($visaData->call_number) && $visaData->call_number != "")
+  <div class="whatsapp-btn">
+      <a href="tel:{{$visaData->call_number}}"><i class="fab fa-call"></i></a>
   </div>
 @endif
 <!-- CONTACT MODAL -->
