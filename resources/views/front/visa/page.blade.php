@@ -104,9 +104,9 @@
   </div>
 @endif
 @if(isset($visaData->call_status) && $visaData->call_status == 1 && isset($visaData->call_number) && $visaData->call_number != "")
-  <div class="whatsapp-btn">
-      <a href="tel:{{$visaData->call_number}}"><i class="fab fa-call"></i></a>
-  </div>
+  <!-- <div class="whatsapp-btn">
+      <a href="tel:9876543210"><i class="fab fa-call"></i></a>
+  </div> -->
 @endif
 <!-- CONTACT MODAL -->
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
