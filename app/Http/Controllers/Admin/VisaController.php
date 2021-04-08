@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\UpdateVisaRequest;
+use Excel;
 
 class VisaController extends Controller
 {
@@ -347,6 +348,58 @@ class VisaController extends Controller
       DB::table('visa_apply_page_content')->where('visa_id',$visa_id)->where('language_id',env('APP_LANG'))->update($data);
 
       return redirect()->route('admin.visa.index');
+    }
+
+    public function typeOfVisaList($visa_id){
+
+      $visaData = DB::table('visa_pages')->where('id', $visa_id)->first();
+      if(!isset($visaData->id)){
+        return redirect()->route('admin.visa.index');
+      }
+      $visaType = DB::table('visa_type_detail')->where('visa_country_name', strtolower($visaData->country_name))->where('language_id',env('APP_LANG'))->get();
+
+      return view('admin.visa.typeOfVisaList',compact('visaType','visa_id'));
+    }
+
+    public function typeOfVisaUpload($visa_id){
+
+      return view('admin.visa.showUploadScreen',compact('visa_id'));
+
+    }
+
+    public function typeOfVisaSave(Request $request){
+      $this->validate($request, [
+       'file_name'  => 'required|mimes:xls,xlsx'
+      ]);
+
+      $path = $request->file('file_name')->getRealPath();
+      $data = Excel::load($path)->get()->toArray();
+
+      if(count($data) < 1){
+        return back()->with('error', 'Invalid Sheet');
+
+      }
+      $visaData = DB::table('visa_pages')->where('id', $request->visa_id)->first();
+      if(!isset($visaData->id)){
+        return redirect()->route('admin.visa.index');
+      }
+
+      $tempData = [];
+      foreach ($data[0] as $key => $value) {
+        $tempData[] =[
+            'language_id' => env('APP_LANG'),
+            'visa_country_name' => strtolower($visaData->country_name),
+            'visa_type_name' => $value['visa_type_name'],
+            'nationality_name' => $value['nationality_name'],
+            'govt_fee' => $value['govt_fee'] && is_numeric($value['govt_fee']) ? $value['govt_fee'] : 0.0,
+            'standard_usd_price' => $value['standard_usd_price'] && is_numeric($value['standard_usd_price']) ? $value['standard_usd_price'] : 0.0,
+            'rush_usd_price' => $value['rush_usd_price'] && is_numeric($value['rush_usd_price']) ? $value['rush_usd_price'] : 0.0,
+            'express_usd_price' => $value['express_usd_price'] && is_numeric($value['express_usd_price']) ? $value['express_usd_price'] : 0.0
+        ];
+      }
+      DB::table('visa_type_detail')->where('language_id',env('APP_LANG'))->where("visa_country_name",strtolower($visaData->country_name))->delete();
+      DB::table('visa_type_detail')->insert($tempData);
+      return redirect()->route('admin.visa.typeOfVisaList',[$request->visa_id])->with("success","Excel Upload Successfully");
     }
 
 }

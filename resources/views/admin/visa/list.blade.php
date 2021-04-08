@@ -36,6 +36,7 @@
                           <a href="{{ route('admin.visa.edit',[$val->id]) }}" class="btn btn-xs btn-info">Edit</a>
                           <a href="{{ route('admin.visa.faqList',[$val->id]) }}" class="btn btn-xs btn-primary">Faq List</a>
                           <a href="{{ route('admin.visa.applyDetailList',[$val->id]) }}" class="btn btn-xs btn-warning">Apply Pag</a>
+                          <a href="{{ route('admin.visa.typeOfVisaList',[$val->id]) }}" class="btn btn-xs btn-success">Visa Table</a>
 
                           {!! Form::open(array(
                               'style' => 'display: inline-block;',

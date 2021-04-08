@@ -59,6 +59,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::put('/visa/faq-edit/{id}/{faqId}', 'Admin\VisaController@faqUpdateVisa')->name('visa.faqUpdate');
     Route::delete('/visa/faq-delete/{id}/{faqId}', 'Admin\VisaController@faqDeleteVisa')->name('visa.faqDelete');
 
+    Route::get('/visa/type-of-visa/{visa_id}', 'Admin\VisaController@typeOfVisaList')->name('visa.typeOfVisaList');
+    Route::get('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaUpload')->name('visa.typeOfVisaUpload');
+    Route::post('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaSave')->name('visa.typeOfVisaSave');
 
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');
     Route::get('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
