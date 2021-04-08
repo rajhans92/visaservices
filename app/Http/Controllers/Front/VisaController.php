@@ -28,9 +28,8 @@ class VisaController extends Controller
     public function pages(Request $request)
     {
 
-      $default_visa = isset($_COOKIE['go_country']) ? $_COOKIE['go_country'] : env('APP_DEFAULT_COUNTRY');
-      $default_nationality = isset($_COOKIE['from_country']) ? $_COOKIE['from_country'] : env('APP_DEFAULT_COUNTRY');
-
+      $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : env('APP_DEFAULT_COUNTRY');
+      $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
       $uri = $request->path();
       $visaData = DB::table('visa_pages')
       ->select(
