@@ -2,16 +2,16 @@
   <div class="container">
     <ul class="footer-top d-flex">
       @if($footerData->tag_1 != "")
-        <li><a href="{{$urlSet[$footerData->tag_link_1]}}">{{$footerData->tag_1}}</a></li>
+        <li><a href="{{isset($urlSet[$footerData->tag_link_1]) ? $urlSet[$footerData->tag_link_1] : '#'}}">{{$footerData->tag_1}}</a></li>
       @endif
       @if($footerData->tag_2 != "")
-        <li><a href="{{$urlSet[$footerData->tag_link_2]}}">{{$footerData->tag_2}}</a></li>
+        <li><a href="{{isset($urlSet[$footerData->tag_link_2]) ? $urlSet[$footerData->tag_link_2] : '#'}}">{{$footerData->tag_2}}</a></li>
       @endif
       @if($footerData->tag_3 != "")
-        <li><a href="{{$urlSet[$footerData->tag_link_3]}}">{{$footerData->tag_3}}</a></li>
+        <li><a href="{{isset($urlSet[$footerData->tag_link_3]) ? $urlSet[$footerData->tag_link_3] : '#'}}">{{$footerData->tag_3}}</a></li>
       @endif
       @if($footerData->tag_4 != "")
-        <li><a href="{{$urlSet[$footerData->tag_link_4]}}">{{$footerData->tag_4}}</a></li>
+        <li><a href="{{isset($urlSet[$footerData->tag_link_4]) ? $urlSet[$footerData->tag_link_4] : '#'}}">{{$footerData->tag_4}}</a></li>
       @endif
     </ul>
     <ul class="payment_images">
@@ -83,9 +83,11 @@
     <div class="footer-bottom d-flex">
       <div class="_links">
         <ul class="d-flex">
+        @if(isset($menu['footer']))
           @foreach($menu['footer'] as $key => $val)
             <li> <a href="{{$val['url']}}">{{$val['name']}}</a> </li>
           @endforeach
+        @endif
         </ul>
       </div>
       @if($footerData->company_detail != "")

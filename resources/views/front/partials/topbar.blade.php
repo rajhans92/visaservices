@@ -7,9 +7,11 @@
     <div class="navbar-collapse" id="navbarNavDropdown">
       <div class="toggle-overlay"></div>
       <ul class="navbar-nav">
+      @if(isset($menu['header']))
         @foreach($menu['header'] as $key => $val)
-          <li class="nav-item"> <a class="nav-link" href="{{$val['url']}}">{{$val['name']}}</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{isset($val['url']) ? $val['url'] : '#'}}">{{$val['name']}}</a> </li>
         @endforeach
+      @endif
       </ul>
     </div>
   </div>

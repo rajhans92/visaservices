@@ -33,10 +33,10 @@
            </div>
            <div class="popular">{{$mainData->popular}}:
            <ul>
-           <li><a href="{{$mainData->link_1 != 0 ? $urlSet[$mainData->link_1] : '#' }}">{{$mainData->title_1}}</a></li>
-           <li><a href="{{$mainData->link_2 != 0 ? $urlSet[$mainData->link_2] : '#' }}">{{$mainData->title_2}}</a></li>
-           <li><a href="{{$mainData->link_3 != 0 ? $urlSet[$mainData->link_3] : '#' }}">{{$mainData->title_3}}</a></li>
-           <li><a href="{{$mainData->link_4 != 0 ? $urlSet[$mainData->link_4] : '#' }}">{{$mainData->title_4}}</a></li>
+           <li><a href="{{$mainData->link_1 != 0 && isset($urlSet[$mainData->link_1]) ? $urlSet[$mainData->link_1] : '#' }}">{{$mainData->title_1}}</a></li>
+           <li><a href="{{$mainData->link_2 != 0 && isset($urlSet[$mainData->link_2]) ? $urlSet[$mainData->link_2] : '#' }}">{{$mainData->title_2}}</a></li>
+           <li><a href="{{$mainData->link_3 != 0 && isset($urlSet[$mainData->link_3]) && isset($urlSet[$mainData->link_1]) ? $urlSet[$mainData->link_3] : '#' }}">{{$mainData->title_3}}</a></li>
+           <li><a href="{{$mainData->link_4 != 0 && isset($urlSet[$mainData->link_4]) ? $urlSet[$mainData->link_4] : '#' }}">{{$mainData->title_4}}</a></li>
            </ul>
            </div>
            <div class="google-ratings">

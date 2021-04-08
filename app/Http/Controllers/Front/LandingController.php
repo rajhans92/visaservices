@@ -75,7 +75,7 @@ class LandingController extends Controller
             'route_visa.visa_url as visa_url'
           )
         ->where('country.language_id',env('APP_LANG'))
-        ->where('country_popular_visa.country_name_one',$countryData[0]->country_name)
+        ->where('country_popular_visa.country_name_one',strtolower($countryData[0]->country_name))
         ->whereIn('country_popular_visa.country_name_many',function($db){
           $db->select('visa_pages.country_name')
               ->from('visa_pages')
@@ -87,7 +87,6 @@ class LandingController extends Controller
         ->join('route_visa','route_visa.visa_id',"=","visa_pages.id")
         ->get();
       }
-
       $secondDropdown = DB::table('country')
       ->select(
           'country.id as id',
@@ -123,7 +122,7 @@ class LandingController extends Controller
         $urlSet[$value->id] = $value->visa_url;
       }
 
-      // exit(print_r($countryVisa));
+      // exit(print_r($secondDropdown));
       return view('front.home',compact('homeData','section2Data','mainData','countryData','secondDropdown','temp','urlSet'));
     }
 
