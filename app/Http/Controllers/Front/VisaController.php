@@ -103,7 +103,6 @@ class VisaController extends Controller
       if(isset($tempVisaTable[0])){
         $isAvailable = true;
       }
-
       return view('front.visa.page',compact('visaData','visaFaqs','allVisaData','isAvailable','visaProcessingType','default_visa','default_nationality'));
 
     }
