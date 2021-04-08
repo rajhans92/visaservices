@@ -252,13 +252,13 @@ class VisaController extends Controller
         DB::table('visa_apply_page_content')->where('visa_id', $request->id)->limit(1)
         ->delete();
 
-        if($visaData->visa_landing_img != ""){
+        if(isset($visaData->visa_landing_img) && $visaData->visa_landing_img != ""){
           $oldImagePath = public_path('images/visa/').$visaData->visa_landing_img;
           if (file_exists($oldImagePath)) {
             @unlink($oldImagePath);
           }
         }
-        if($applyData->thank_you_img != ""){
+        if(isset($visaData->thank_you_img) &&  $applyData->thank_you_img != ""){
           $oldImagePath = public_path('images/visa/apply/').$applyData->thank_you_img;
           if (file_exists($oldImagePath)) {
             @unlink($oldImagePath);
