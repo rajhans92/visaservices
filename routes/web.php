@@ -41,6 +41,29 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
     Route::get('/', 'Admin\DashboardController@index');
 
+    Route::get('/services', 'Admin\ServicesController@index')->name('services.index');
+    Route::get('/services/add', 'Admin\ServicesController@createServices')->name('services.create');
+    Route::post('/services/add', 'Admin\ServicesController@storeServices')->name('services.create');
+    Route::get('/services/edit/{id}', 'Admin\ServicesController@editServices')->name('services.edit');
+    Route::put('/services/edit/{id}', 'Admin\ServicesController@updateServices')->name('services.edit');
+    Route::delete('/services/destroy/{id}', 'Admin\ServicesController@destroyServices')->name('services.destroy');
+
+    Route::get('/services/apply/{services_id}', 'Admin\ServicesController@applyDetailList')->name('services.applyDetailList');
+    Route::post('/services/apply/{services_id}', 'Admin\ServicesController@applyDetailSave')->name('services.applyDetailSave');
+
+
+    Route::get('/services/faq/{id}', 'Admin\ServicesController@faqServices')->name('services.faqList');
+    Route::get('/services/faq-create/{id}', 'Admin\ServicesController@faqCreateServices')->name('services.faqCreate');
+    Route::post('/services/faq-create/{id}', 'Admin\ServicesController@faqStoreServices')->name('services.faqCreate');
+    Route::get('/services/faq-edit/{id}/{faqId}', 'Admin\ServicesController@faqEditServices')->name('services.faqEdit');
+    Route::put('/services/faq-edit/{id}/{faqId}', 'Admin\ServicesController@faqUpdateServices')->name('services.faqUpdate');
+    Route::delete('/services/faq-delete/{id}/{faqId}', 'Admin\ServicesController@faqDeleteServices')->name('services.faqDelete');
+
+    Route::get('/services/data-entry/{services_id}', 'Admin\ServicesController@dataEntryList')->name('services.dataEntryList');
+    Route::get('/services/data-entry-upload/{services_id}', 'Admin\ServicesController@dataEntryUpdate')->name('services.dataEntryUpdate');
+    Route::post('/services/data-entry-upload/{services_id}', 'Admin\ServicesController@dataEntrySave')->name('services.dataEntrySave');
+
+
     Route::get('/visa', 'Admin\VisaController@index')->name('visa.index');
     Route::get('/visa/add', 'Admin\VisaController@createVisa')->name('visa.create');
     Route::post('/visa/add', 'Admin\VisaController@storeVisa')->name('visa.create');

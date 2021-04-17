@@ -178,7 +178,7 @@ class HomeController extends Controller
       ->join('home_section_3','home_section_3.language_id','=','home_page.language_id')
       ->where('home_page.language_id',$lang_id)
       ->first();
-      $data = DB::table('route_visa')->get();
+      $data = DB::table('route_visa')->where("type_of_url","visa")->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
         $urlSet[$value->id] = $value->visa_url;
@@ -356,7 +356,7 @@ class HomeController extends Controller
       ->join('home_section_2','home_section_2.language_id','=','home_page.language_id')
       ->where('home_page.language_id',$lang_id)
       ->first();
-      $data = DB::table('route_visa')->get();
+      $data = DB::table('route_visa')->where("type_of_url","visa")->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
         $urlSet[$value->id] = $value->visa_url;
@@ -559,7 +559,7 @@ class HomeController extends Controller
       ->where('home_page.language_id',$lang_id)
       ->first();
 
-      $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->get();
+      $data = DB::table('route_visa')->where('language_id',env('APP_LANG'))->where("type_of_url","visa")->get();
       $urlSet=[];
       foreach ($data as $key => $value) {
         $urlSet[$value->id] = $value->visa_url;

@@ -76,10 +76,12 @@ class LandingController extends Controller
           )
         ->where('country.language_id',env('APP_LANG'))
         ->where('country_popular_visa.country_name_one',strtolower($countryData[0]->country_name))
+        ->where('route_visa.type_of_url',"visa")
         ->whereIn('country_popular_visa.country_name_many',function($db){
           $db->select('visa_pages.country_name')
               ->from('visa_pages')
               ->where('visa_pages.language_id',env('APP_LANG'))
+              ->where('route_visa.type_of_url',"visa")
               ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
         })
         ->join('country_popular_visa','country_popular_visa.country_name_many',"=",'country.country_name')
@@ -95,10 +97,12 @@ class LandingController extends Controller
           'route_visa.visa_url as visa_url'
         )
       ->where('country.language_id',env('APP_LANG'))
+      ->where('route_visa.type_of_url',"visa")
       ->whereIn('country.country_name',function($db){
         $db->select('visa_pages.country_name')
             ->from('visa_pages')
             ->where('visa_pages.language_id',env('APP_LANG'))
+            ->where('route_visa.type_of_url',"visa")
             ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
       })
       ->join('visa_pages','visa_pages.country_name',"=","country.country_name")
@@ -145,10 +149,12 @@ class LandingController extends Controller
         )
       ->where('country.language_id',env('APP_LANG'))
       ->where('country_popular_visa.country_name_one',$country)
+      ->where('route_visa.type_of_url',"visa")
       ->whereIn('country_popular_visa.country_name_many',function($db){
         $db->select('visa_pages.country_name')
             ->from('visa_pages')
             ->where('visa_pages.language_id',env('APP_LANG'))
+            ->where('route_visa.type_of_url',"visa")
             ->join('route_visa','route_visa.visa_id',"=","visa_pages.id");
       })
       ->join('country_popular_visa','country_popular_visa.country_name_many',"=",'country.country_name')

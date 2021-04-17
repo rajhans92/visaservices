@@ -56,6 +56,7 @@ class VisaController extends Controller
         )
       ->where('visa_pages.language_id',env('APP_LANG'))
       ->where('route_visa.visa_url',$uri)
+      ->where('route_visa.type_of_url',"visa")
       ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
 
@@ -131,6 +132,7 @@ class VisaController extends Controller
           )
         ->where('visa_pages.language_id',env('APP_LANG'))
         ->where('route_visa.visa_url',$url)
+        ->where('route_visa.type_of_url',"visa")
         ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
         ->first();
 
@@ -425,6 +427,7 @@ class VisaController extends Controller
           )
         ->where('visa_pages.language_id',env('APP_LANG'))
         ->where('visa_pages.country_name',$visaDetail->visa_country_name)
+        ->where('route_visa.type_of_url',"visa")
         ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
         ->first();
 

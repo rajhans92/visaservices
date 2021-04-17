@@ -37,6 +37,7 @@ class VisaController extends Controller
           'route_visa.visa_url as visa_url'
           )
         ->where('visa_pages.language_id',env('APP_LANG'))
+        ->where('route_visa.type_of_url',"visa")
         ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
         ->get();
 
@@ -62,7 +63,7 @@ class VisaController extends Controller
 
     public function storeVisa(Request $request){
 
-      $tempNm = DB::table('route_visa')->where("language_id",env('APP_LANG'))->where('visa_url',$request['visa_url'])->count();
+      $tempNm = DB::table('route_visa')->where("language_id",env('APP_LANG'))->where('route_visa.type_of_url',"visa")->where('visa_url',$request['visa_url'])->count();
       if($tempNm > 0){
           return redirect()->back()->with('error','Visa URL should be unique!');
       }
@@ -105,7 +106,8 @@ class VisaController extends Controller
         'class' => 'Front\VisaController',
         'method' => 'pages',
         'visa_id' => $visa_id,
-        'visa_url' => $request['visa_url']
+        'visa_url' => $request['visa_url'],
+        "type_of_url" => "visa"
       ]);
 
       DB::table('visa_apply_page_content')->insert([
@@ -121,6 +123,7 @@ class VisaController extends Controller
       $tempNm = DB::table('route_visa')
       ->where("language_id",env('APP_LANG'))
       ->where('visa_url',$request['visa_url'])
+      ->where('type_of_url',"visa")
       ->whereNotIn('visa_id',[$id])->count();
       if($tempNm > 0){
           return redirect()->back()->with('error','Visa URL should be unique!');
@@ -144,6 +147,7 @@ class VisaController extends Controller
         )
       ->where('visa_pages.language_id',env('APP_LANG'))
       ->where('visa_pages.id',$id)
+      ->where('route_visa.type_of_url',"visa")
       ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
 
@@ -190,6 +194,7 @@ class VisaController extends Controller
         DB::table('route_visa')
         ->where('visa_id',$id)
         ->where('language_id',env('APP_LANG'))
+        ->where('type_of_url',"visa")
         ->update([
           'visa_url' => $request['visa_url']
         ]);
@@ -231,6 +236,7 @@ class VisaController extends Controller
         )
       ->where('visa_pages.language_id',env('APP_LANG'))
       ->where('visa_pages.id',$id)
+      ->where('route_visa.type_of_url',"visa")
       ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
 
@@ -243,7 +249,7 @@ class VisaController extends Controller
         DB::table('visa_pages')->where('id', $request->id)->limit(1)
         ->delete();
 
-        DB::table('route_visa')->where('language_id',env('APP_LANG'))->where('visa_id', $request->id)->limit(1)
+        DB::table('route_visa')->where('language_id',env('APP_LANG'))->where('type_of_url',"visa")->where('visa_id', $request->id)->limit(1)
         ->delete();
 
         DB::table('visa_faqs')->where('language_id',env('APP_LANG'))->where('visa_id', $request->id)->delete();

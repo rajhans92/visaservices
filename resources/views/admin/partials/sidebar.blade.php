@@ -70,6 +70,28 @@
                 </li>
               </ul>
             </li>
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span class="title">Services Management</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+
+                <li class="{{ $request->segment(2) == 'services' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.services.index')}}">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Services Page
+                        </span>
+                    </a>
+                </li>
+
+              </ul>
+            </li>
+
 
             <li class="treeview active">
               <a href="#">

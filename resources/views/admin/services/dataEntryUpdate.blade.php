@@ -6,13 +6,13 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Visa Table Upload
+            Services Table Upload
         </div>
 
         <div class="panel-body">
             <div class="row">
               <div class="col-xs-4 form-group">
-                <a href="{{ asset('/s3/visa-sheet.xlsx') }}" class="btn btn-primary">Download Formatted Sheet</a>
+                <a href="{{ asset('/s3/services-sheet.xlsx') }}" class="btn btn-primary">Download Formatted Sheet</a>
               </div>
               <div class="col-xs-4 form-group">
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="panel-body">
-          <form action="{{route('admin.visa.typeOfVisaSave',[$visa_id])}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('admin.services.dataEntrySave',[$services_id])}}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-xs-4 form-group">
@@ -48,7 +48,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4 form-group">
-              <a href="{{ route('admin.visa.typeOfVisaList',[$visa_id]) }}" class="btn btn-default">Back</a>
+              <a href="{{ route('admin.services.dataEntryList',[$services_id]) }}" class="btn btn-default">Back</a>
             </div>
           </div>
         </div>
