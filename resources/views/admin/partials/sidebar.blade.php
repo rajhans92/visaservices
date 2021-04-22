@@ -88,7 +88,14 @@
                         </span>
                     </a>
                 </li>
-
+                <li class="{{ $request->segment(2) == 'service-contact' ? 'active active-sub' : '' }}">
+                  <a href="{{route('admin.services.contactList')}}">
+                    <i class="fa fa-briefcase"></i>
+                    <span class="title">
+                      Contact Query
+                    </span>
+                  </a>
+                </li>
               </ul>
             </li>
 

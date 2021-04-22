@@ -14,6 +14,7 @@ $this->get("/apply-online/{url}/{slug}", 'Front\VisaController@applyOnlineEdit')
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
 $this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReviewSave')->name('apply.reviewSave');
 $this->post("/apply-contact-us", 'Front\VisaController@applyContactUs')->name('apply.cotactUs');
+$this->post("/service-contact-us", 'Front\ServicesController@serviceContactUs')->name('service.cotactUs');
 
 if(!empty($pages)){
   foreach ($pages as $page){
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/services/data-entry/{services_id}', 'Admin\ServicesController@dataEntryList')->name('services.dataEntryList');
     Route::get('/services/data-entry-upload/{services_id}', 'Admin\ServicesController@dataEntryUpdate')->name('services.dataEntryUpdate');
     Route::post('/services/data-entry-upload/{services_id}', 'Admin\ServicesController@dataEntrySave')->name('services.dataEntrySave');
+    Route::get('/service-contact/list', 'Admin\ServicesController@contactList')->name('services.contactList');
 
 
     Route::get('/visa', 'Admin\VisaController@index')->name('visa.index');

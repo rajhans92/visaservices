@@ -401,4 +401,11 @@ class ServicesController extends Controller
       return redirect()->route('admin.services.dataEntryList',[$request->services_id])->with("success","Excel Upload Successfully");
     }
 
+    public function contactList()
+    {
+        $visaData = DB::table("service_contact_us")->orderBy('id', 'DESC')
+        ->get();
+        return view('admin.services.contactList',compact('visaData'));
+    }
+
 }
