@@ -14,7 +14,14 @@ $this->get("/apply-online/{url}/{slug}", 'Front\VisaController@applyOnlineEdit')
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
 $this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReviewSave')->name('apply.reviewSave');
 $this->post("/apply-contact-us", 'Front\VisaController@applyContactUs')->name('apply.cotactUs');
-$this->post("/service-contact-us", 'Front\ServicesController@serviceContactUs')->name('service.cotactUs');
+
+$this->post("/services-contact-us", 'Front\ServicesController@serviceContactUs')->name('service.cotactUs');
+$this->get("/services-online/{url}", 'Front\ServicesController@applyOnline');
+$this->post("/services-online", 'Front\ServicesController@applyOnlineSave')->name('services.save');
+$this->get("/services-online-review/{slug}", 'Front\ServicesController@applyOnlineReview')->name('services.review');
+$this->post("/services-online-review/{slug}", 'Front\ServicesController@applyOnlineReviewSave')->name('services.reviewSave');
+$this->get("/services-online/{url}/{slug}", 'Front\ServicesController@applyOnlineEdit')->name('services.edit');
+$this->post("/services-online-update/{url}/{slug}", 'Front\ServicesController@applyOnlineUpdate')->name('services.onlineUpdate');
 
 if(!empty($pages)){
   foreach ($pages as $page){

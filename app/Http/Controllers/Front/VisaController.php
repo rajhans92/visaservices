@@ -309,7 +309,7 @@ class VisaController extends Controller
         $number = mt_rand(1000000000, 9999999999); // better than rand()
 
         // call the same function if the barcode exists already
-        $count =DB::table('visa_apply_detail')->where('order_id',$number)->count();
+        $count =DB::table('visa_apply_detail')->where('order_id',env('APP_ORDER_PREFIX').$number)->count();
         if ($count) {
             return generateBarcodeNumber();
         }
@@ -331,7 +331,13 @@ class VisaController extends Controller
       }
       $default_currency = env('APP_DEFAULT_CURRENCY');
 
-      $visaPages = DB::table('visa_pages')->where('country_name',$visaDetail->visa_country_name)->first();
+      $visaPages = DB::table('visa_pages')
+                  ->select('visa_pages.*','route_visa.visa_url as visa_url')
+                  ->where('visa_pages.country_name',$visaDetail->visa_country_name)
+                  ->where('visa_pages.language_id',env('APP_LANG'))
+                  ->where('route_visa.type_of_url',"visa")
+                  ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
+                  ->first();
 
       $visaApplicantDetail = DB::table('visa_apply_applicant')->where('order_id',$visaDetail->order_id)->get();
 

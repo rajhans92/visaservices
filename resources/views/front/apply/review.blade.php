@@ -12,7 +12,7 @@
         <div class="apply-box">
           <div class="apply-box-header">
             <h2>General Information</h2>
-            <a href="#" class="edit">
+            <a href="{{ route('apply.edit',[$visaPages->visa_url,$slug]) }}" class="edit">
               <i class="fas fa-pencil-alt"></i>
             </a>
           </div>
@@ -76,7 +76,7 @@
         <div class="apply-box applicant-box">
           <div class="apply-box-header">
             <h2>APPLICANT #{{$count++}}</h2>
-            <a href="#" class="edit">
+            <a href="{{ route('apply.edit',[$visaPages->visa_url,$slug]) }}" class="edit">
               <i class="fas fa-pencil-alt"></i>
             </a>
           </div>

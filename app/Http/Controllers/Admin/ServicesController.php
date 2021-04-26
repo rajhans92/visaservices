@@ -388,7 +388,7 @@ class ServicesController extends Controller
         $tempData[] =[
             'language_id' => env('APP_LANG'),
             'services_id' => $request->services_id,
-            'visa_country_name' => $value['visa_country_name'],
+            'nationality' => $value['nationality'],
             'govt_fee' => $value['govt_fee'] && is_numeric($value['govt_fee']) ? $value['govt_fee'] : 0.0,
             'standard_usd_price' => $value['standard_usd_price'] && is_numeric($value['standard_usd_price']) ? $value['standard_usd_price'] : 0.0,
             'rush_usd_price' => $value['rush_usd_price'] && is_numeric($value['rush_usd_price']) ? $value['rush_usd_price'] : 0.0,

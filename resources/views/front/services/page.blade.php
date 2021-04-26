@@ -21,7 +21,7 @@
           <p>{!! $servicesData->services_content_2 !!}</p>
           @if($isAvailable)
             @if(isset($servicesData->payment_method) && $servicesData->payment_method == 1)
-              <a href="{{url('/apply-online/'.$servicesData->services_url)}}">{{$servicesData->services_main_button}}</a>
+              <a href="{{url('/services-online/'.$servicesData->visa_url)}}">{{$servicesData->services_main_button}}</a>
             @else
               <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
             @endif
@@ -74,7 +74,7 @@
                   <span><b></b></span>
             </div>
             @if(isset($servicesData->payment_method) && $servicesData->payment_method == 1)
-             <a href="{{url('/apply-online/'.$servicesData->visa_url)}}">{{$servicesData->services_main_button}}</a>
+             <a href="{{url('/services-online/'.$servicesData->visa_url)}}">{{$servicesData->services_main_button}}</a>
             @else
               <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
             @endif
@@ -164,6 +164,12 @@ function closeModal() {
 let datSet = <?php echo json_encode($allServicesData); ?>;
 let faq = <?php echo json_encode($faq); ?>;
 let default_country = '{{$default_country}}';
+var d = new Date();
+d.setTime(d.getTime() + (2*24*60*60*1000));
+var expires = "expires="+ d.toUTCString();
+
+document.cookie = "nationality" + "=" + default_country + ";" + expires + ";path=/";
+console.log("before = ",document.cookie);
 $(function(){
   $("#submitBtn").click(function(){
         let name = $("#name").val();
@@ -210,6 +216,10 @@ $(function(){
           strTemp += "<li><a>"+key+'<select class="currency" value="USD">'+strTemp1+'</select><span id="'+(count++)+'">'+datSet[default_country]['USD'][key]+'</a></li>';
         }
         $("#currency").html(strTemp);
+
+        document.cookie = "nationality" + "=" + default_country + ";" + expires + ";path=/";
+        console.log("after = ",document.cookie);
+
      }
   });
   $(document).on("change",".currency",function(){
