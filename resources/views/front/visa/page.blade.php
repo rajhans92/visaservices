@@ -70,8 +70,8 @@
                  </select>
              </div>
               <div class="fees-box days-box">
-                  <span><img src="images/rush.png">{{$visaData->visa_type_title}}:</span>
-                  <span><b>{{$visaProcessingType->duration}} {{$visaProcessingType->duration_type}}</b></span>
+                  <span><img src="images/rush.png">{{env('APP_VISA_TYPE')}}:</span>
+                  <span><b>{{isset($visaDurationData[strtolower(env('APP_VISA_TYPE'))]) ? $visaDurationData[strtolower(env('APP_VISA_TYPE'))] : ""}}</b></span>
             </div>
             @if(isset($visaData->payment_method) && $visaData->payment_method == 1)
              <a href="{{url('/apply-online/'.$visaData->visa_url)}}">{{$visaData->visa_main_button}}</a>
@@ -79,19 +79,21 @@
               <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
             @endif
           </div>
-          <h5 class="top-articles-heading">{{$visaData->visa_popular_title}}</h5>
-          <ul class="top-articles" id="currency">
-             <?php $count = 1; ?>
-              @foreach($allVisaData[strtolower($default_nationality)] as $key => $val)
-              <li><a>{{$key}}
-                <select class="currency" value="USD">
-                  @foreach($val as $key1 => $val1)
-                    <option value="{{$key1}}" table="{{$key}}" count="{{$count}}" {{$key1 == "USD" ? "selected" : ""}}>{{$key1}}</option>
+          @if($visaData->is_price_show == 1)
+              <h5 class="top-articles-heading">{{$visaData->visa_popular_title}}</h5>
+              <ul class="top-articles" id="currency">
+                 <?php $count = 1; ?>
+                  @foreach($allVisaData[strtolower($default_nationality)] as $key => $val)
+                  <li><a>{{$key}}
+                    <select class="currency" value="USD">
+                      @foreach($val as $key1 => $val1)
+                        <option value="{{$key1}}" table="{{$key}}" count="{{$count}}" {{$key1 == "USD" ? "selected" : ""}}>{{$key1}}</option>
+                      @endforeach
+                    </select>
+                    <span id="{{$count++}}">{{$val['USD'][strtolower(env('APP_VISA_TYPE'))]}}</span></a></li>
                   @endforeach
-                </select>
-                <span id="{{$count++}}">{{$val['USD'][strtolower(env('APP_VISA_TYPE'))]}}</span></a></li>
-              @endforeach
-          </ul>
+              </ul>
+          @endif
       </div>
       @endif
   </div>
@@ -100,7 +102,7 @@
 <!-- Whatsapp Btn -->
 @if(isset($visaData->whatsapp_status) && $visaData->whatsapp_status == 1 && isset($visaData->whatsapp_number) && $visaData->whatsapp_number != "")
   <div class="whatsapp-btn">
-      <a href="https://api.whatsapp.com/send?phone={{$visaData->whatsapp_number}}&text=Hi, I contacted you Through your website."><i class="fab fa-whatsapp"></i></a>
+      <a href="https://api.whatsapp.com/send?phone={{$visaData->whatsapp_number}}&text={{$visaData->whatsapp_text}}"><i class="fab fa-whatsapp"></i></a>
   </div>
 @endif
 @if(isset($visaData->call_status) && $visaData->call_status == 1 && isset($visaData->call_number) && $visaData->call_number != "")

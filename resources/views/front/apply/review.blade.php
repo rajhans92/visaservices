@@ -175,10 +175,12 @@
             <h2>Order Details</h2>
           </div>
           <div class="order-total-sum">
+            @if(isset($visaPages->is_govt_apply) && $visaPages->is_govt_apply == 1)
               <div class="sum-info">
-              <div>Government Fees (Pay on Arrival)</div>
-              <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalGovtAmount">{{$totalGovtAmount}}</span></div>
-            </div>
+                <div>Government Fees (Pay on Arrival)</div>
+                <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalGovtAmount">{{$totalGovtAmount}}</span></div>
+              </div>
+            @endif
             <div class="sum-info">
               <div>Service Fee</div>
               <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalApplicantAmount">{{$totalApplicantAmount}}</span></div>

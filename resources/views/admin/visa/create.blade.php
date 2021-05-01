@@ -147,12 +147,54 @@
           </div>
           <div class="row">
             <div class="col-xs-4 form-group">
+                {!! Form::label('standard_time_duration', 'Standard Time Duration*', ['class' => 'control-label']) !!}
+                {!! Form::text('standard_time_duration', old('standard_time_duration'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('standard_time_duration'))
+                    <p class="help-block">
+                        {{ $errors->first('standard_time_duration') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('rush_time_duration', 'Rush Time Duration*', ['class' => 'control-label']) !!}
+                {!! Form::text('rush_time_duration', old('rush_time_duration'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('rush_time_duration'))
+                    <p class="help-block">
+                        {{ $errors->first('rush_time_duration') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('express_time_duration', 'Express Time Duration*', ['class' => 'control-label']) !!}
+                {!! Form::text('express_time_duration', old('express_time_duration'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('express_time_duration'))
+                    <p class="help-block">
+                        {{ $errors->first('express_time_duration') }}
+                    </p>
+                @endif
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 form-group">
                 {!! Form::label('whatsapp_number', 'Whatsapp Number*', ['class' => 'control-label']) !!}
                 {!! Form::text('whatsapp_number', old('whatsapp_number'), ['class' => 'form-control',"maxlength"=>14, 'placeholder' => '', 'required' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('whatsapp_number'))
                     <p class="help-block">
                         {{ $errors->first('whatsapp_number') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('whatsapp_text', 'Whatsapp Text*', ['class' => 'control-label']) !!}
+                {!! Form::text('whatsapp_text', old('whatsapp_text'), ['class' => 'form-control',"maxlength"=>250, 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('whatsapp_text'))
+                    <p class="help-block">
+                        {{ $errors->first('whatsapp_text') }}
                     </p>
                 @endif
             </div>
@@ -169,6 +211,9 @@
                     </p>
                 @endif
             </div>
+          </div>
+
+          <div class="row">
             <div class="col-xs-4 form-group">
                 {!! Form::label('call_number', 'Support Number*', ['class' => 'control-label']) !!}
                 {!! Form::text('call_number', old('call_number'), ['class' => 'form-control','maxlength'=>'14', 'placeholder' => '', 'required' => '']) !!}
@@ -179,9 +224,6 @@
                     </p>
                 @endif
             </div>
-          </div>
-
-          <div class="row">
             <div class="col-xs-4 form-group">
                 {!! Form::label('call_status', 'Show Support No.*', ['class' => 'control-label']) !!}
                 <select name="call_status" class="form-control whatsapp_status">
@@ -196,14 +238,6 @@
                 @endif
             </div>
             <div class="col-xs-4 form-group">
-              {!! Form::label('payment_method', 'Payment Method*', ['class' => 'control-label']) !!}
-              <select class="form-control selectpicker" required name="payment_method" value="" >
-                  <option value="" >Select</option>
-                  <option value="0" >Contact Us</option>
-                  <option value="1" >Online Payment</option>
-              </select>
-            </div>
-            <div class="col-xs-4 form-group">
               {!! Form::label('reuired_doc', 'Required Documents*', ['class' => 'control-label']) !!}
               <div class="checkbox">
                 <label><input type="checkbox" name="isPassportDocRequired" value="1">Passport Document</label>
@@ -214,6 +248,32 @@
               <div class="checkbox">
                 <label><input type="checkbox" name="isOtherDocRequired" value="1">Other Document</label>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 form-group">
+              {!! Form::label('payment_method', 'Payment Method*', ['class' => 'control-label']) !!}
+              <select class="form-control selectpicker" required name="payment_method" value="" >
+                  <option value="" >Select</option>
+                  <option value="0" >Contact Us</option>
+                  <option value="1" >Online Payment</option>
+              </select>
+            </div>
+            <div class="col-xs-4 form-group">
+              {!! Form::label('is_price_show', 'Is Price Show*', ['class' => 'control-label']) !!}
+              <select class="form-control selectpicker" required name="is_price_show" value="" >
+                  <option value="" >Select</option>
+                  <option value="1" >Yes</option>
+                  <option value="0" >No</option>
+              </select>
+            </div>
+            <div class="col-xs-4 form-group">
+              {!! Form::label('is_govt_apply', 'Is Govt Apply*', ['class' => 'control-label']) !!}
+              <select class="form-control selectpicker" required name="is_govt_apply" value="" >
+                  <option value="" >Select</option>
+                  <option value="1" >Yes</option>
+                  <option value="0" >No</option>
+              </select>
             </div>
           </div>
 

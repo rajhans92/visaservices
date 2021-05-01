@@ -80,26 +80,28 @@
                                           <div class="processing-time">
                                               <input type="radio" name="visa_process_calculator" class="visa_process_calculator" id="standard" value="standard" checked>
                     						              <span class="checkmark"></span>
-                                              <b>Standard <br><span>5 Days</span></b>
+                                              <b>Standard <br><span>{{$visaData->standard_time_duration}}</span></b>
                                           </div>
                                           <div class="processing-time">
                                               <input type="radio" id="rush" name="visa_process_calculator" class="visa_process_calculator" value="rush" >
                     						                    <span class="checkmark"></span>
-                                                  <b>Rush <br><span>48 Hours</span></b>
+                                                  <b>Rush <br><span>{{$visaData->rush_time_duration}}</span></b>
                                           </div>
                                           <div class="processing-time">
                                               <input type="radio" name="visa_process_calculator" class="visa_process_calculator" id="standard" value="express">
                     						                    <span class="checkmark"></span>
-                                                  <b>Express <br><span>24 Hours</span></b>
+                                                  <b>Express <br><span>{{$visaData->express_time_duration}}</span></b>
                                           </div>
                                           </div>
                                       </div>
                                               </div>
                                      <div class="order-total-sum">
+                                       @if(isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1)
                     								    <div class="sum-info">
-                    										<div>Government Fees (Pay on Arrival)</div>
-                    										<div><span class="currencyRateCal">{{$default_currency}}</span> <span id="totalGovtCal">00.00<span></div>
-                    									</div>
+                      										<div>Government Fees (Pay on Arrival)</div>
+                      										<div><span class="currencyRateCal">{{$default_currency}}</span> <span id="totalGovtCal">00.00<span></div>
+                      									</div>
+                                       @endif
                     									<div class="sum-info">
                     										<div>Service Fee </div>
                     										<div><span class="currencyRateCal">{{$default_currency}}</span> <span id="totalSubCal">00.00</span></div>
@@ -419,17 +421,17 @@
                       <div class="processing-time">
                           <input type="radio" name="visa_process_type"  class="visa_process_type" {{strtolower($visaDetail->visa_process_type) == "standard" ? 'checked="checked"' :"" }} id="standard" value="standard">
               <span class="checkmark"></span>
-                          <b>Standard <br><span>5 Days</span></b>
+                          <b>Standard <br><span>{{$visaData->standard_time_duration}}</span></b>
                       </div>
                       <div class="processing-time">
                           <input type="radio" id="rush" class="visa_process_type" name="visa_process_type" {{strtolower($visaDetail->visa_process_type) == "rush" ? 'checked="checked"' :"" }} value="rush">
               <span class="checkmark"></span>
-                              <b>Rush <br><span>48 Hours</span></b>
+                              <b>Rush <br><span>{{$visaData->rush_time_duration}}</span></b>
                       </div>
                       <div class="processing-time">
                           <input type="radio" name="visa_process_type" class="visa_process_type" {{strtolower($visaDetail->visa_process_type) == "express" ? 'checked="checked"' :"" }} value="express">
               <span class="checkmark"></span>
-                              <b>Express <br><span>24 Hours</span></b>
+                              <b>Express <br><span>{{$visaData->express_time_duration}}</span></b>
                       </div>
                       </div>
                   </div>
@@ -443,10 +445,12 @@
                 <h2>Order Details</h2>
               </div>
               <div class="order-total-sum">
+                @if(isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1)
                   <div class="sum-info">
-                  <div>Government Fees (Pay on Arrival)</div>
-                  <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalGovtAmount">{{number_format($govtFees,2)}}</span></div>
-                </div>
+                    <div>Government Fees (Pay on Arrival)</div>
+                    <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalGovtAmount">{{number_format($govtFees,2)}}</span></div>
+                  </div>
+                @endif
                 <div class="sum-info">
                   <div>Service Fee</div>
                   <div><span class="currencyShow">{{$default_currency}}</span> <span id="totalApplicantAmount">{{number_format($totalApplicant,2)}}</span></div>
@@ -494,6 +498,7 @@ $(function(){
   let allVisaDataAlter = <?php echo json_encode($allVisaDataAlter)?>;
   let default_currency = "{{$default_currency}}";
   let default_currency_cal = "{{$default_currency}}";
+  let is_govt_apply = "{{$visaData->is_govt_apply}}";
   $("#addApplicant").click(function(){
       let nationalityVal = $("#visaType").val();
       let nationality = "";
@@ -585,13 +590,19 @@ $(function(){
              let nationality = $(this).val();
              if(nationality.length > 0){
                totalApplicantAmount += parseFloat(allVisaData[visaTypeId]['country'][nationality.toLowerCase()][default_currency][visaProcessingType.toLowerCase()]);
-               totalGovtAmount += parseFloat(allVisaData[visaTypeId]['country'][nationality.toLowerCase()][default_currency]['govt']);
+               if(is_govt_apply == 1){
+                 totalGovtAmount += parseFloat(allVisaData[visaTypeId]['country'][nationality.toLowerCase()][default_currency]['govt']);
+               }
              }
         });
     }
     $("#totalApplicantAmount").text(totalApplicantAmount.toFixed(2));
     $("#totalGovtAmount").text(totalGovtAmount.toFixed(2));
-    totalAmount = parseFloat(totalApplicantAmount) + parseFloat(totalGovtAmount);
+    if(is_govt_apply == 1){
+      totalAmount = parseFloat(totalApplicantAmount) + parseFloat(totalGovtAmount);
+    }else{
+      totalAmount = parseFloat(totalApplicantAmount);
+    }
     $("#totalAmount").text(totalAmount.toFixed(2));
 
   }
@@ -653,12 +664,18 @@ $(function(){
       if(visaTypeId.length > 0 && nationality.length >0){
         totalApplicantAmount = parseFloat(allVisaDataAlter[nationality.toLowerCase()][visaTypeId][default_currency_cal][visaProcessingType.toLowerCase()]) * countCal;
 
-        totalGovtAmount = parseFloat(allVisaDataAlter[nationality.toLowerCase()][visaTypeId][default_currency_cal]['govt']) * countCal;
+        if(is_govt_apply == 1){
+          totalGovtAmount = parseFloat(allVisaDataAlter[nationality.toLowerCase()][visaTypeId][default_currency_cal]['govt']) * countCal;
+        }
       }
 
       $("#totalSubCal").text(totalApplicantAmount.toFixed(2));
       $("#totalGovtCal").text(totalGovtAmount.toFixed(2));
-      totalAmount = parseFloat(totalApplicantAmount) + parseFloat(totalGovtAmount);
+      if(is_govt_apply == 1){
+        totalAmount = parseFloat(totalApplicantAmount) + parseFloat(totalGovtAmount);
+      }else{
+        totalAmount = parseFloat(totalApplicantAmount);
+      }
       $("#totalAmountCal").text(totalAmount.toFixed(2));
 
     }
