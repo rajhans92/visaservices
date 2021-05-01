@@ -27,10 +27,8 @@ class VisaController extends Controller
      */
     public function pages(Request $request)
     {
-
-      $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : env('APP_DEFAULT_COUNTRY');
-      $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
       $uri = $request->path();
+
       $visaData = DB::table('visa_pages')
       ->select(
         'visa_pages.id as id',
@@ -65,6 +63,9 @@ class VisaController extends Controller
       ->where('route_visa.type_of_url',"visa")
       ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
       ->first();
+
+      $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : $visaData->country_name;
+      $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
 
       $visaFaqs = DB::table('visa_faqs')
       ->where('visa_faqs.language_id',env('APP_LANG'))
@@ -128,8 +129,6 @@ class VisaController extends Controller
     {
         $countryFound = false;
         $default_currency = env('APP_DEFAULT_CURRENCY');
-        $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : env('APP_DEFAULT_COUNTRY');
-        $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
 
         $visaData = DB::table('visa_pages')
         ->select(
@@ -159,6 +158,8 @@ class VisaController extends Controller
         if(!isset($visaData->id)){
           return redirect('/');
         }
+        $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : $visaData->country_name;
+        $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
 
         $visaFaqs = DB::table('visa_faqs')
         ->where('visa_faqs.language_id',env('APP_LANG'))
@@ -243,7 +244,7 @@ class VisaController extends Controller
         $allVisaData = [];
         $total_payment = 0.0;
         $default_currency = env('APP_DEFAULT_CURRENCY');
-        $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : env('APP_DEFAULT_COUNTRY');
+        $default_visa = isset($_COOKIE['go_country']) ? strtolower($_COOKIE['go_country']) : $request['visa_country_name'];
         $default_nationality = isset($_COOKIE['from_country']) ? strtolower($_COOKIE['from_country']) : env('APP_DEFAULT_COUNTRY');
 
         $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
@@ -279,20 +280,20 @@ class VisaController extends Controller
                         ->first();
 
         foreach ($tempVisaTable as $key => $value) {
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
 
           }
 
@@ -301,10 +302,10 @@ class VisaController extends Controller
         $temId = $this->generateBarcodeNumber();
         $orderId = env('APP_ORDER_PREFIX').$temId;
         $slug = Str::slug($orderId);
-        $visaData = [];
+        $visaDataSet = [];
         for ($i=1; $i <= $request['totalCount'] ; $i++) {
           if(isset($request['applicant_nationality'.$i])){
-              $visaData[] = [
+              $visaDataSet[] = [
                  "order_id" => $orderId,
                  "first_name" => $request['applicant_first_name'.$i],
                  "last_name" => $request['applicant_last_name'.$i],
@@ -318,10 +319,10 @@ class VisaController extends Controller
                  "applicant_phone" => $request['applicant_phone'.$i],
                  "passport_issue_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_issue_year'.$i].'-'.$request['applicant_passport_issue_month'.$i].'-'.$request['applicant_passport_issue_date'.$i])),
                  "passport_expiry_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_year'.$i].'-'.$request['applicant_passport_month'.$i].'-'.$request['applicant_passport_date'.$i])),
-                 "applicant_payment" => floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']]) ,
-                 "govt_fee" => isset($visaData->is_govt_apply) && $visaData->is_govt_apply==1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']):0.00 ,
+                 "applicant_payment" => floatval($allVisaData[strtolower($request['visaType'])]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']]) ,
+                 "govt_fee" => isset($visaData->is_govt_apply) && $visaData->is_govt_apply=='1' ? floatval($allVisaData[strtolower($request['visaType'])]['country'][$request['applicant_nationality'.$i]]['USD']['govt']):0.00 ,
               ];
-              $total_payment += floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']])+ (isset($visaData->is_govt_apply) && $visaData->is_govt_apply==1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']):0.00);
+              $total_payment += floatval($allVisaData[strtolower($request['visaType'])]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']])+ (isset($visaData->is_govt_apply) && $visaData->is_govt_apply=='1' ? floatval($allVisaData[strtolower($request['visaType'])]['country'][$request['applicant_nationality'.$i]]['USD']['govt']):0.00);
             }
         }
 
@@ -339,7 +340,7 @@ class VisaController extends Controller
           "slug" => $slug,
           "total_payment" => $total_payment,
         ]);
-        DB::table("visa_apply_applicant")->insert($visaData);
+        DB::table("visa_apply_applicant")->insert($visaDataSet);
 
         $data = [
           'email' =>  $request['email'],
@@ -608,7 +609,6 @@ class VisaController extends Controller
                         ->where('route_visa.type_of_url',"visa")
                         ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
                         ->first();
-
         foreach ($tempVisaTable as $key => $value) {
           $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
           $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
@@ -632,7 +632,7 @@ class VisaController extends Controller
         $temId = $this->generateBarcodeNumber();
         $orderId = $visaDetail->order_id;
         $slug = $visaDetail->slug;
-        $visaData = [];
+        $visaDataSet = [];
 
         foreach ($visaApplicantDetail as $key => $value) {
           if(isset($request['applicant_nationality_update'.$value->id])){
@@ -650,9 +650,9 @@ class VisaController extends Controller
               "passport_issue_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_issue_year_update'.$value->id].'-'.$request['applicant_passport_issue_month_update'.$value->id].'-'.$request['applicant_passport_issue_date_update'.$value->id])),
               "passport_expiry_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_year_update'.$value->id].'-'.$request['applicant_passport_month_update'.$value->id].'-'.$request['applicant_passport_date_update'.$value->id])),
               "applicant_payment" => floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD'][$request['visa_process_type']]) ,
-              "govt_fee" => isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD']['govt']) : 0.00
+              "govt_fee" => (isset($visaData->is_govt_apply) && $visaData->is_govt_apply =='1') ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD']['govt']) : 0.00
             ]);
-            $total_payment += floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD'][$request['visa_process_type']])+ (isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD']['govt']) : 0.00);
+            $total_payment += floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD'][$request['visa_process_type']])+ ((isset($visaData->is_govt_apply) && $visaData->is_govt_apply == '1') ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality_update'.$value->id]]['USD']['govt']) : 0.00);
 
           }else{
             DB::table("visa_apply_applicant")->where('id',$value->id)->delete();
@@ -661,7 +661,7 @@ class VisaController extends Controller
 
         for ($i=1; $i <= $request['totalCount'] ; $i++) {
           if(isset($request['applicant_nationality'.$i])){
-              $visaData[] = [
+              $visaDataSet[] = [
                  "order_id" => $orderId,
                  "first_name" => $request['applicant_first_name'.$i],
                  "last_name" => $request['applicant_last_name'.$i],
@@ -676,9 +676,9 @@ class VisaController extends Controller
                  "passport_issue_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_issue_year'.$i].'-'.$request['applicant_passport_issue_month'.$i].'-'.$request['applicant_passport_issue_date'.$i])),
                  "passport_expiry_date" => date('Y-m-d H:m:s',strtotime($request['applicant_passport_year'.$i].'-'.$request['applicant_passport_month'.$i].'-'.$request['applicant_passport_date'.$i])),
                  "applicant_payment" => floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']]) ,
-                 "govt_fee" => isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']) : 0.00 ,
+                 "govt_fee" => (isset($visaData->is_govt_apply) && $visaData->is_govt_apply == '1') ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']) : 0.00 ,
               ];
-              $total_payment += floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']])+ (isset($visaData->is_govt_apply) && $visaData->is_govt_apply == 1 ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']) : 0.00);
+              $total_payment += floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD'][$request['visa_process_type']])+ ((isset($visaData->is_govt_apply) && $visaData->is_govt_apply == '1') ? floatval($allVisaData[$request['visaType']]['country'][$request['applicant_nationality'.$i]]['USD']['govt']) : 0.00);
             }
         }
 
@@ -696,7 +696,7 @@ class VisaController extends Controller
           "slug" => $slug,
           "total_payment" => $total_payment,
         ]);
-        DB::table("visa_apply_applicant")->insert($visaData);
+        DB::table("visa_apply_applicant")->insert($visaDataSet);
 
         $data = [
           'email' =>  $request['email'],
