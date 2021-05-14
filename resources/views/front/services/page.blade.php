@@ -69,9 +69,9 @@
                    @endforeach
                  </select>
              </div>
-              <div class="fees-box days-box">
-                  <span><img src="images/rush.png">{{$servicesData->services_type_title}}:</span>
-                  <span><b></b></span>
+             <div class="fees-box days-box">
+                 <span><img src="images/rush.png">{{env('APP_VISA_TYPE')}}:</span>
+                 <span><b>{{isset($servicesDurationData[strtolower(env('APP_VISA_TYPE'))]) ? $servicesDurationData[strtolower(env('APP_VISA_TYPE'))] : ""}}</b></span>
             </div>
             @if(isset($servicesData->payment_method) && $servicesData->payment_method == 1)
              <a href="{{url('/services-online/'.$servicesData->visa_url)}}">{{$servicesData->services_main_button}}</a>
@@ -79,22 +79,24 @@
               <button class="btn" data-toggle="modal" data-target="#contactModal"  onClick="contactBox()"  style="margin-top:10px;">Contact Us</button>
             @endif
           </div>
-          <h5 class="top-articles-heading">{{$servicesData->services_popular_title}}</h5>
-          <ul class="top-articles" id="currency">
-             <?php $count = 1; ?>
-              @foreach($allServicesData[$default_country]['USD'] as $key => $val)
-              <li>
-                <a>{{$key}}
-                  <select class="currency" value="USD">
-                    @foreach($allServicesData[$default_country] as $key1 => $val1)
-                      <option value="{{$key1}}" table="{{$key}}" count="{{$count}}" {{$key1 == "USD" ? "selected" : ""}}>{{$key1}}</option>
-                    @endforeach
-                  </select>
-                  <span id="{{$count++}}">{{$val}}</span>
-                </a>
-              </li>
-              @endforeach
-          </ul>
+            @if($servicesData->is_price_show == 1)
+            <h5 class="top-articles-heading">{{$servicesData->services_popular_title}}</h5>
+            <ul class="top-articles" id="currency">
+               <?php $count = 1; ?>
+                @foreach($allServicesData[$default_country]['USD'] as $key => $val)
+                <li>
+                  <a>{{$key}}
+                    <select class="currency" value="USD">
+                      @foreach($allServicesData[$default_country] as $key1 => $val1)
+                        <option value="{{$key1}}" table="{{$key}}" count="{{$count}}" {{$key1 == "USD" ? "selected" : ""}}>{{$key1}}</option>
+                      @endforeach
+                    </select>
+                    <span id="{{$count++}}">{{$val}}</span>
+                  </a>
+                </li>
+                @endforeach
+            </ul>
+            @endif
       </div>
       @endif
   </div>
@@ -103,7 +105,7 @@
 <!-- Whatsapp Btn -->
 @if(isset($servicesData->whatsapp_status) && $servicesData->whatsapp_status == 1 && isset($servicesData->whatsapp_number) && $servicesData->whatsapp_number != "")
   <div class="whatsapp-btn">
-      <a href="https://api.whatsapp.com/send?phone={{$servicesData->whatsapp_number}}&text=Hi, I contacted you Through your website."><i class="fab fa-whatsapp"></i></a>
+      <a href="https://api.whatsapp.com/send?phone={{$servicesData->whatsapp_number}}&text={{$servicesData->whatsapp_text}}"><i class="fab fa-whatsapp"></i></a>
   </div>
 @endif
 @if(isset($servicesData->call_status) && $servicesData->call_status == 1 && isset($servicesData->call_number) && $servicesData->call_number != "")

@@ -96,22 +96,21 @@ class VisaController extends Controller
       foreach ($tempVisaTable as $key => $value) {
         $govt_fees = 0;
         if($visaData->is_govt_apply == 1){
-          $govt_fees  = number_format($value->govt_fee,2);
+          $govt_fees  =sprintf("%.2f",$value->govt_fee);
         }
-        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = $govt_fees + number_format($value->standard_usd_price,2);
-        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = $govt_fees + number_format($value->rush_usd_price,2);
-        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = $govt_fees + number_format($value->express_usd_price,2);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = $govt_fees + sprintf("%.2f",$value->standard_usd_price);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = $govt_fees + sprintf("%.2f",$value->rush_usd_price);
+        $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = $govt_fees + sprintf("%.2f",$value->express_usd_price);
         $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = $govt_fees;
 
         foreach ($currencyRate as $key2 => $value2) {
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = sprintf("%.2f", $value2->rate * $value->standard_usd_price) + $govt_fees;
 
-          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2) + $govt_fees;
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] =  sprintf("%.2f", $value2->rate * $value->rush_usd_price)+ $govt_fees;
 
-          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2) + $govt_fees;
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = sprintf("%.2f", $value2->rate * $value->express_usd_price) + $govt_fees;
 
-          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2) + $govt_fees;
-
-          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2) + $govt_fees;
+          $allVisaData[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = sprintf("%.2f", $value2->rate * $value->govt_fee);
 
         }
 
@@ -202,35 +201,35 @@ class VisaController extends Controller
               $tempCheck = true;
               $default_visa_type = $value->visa_type_name;
           }
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
           //-------------------------------------------------------------------------------------------------------------------
 
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
             //-------------------------------------------------------------------------------------------------------------------
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
           }
 
         }
@@ -280,20 +279,20 @@ class VisaController extends Controller
                         ->first();
 
         foreach ($tempVisaTable as $key => $value) {
-          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaData[strtolower($value->visa_type_name)]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
           }
 
@@ -530,35 +529,35 @@ class VisaController extends Controller
         $tempCheck = false;
         foreach ($tempVisaTable as $key => $value) {
 
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
           //-------------------------------------------------------------------------------------------------------------------
 
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
             //-------------------------------------------------------------------------------------------------------------------
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaDataAlter[strtolower($value->nationality_name)][$value->visa_type_name][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
           }
 
         }
@@ -610,20 +609,20 @@ class VisaController extends Controller
                         ->join("route_visa","route_visa.visa_id","=","visa_pages.id")
                         ->first();
         foreach ($tempVisaTable as $key => $value) {
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allVisaData[$value->visa_type_name]['country'][strtolower($value->nationality_name)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
           }
 

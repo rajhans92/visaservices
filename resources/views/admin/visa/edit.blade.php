@@ -200,16 +200,6 @@
                 @endif
             </div>
             <div class="col-xs-4 form-group">
-                {!! Form::label('whatsapp_text', 'Whatsapp Text*', ['class' => 'control-label']) !!}
-                {!! Form::text('whatsapp_text', old('whatsapp_text'), ['class' => 'form-control',"maxlength"=>250, 'placeholder' => '', 'required' => '']) !!}
-                <p class="help-block"></p>
-                @if($errors->has('whatsapp_text'))
-                    <p class="help-block">
-                        {{ $errors->first('whatsapp_text') }}
-                    </p>
-                @endif
-            </div>
-            <div class="col-xs-4 form-group">
                 {!! Form::label('whatsapp_status', 'Show Whatsapp No.*', ['class' => 'control-label']) !!}
                 <select name="whatsapp_status" class="form-control whatsapp_status">
                    <option value="0" {{$visaData->whatsapp_status == 0 ? "selected":""}}>No</option>

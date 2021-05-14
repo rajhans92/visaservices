@@ -25,6 +25,7 @@
                 </thead>
 
                 <tbody>
+                @if(!$visaData->isEmpty())
                   @foreach($visaData as $key => $val)
                     <tr data-entry-id="">
                         <td></td>
@@ -32,11 +33,12 @@
                         <td>{{$val->email}}</td>
                         <td>{{$val->contact_number}}</td>
                         <td>{{$val->message}}</td>
-                        <td>{{$val->visa_country}}</td>
+                        <td>{{$val->nationality}}</td>
                         <td>{{date('d-m-Y',strtotime($val->submission_date))}}</td>
 
                     </tr>
                   @endforeach
+                @endif
                 </tbody>
             </table>
         </div>

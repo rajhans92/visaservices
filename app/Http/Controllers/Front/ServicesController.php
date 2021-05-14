@@ -50,6 +50,11 @@ class ServicesController extends Controller
         'services_pages.meta_title as meta_title',
         'services_pages.meta_description as meta_description',
         'services_pages.meta_keywords as meta_keywords',
+        'services_pages.standard_time_duration as standard_time_duration',
+        'services_pages.rush_time_duration as rush_time_duration',
+        'services_pages.express_time_duration as express_time_duration',
+        'services_pages.whatsapp_text as whatsapp_text',
+        'services_pages.is_price_show as is_price_show',
         'route_visa.visa_url as visa_url'
         )
       ->where('services_pages.language_id',env('APP_LANG'))
@@ -66,6 +71,12 @@ class ServicesController extends Controller
       $allServicesData = [];
       $currencyRate = DB::table('currency_rate')->where('language_id',env('APP_LANG'))->get();
 
+      $servicesDurationData = [
+        "standard" => $servicesData->standard_time_duration,
+        "rush" => $servicesData->rush_time_duration,
+        "express" => $servicesData->express_time_duration,
+      ];
+
       $tempServicesTable = DB::table('services_country_price')
                       ->where('services_id',$servicesData->id)
                       ->where('language_id',env('APP_LANG'))
@@ -73,17 +84,17 @@ class ServicesController extends Controller
 
       foreach ($tempServicesTable as $key => $value) {
 
-        $allServicesData[strtolower($value->nationality)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-        $allServicesData[strtolower($value->nationality)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-        $allServicesData[strtolower($value->nationality)]['USD']['express'] = number_format($value->express_usd_price,2);
+        $allServicesData[strtolower($value->nationality)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+        $allServicesData[strtolower($value->nationality)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+        $allServicesData[strtolower($value->nationality)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
 
         foreach ($currencyRate as $key2 => $value2) {
 
-          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+          $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
 
         }
@@ -98,7 +109,7 @@ class ServicesController extends Controller
       if(isset($tempServicesTable[0])){
         $isAvailable = true;
       }
-      return view('front.services.page',compact('servicesData','servicesFaqs','allServicesData','isAvailable','default_country'));
+      return view('front.services.page',compact('servicesData','servicesFaqs','servicesDurationData','allServicesData','isAvailable','default_country'));
 
     }
 
@@ -128,6 +139,9 @@ class ServicesController extends Controller
               'services_pages.meta_title as meta_title',
               'services_pages.meta_description as meta_description',
               'services_pages.meta_keywords as meta_keywords',
+              'services_pages.standard_time_duration as standard_time_duration',
+              'services_pages.rush_time_duration as rush_time_duration',
+              'services_pages.express_time_duration as express_time_duration',
               'route_visa.visa_url as visa_url'
               )
             ->where('services_pages.language_id',env('APP_LANG'))
@@ -154,20 +168,20 @@ class ServicesController extends Controller
                                   ->get();
             foreach ($tempServicesTable as $key => $value) {
 
-              $allServicesData[strtolower($value->nationality)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-              $allServicesData[strtolower($value->nationality)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-              $allServicesData[strtolower($value->nationality)]['USD']['express'] = number_format($value->express_usd_price,2);
-              $allServicesData[strtolower($value->nationality)]['USD']['govt'] = number_format($value->govt_fee,2);
+              $allServicesData[strtolower($value->nationality)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+              $allServicesData[strtolower($value->nationality)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+              $allServicesData[strtolower($value->nationality)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+              $allServicesData[strtolower($value->nationality)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
               foreach ($currencyRate as $key2 => $value2) {
 
-                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+                $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
               }
             }
@@ -210,6 +224,9 @@ class ServicesController extends Controller
                'services_pages.is_govt_apply as is_govt_apply',
                'services_pages.meta_title as meta_title',
                'services_pages.meta_description as meta_description',
+               'services_pages.standard_time_duration as standard_time_duration',
+               'services_pages.rush_time_duration as rush_time_duration',
+               'services_pages.express_time_duration as express_time_duration',
                'services_pages.meta_keywords as meta_keywords'
                )
              ->where('services_pages.language_id',env('APP_LANG'))
@@ -228,20 +245,20 @@ class ServicesController extends Controller
 
         foreach ($tempServicesTable as $key => $value) {
 
-          $allServicesData[strtolower($value->nationality)]['USD']['standard']= number_format($value->standard_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['rush']    = number_format($value->rush_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['govt']    = number_format($value->govt_fee,2);
+          $allServicesData[strtolower($value->nationality)]['USD']['standard']= sprintf("%.2f",$value->standard_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['rush']    = sprintf("%.2f",$value->rush_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['govt']    = sprintf("%.2f",$value->govt_fee);
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
           }
         }
@@ -334,6 +351,9 @@ class ServicesController extends Controller
         'services_pages.isPassportDocRequired as isPassportDocRequired',
         'services_pages.isApplicantPhotoRequired as isApplicantPhotoRequired',
         'services_pages.isOtherDocRequired as isOtherDocRequired',
+        'services_pages.standard_time_duration as standard_time_duration',
+        'services_pages.rush_time_duration as rush_time_duration',
+        'services_pages.express_time_duration as express_time_duration',
         'route_visa.visa_url as visa_url'
         )
       ->where('services_pages.language_id',env('APP_LANG'))
@@ -435,6 +455,9 @@ class ServicesController extends Controller
           'services_pages.meta_title as meta_title',
           'services_pages.meta_description as meta_description',
           'services_pages.meta_keywords as meta_keywords',
+          'services_pages.standard_time_duration as standard_time_duration',
+          'services_pages.rush_time_duration as rush_time_duration',
+          'services_pages.express_time_duration as express_time_duration',
           'route_visa.visa_url as visa_url'
           )
         ->where('services_pages.language_id',env('APP_LANG'))
@@ -461,20 +484,20 @@ class ServicesController extends Controller
                               ->get();
         foreach ($tempServicesTable as $key => $value) {
 
-          $allServicesData[strtolower($value->nationality)]['USD']['standard'] = number_format($value->standard_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['rush'] = number_format($value->rush_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['express'] = number_format($value->express_usd_price,2);
-          $allServicesData[strtolower($value->nationality)]['USD']['govt'] = number_format($value->govt_fee,2);
+          $allServicesData[strtolower($value->nationality)]['USD']['standard'] = sprintf("%.2f",$value->standard_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['rush'] = sprintf("%.2f",$value->rush_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+          $allServicesData[strtolower($value->nationality)]['USD']['govt'] = sprintf("%.2f",$value->govt_fee);
 
           foreach ($currencyRate as $key2 => $value2) {
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+            $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
           }
         }
@@ -523,6 +546,9 @@ class ServicesController extends Controller
           'services_pages.meta_title as meta_title',
           'services_pages.meta_description as meta_description',
           'services_pages.meta_keywords as meta_keywords',
+          'services_pages.standard_time_duration as standard_time_duration',
+          'services_pages.rush_time_duration as rush_time_duration',
+          'services_pages.express_time_duration as express_time_duration',
           'route_visa.visa_url as visa_url'
           )
         ->where('services_pages.language_id',env('APP_LANG'))
@@ -544,20 +570,20 @@ class ServicesController extends Controller
 
           foreach ($tempServicesTable as $key => $value) {
 
-            $allServicesData[strtolower($value->nationality)]['USD']['standard']= number_format($value->standard_usd_price,2);
-            $allServicesData[strtolower($value->nationality)]['USD']['rush']    = number_format($value->rush_usd_price,2);
-            $allServicesData[strtolower($value->nationality)]['USD']['express'] = number_format($value->express_usd_price,2);
-            $allServicesData[strtolower($value->nationality)]['USD']['govt']    = number_format($value->govt_fee,2);
+            $allServicesData[strtolower($value->nationality)]['USD']['standard']= sprintf("%.2f",$value->standard_usd_price);
+            $allServicesData[strtolower($value->nationality)]['USD']['rush']    = sprintf("%.2f",$value->rush_usd_price);
+            $allServicesData[strtolower($value->nationality)]['USD']['express'] = sprintf("%.2f",$value->express_usd_price);
+            $allServicesData[strtolower($value->nationality)]['USD']['govt']    = sprintf("%.2f",$value->govt_fee);
 
             foreach ($currencyRate as $key2 => $value2) {
 
-              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = number_format($value2->rate * $value->standard_usd_price,2);
+              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['standard'] = sprintf("%.2f",$value2->rate * $value->standard_usd_price);
 
-              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = number_format($value2->rate * $value->rush_usd_price,2);
+              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['rush'] = sprintf("%.2f",$value2->rate * $value->rush_usd_price);
 
-              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = number_format($value2->rate * $value->express_usd_price,2);
+              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['express'] = sprintf("%.2f",$value2->rate * $value->express_usd_price);
 
-              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = number_format($value2->rate * $value->govt_fee,2);
+              $allServicesData[strtolower($value->nationality)][strtoupper($value2->code)]['govt'] = sprintf("%.2f",$value2->rate * $value->govt_fee);
 
             }
           }
@@ -601,7 +627,7 @@ class ServicesController extends Controller
 
     public function serviceContactUs(Request $request){
         $data = ["status"=>true];
-        DB::table('service_contact_us')->insert([
+        DB::table('services_contact_us')->insert([
             'language_id' => env('APP_LANG'),
             'name' => $request['name'],
             'email' => $request['email'],

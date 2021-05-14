@@ -72,6 +72,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::post('/services/data-entry-upload/{services_id}', 'Admin\ServicesController@dataEntrySave')->name('services.dataEntrySave');
     Route::get('/service-contact/list', 'Admin\ServicesController@contactList')->name('services.contactList');
 
+    Route::get('/service-application/list', 'Admin\ServicesController@applicationList')->name('services.applicationList');
+    Route::get('/service-application/detail/{application_id}', 'Admin\ServicesController@applicationDetail')->name('services.applicationDetail');
+
 
     Route::get('/visa', 'Admin\VisaController@index')->name('visa.index');
     Route::get('/visa/add', 'Admin\VisaController@createVisa')->name('visa.create');

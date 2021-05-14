@@ -76,7 +76,12 @@ class ServicesController extends Controller
            'call_status' => $request['call_status'],
            'whatsapp_number' => $request['whatsapp_number'],
            'whatsapp_status' => $request['whatsapp_status'],
+           'is_price_show' => $request['is_price_show'],
            'call_number' => $request['call_number'],
+           'whatsapp_text' => $request['whatsapp_text'],
+           'standard_time_duration' => $request['standard_time_duration'],
+           'rush_time_duration' => $request['rush_time_duration'],
+           'express_time_duration' => $request['express_time_duration'],
            'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
            'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
            'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0,
@@ -159,6 +164,11 @@ class ServicesController extends Controller
           'whatsapp_number' => $request['whatsapp_number'],
           'whatsapp_status' => $request['whatsapp_status'],
           'call_number' => $request['call_number'],
+          'whatsapp_text' => $request['whatsapp_text'],
+          'is_price_show' => $request['is_price_show'],
+          'standard_time_duration' => $request['standard_time_duration'],
+          'rush_time_duration' => $request['rush_time_duration'],
+          'express_time_duration' => $request['express_time_duration'],
           'isPassportDocRequired' => isset($request['isPassportDocRequired']) ? $request['isPassportDocRequired'] : 0,
           'isApplicantPhotoRequired' => isset($request['isApplicantPhotoRequired']) ? $request['isApplicantPhotoRequired'] : 0,
           'isOtherDocRequired' => isset($request['isOtherDocRequired']) ? $request['isOtherDocRequired'] : 0,
@@ -222,6 +232,12 @@ class ServicesController extends Controller
         'services_pages.call_number as call_number',
         'services_pages.call_status as call_status',
         'services_pages.is_govt_apply as is_govt_apply',
+        'services_pages.is_price_show as is_price_show',
+        'services_pages.whatsapp_text as whatsapp_text',
+        'services_pages.standard_time_duration as standard_time_duration',
+        'services_pages.rush_time_duration as rush_time_duration',
+        'services_pages.express_time_duration as express_time_duration',
+
         'route_visa.visa_url as visa_url'
         )
       ->where('services_pages.language_id',env('APP_LANG'))
@@ -403,9 +419,26 @@ class ServicesController extends Controller
 
     public function contactList()
     {
-        $visaData = DB::table("service_contact_us")->orderBy('id', 'DESC')
+        $visaData = DB::table("services_contact_us")->orderBy('id', 'DESC')
         ->get();
         return view('admin.services.contactList',compact('visaData'));
     }
 
+    public function applicationList(){
+      $visaData = DB::table("services_apply_detail")->orderBy('id', 'DESC')
+      ->get();
+      return view('admin.services.applicationList',compact('visaData'));
+    }
+
+    public function applicationDetail($application_id){
+        $visaData = DB::table("services_apply_detail")
+        ->where("services_apply_detail.id",$application_id)
+        ->first();
+
+        if(!isset($visaData->id)){
+           return redirect()->back()->with('success', 'No Data available');
+        }
+
+        return view('admin.services.applicationDetail',compact('visaData'));
+    }
 }

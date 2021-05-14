@@ -75,17 +75,17 @@
                       <div class="processing-time">
                           <input type="radio" name="visa_process_type" checked="checked" class="visa_process_type" id="standard" value="standard">
               <span class="checkmark"></span>
-                          <b>Standard <br><span>5 Days</span></b>
+                          <b>Standard <br><span>{{$servicesData->standard_time_duration}}</span></b>
                       </div>
                       <div class="processing-time">
                           <input type="radio" id="rush" class="visa_process_type" name="visa_process_type" value="rush">
               <span class="checkmark"></span>
-                              <b>Rush <br><span>48 Hours</span></b>
+                              <b>Rush <br><span>{{$servicesData->rush_time_duration}}</span></b>
                       </div>
                       <div class="processing-time">
                           <input type="radio" name="visa_process_type" class="visa_process_type" value="express">
               <span class="checkmark"></span>
-                              <b>Express <br><span>24 Hours</span></b>
+                              <b>Express <br><span>{{$servicesData->express_time_duration}}</span></b>
                       </div>
                       </div>
                   </div>
