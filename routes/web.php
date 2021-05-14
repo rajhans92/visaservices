@@ -16,6 +16,7 @@ $this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineRevi
 $this->post("/apply-contact-us", 'Front\VisaController@applyContactUs')->name('apply.cotactUs');
 
 $this->post("/services-contact-us", 'Front\ServicesController@serviceContactUs')->name('service.cotactUs');
+
 $this->get("/services-online/{url}", 'Front\ServicesController@applyOnline');
 $this->post("/services-online", 'Front\ServicesController@applyOnlineSave')->name('services.save');
 $this->get("/services-online-review/{slug}", 'Front\ServicesController@applyOnlineReview')->name('services.review');

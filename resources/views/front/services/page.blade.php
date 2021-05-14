@@ -181,7 +181,7 @@ $(function(){
         if(name.length > 0 && email.length > 0 && mobile.length > 0 && msg.length > 0){
           $.ajax({
             type: "POST",
-            url: '{{url("/service-contact-us")}}',
+            url: '{{url("/services-contact-us")}}',
             data: {
               "_token": "{{ csrf_token() }}",
               "name":name,"email":email,"mobile":mobile,"msg":msg,"country":default_country
