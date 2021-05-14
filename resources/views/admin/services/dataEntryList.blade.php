@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>Visa Country</th>
+                        <th>Nationality</th>
                         <th>Govt Fee</th>
                         <th>Standard Price</th>
                         <th>Rush Price</th>
@@ -30,7 +30,7 @@
                   @foreach($servicesType as $key => $val)
                     <tr data-entry-id="">
                         <td></td>
-                        <td>{{$val->visa_country_name}}</td>
+                        <td>{{$val->nationality}}</td>
                         <td>{{$val->govt_fee}}</td>
                         <td>{{$val->standard_usd_price}}</td>
                         <td>{{$val->rush_usd_price}}</td>
