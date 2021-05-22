@@ -99,6 +99,14 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaUpload')->name('visa.typeOfVisaUpload');
     Route::post('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaSave')->name('visa.typeOfVisaSave');
 
+    Route::get('/embassies', 'Admin\EmbassiesController@embassiesList')->name('embassies.embassiesList');
+    Route::get('/embassies/upload', 'Admin\EmbassiesController@embassiesUpload')->name('embassies.embassiesUpload');
+    Route::post('/embassies/upload', 'Admin\EmbassiesController@embassiesSave')->name('embassies.embassiesSave');
+    Route::get('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesEdit')->name('embassies.embassiesEdit');
+    Route::post('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesUpdate')->name('embassies.embassiesUpdate');
+    Route::delete('/embassies/delete/{embassies_id}', 'Admin\EmbassiesController@embassiesDelete')->name('embassies.embassiesDelete');
+
+
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');
     Route::get('/country/add', 'Admin\CountryController@createCountry')->name('country.create');
     Route::post('/country/add', 'Admin\CountryController@storeCountry')->name('country.create');

@@ -145,6 +145,26 @@
               </ul>
             </li>
 
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span class="title">Embassies Management</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="{{ $request->segment(2) == 'embassies' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.embassies.embassiesList')}}">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Embassies
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </li>
+
 
         </ul>
     </section>
