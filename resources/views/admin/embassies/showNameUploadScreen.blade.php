@@ -12,7 +12,7 @@
         <div class="panel-body">
             <div class="row">
               <div class="col-xs-4 form-group">
-                <a href="{{ asset('/s3/embassies-sheet.xlsx') }}" class="btn btn-primary">Download Formatted Sheet</a>
+                <a href="{{ asset('/s3/embassies-name.xlsx') }}" class="btn btn-primary">Download Formatted Sheet</a>
               </div>
               <div class="col-xs-4 form-group">
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="panel-body">
-          <form action="{{route('admin.embassies.embassiesSave',[$embassies_id])}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('admin.embassies.embassiesNameSave')}}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-xs-4 form-group">
@@ -48,7 +48,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4 form-group">
-              <a href="{{ route('admin.embassies.embassiesList',[$embassies_id]) }}" class="btn btn-default">Back</a>
+              <a href="{{ route('admin.embassies.index') }}" class="btn btn-default">Back</a>
             </div>
           </div>
         </div>

@@ -155,7 +155,7 @@
               </a>
               <ul class="treeview-menu">
                 <li class="{{ $request->segment(2) == 'embassies' ? 'active active-sub' : '' }}">
-                    <a href="{{route('admin.embassies.embassiesList')}}">
+                    <a href="{{route('admin.embassies.index')}}">
                         <i class="fa fa-user"></i>
                         <span class="title">
                             Embassies

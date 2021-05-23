@@ -2,9 +2,9 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <h3 class="page-title">Embassies</h3>
+    <h3 class="page-title">Embassies Name</h3>
     <p>
-        <a href="{{ route('admin.embassies.embassiesUpload',[$embassies_id]) }}" class="btn btn-success">Upload Embassies</a>
+        <a href="{{ route('admin.embassies.embassiesNameUpload') }}" class="btn btn-success">Upload Embassies</a>
 
     </p>
 
@@ -18,14 +18,8 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>Embassy In</th>
-                        <th>City</th>
-                        <th>Heading</th>
-                        <th>Address</th>
-                        <th>contact us</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Map Location</th>
+                        <th>Embassy Name</th>
+                        <th>Embassy URL</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -34,25 +28,16 @@
                   @foreach($embassiesList as $key => $val)
                     <tr data-entry-id="">
                         <td></td>
-                        <td>{{$val->embassy_in}}</td>
-                        <td>{{$val->embassy_city}}</td>
-                        <td>{{$val->heading}}</td>
-                        <td>{{$val->address}}</td>
-                        <td>{{$val->contact_us}}</td>
-                        <td>{{$val->email_id}}</td>
-                        <td>{{$val->website}}</td>
-                        @if($val->map_location != "")
-                        <td><a hreef='{{$val->map_location}}'>Map</a></td>
-                        @else
-                        <td>NA</td>
-                        @endif
+                        <td>{{$val->name}}</td>
+                        <td>{{$val->url}}</td>
                         <td>
-                          <a href="{{ route('admin.embassies.embassiesEdit',[$embassies_id,$val->id]) }}" class="btn btn-xs btn-info">Edit</a>
+                          <a href="{{ route('admin.embassies.embassiesList',[$val->id]) }}" class="btn btn-xs btn-success">Detail</a>
+                          <a href="{{ route('admin.embassies.embassiesNameEdit',[$val->id]) }}" class="btn btn-xs btn-info">Edit</a>
                           {!! Form::open(array(
                               'style' => 'display: inline-block;',
                               'method' => 'DELETE',
                               'onsubmit' => "return confirm('Are you sure?');",
-                              'route' => ['admin.embassies.embassiesDelete', $embassies_id,$val->id])) !!}
+                              'route' => ['admin.embassies.embassiesNameDelete', $val->id])) !!}
                           {!! Form::submit('Delete', array('class' => 'btn btn-xs btn-danger')) !!}
                           {!! Form::close() !!}
                         </td>

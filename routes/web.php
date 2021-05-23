@@ -99,12 +99,20 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaUpload')->name('visa.typeOfVisaUpload');
     Route::post('/visa/type-of-visa-upload/{visa_id}', 'Admin\VisaController@typeOfVisaSave')->name('visa.typeOfVisaSave');
 
-    Route::get('/embassies', 'Admin\EmbassiesController@embassiesList')->name('embassies.embassiesList');
-    Route::get('/embassies/upload', 'Admin\EmbassiesController@embassiesUpload')->name('embassies.embassiesUpload');
-    Route::post('/embassies/upload', 'Admin\EmbassiesController@embassiesSave')->name('embassies.embassiesSave');
-    Route::get('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesEdit')->name('embassies.embassiesEdit');
-    Route::post('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesUpdate')->name('embassies.embassiesUpdate');
-    Route::delete('/embassies/delete/{embassies_id}', 'Admin\EmbassiesController@embassiesDelete')->name('embassies.embassiesDelete');
+    Route::get('/embassies', 'Admin\EmbassiesController@index')->name('embassies.index');
+    Route::get('/embassies/upload', 'Admin\EmbassiesController@embassiesNameUpload')->name('embassies.embassiesNameUpload');
+    Route::post('/embassies/upload', 'Admin\EmbassiesController@embassiesNameSave')->name('embassies.embassiesNameSave');
+    Route::get('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesNameEdit')->name('embassies.embassiesNameEdit');
+    Route::post('/embassies/edit/{embassies_id}', 'Admin\EmbassiesController@embassiesNameUpdate')->name('embassies.embassiesNameUpdate');
+    Route::delete('/embassies/delete/{embassies_id}', 'Admin\EmbassiesController@embassiesNameDelete')->name('embassies.embassiesNameDelete');
+
+
+    Route::get('/embassies/{embassies_id}', 'Admin\EmbassiesController@embassiesList')->name('embassies.embassiesList');
+    Route::get('/embassies/upload/{embassies_id}', 'Admin\EmbassiesController@embassiesUpload')->name('embassies.embassiesUpload');
+    Route::post('/embassies/upload/{embassies_id}', 'Admin\EmbassiesController@embassiesSave')->name('embassies.embassiesSave');
+    Route::get('/embassies/edit/{embassies_id}/{id}', 'Admin\EmbassiesController@embassiesEdit')->name('embassies.embassiesEdit');
+    Route::post('/embassies/edit/{embassies_id}/{id}', 'Admin\EmbassiesController@embassiesUpdate')->name('embassies.embassiesUpdate');
+    Route::delete('/embassies/delete/{embassies_id}/{id}', 'Admin\EmbassiesController@embassiesDelete')->name('embassies.embassiesDelete');
 
 
     Route::get('/country', 'Admin\CountryController@index')->name('country.index');

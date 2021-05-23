@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="page-title">Embassies</h3>
 
-    {!! Form::model($embassiesDetail, ['method' => 'POST', 'route' => ['admin.embassies.embassiesEdit',$embassiesDetail->id], 'files'=>true]) !!}
+    {!! Form::model($embassiesDetail, ['method' => 'POST', 'route' => ['admin.embassies.embassiesEdit',$embassies_id,$embassiesDetail->id], 'files'=>true]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -13,22 +13,22 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4 form-group">
-                {!! Form::label('embassy_of', 'Embassy Of*', ['class' => 'control-label']) !!}
-                {!! Form::text('embassy_of', old('embassy_of'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
-                <p class="help-block"></p>
-                @if($errors->has('embassy_of'))
-                    <p class="help-block">
-                        {{ $errors->first('embassy_of') }}
-                    </p>
-                @endif
-            </div>
-            <div class="col-xs-4 form-group">
                 {!! Form::label('embassy_in', 'Embassy In*', ['class' => 'control-label']) !!}
                 {!! Form::text('embassy_in', old('embassy_in'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('embassy_in'))
                     <p class="help-block">
                         {{ $errors->first('embassy_in') }}
+                    </p>
+                @endif
+            </div>
+            <div class="col-xs-4 form-group">
+                {!! Form::label('embassy_city', 'Embassy City*', ['class' => 'control-label']) !!}
+                {!! Form::text('embassy_city', old('embassy_city'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                <p class="help-block"></p>
+                @if($errors->has('embassy_city'))
+                    <p class="help-block">
+                        {{ $errors->first('embassy_city') }}
                     </p>
                 @endif
             </div>
@@ -103,6 +103,6 @@
     </div>
 
     {!! Form::submit('Update', ['class' => 'btn btn-danger']) !!}
-    <a href="{{ route('admin.embassies.embassiesList') }}" class="btn btn-primary">Cancel</a>
+    <a href="{{ route('admin.embassies.embassiesList',$embassies_id) }}" class="btn btn-primary">Cancel</a>
     {!! Form::close() !!}
 @stop
