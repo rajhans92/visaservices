@@ -30,7 +30,7 @@ class EmbassiesController extends Controller
        $embassiesList = DB::table('embassies')
        ->get();
 
-       return view('admin.embassies.embassieslist',compact('embassiesList'));
+       return view('admin.embassies.embassiesList',compact('embassiesList'));
 
      }
 
