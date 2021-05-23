@@ -38,4 +38,18 @@ class EmbassiesController extends Controller
 
     }
 
+    public function embassiesListById(Request $request){
+      $uri = $request->path();
+      $embassy = DB::table('embassies')->where('url',$uri)->first();
+      if(!isset($embassy->id)){
+        return redirect()->back();
+      }
+      $data = [];
+      $data = DB::table('embassies')->get();
+      $embassyList = DB::table('embassies_detail')->where('embassies_id',$embassy->id)->get();
+
+      return view('front.embassies.detail',compact('embassyList','data','embassy'));
+
+    }
+
 }
