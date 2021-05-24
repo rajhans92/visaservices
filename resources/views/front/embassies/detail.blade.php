@@ -15,22 +15,22 @@
           <div class="select-country-dropdown">
               <select id="embassy_of">
                 @foreach($data as $key => $val)
-                  <option value="{{$val->id}}" {{strtolower($val->name) == strtolower($embassy->name) ? "selected" : ""}}>{{$val->name}}</option>
+                  <option value="{{$val->id}}" {{$val->id == $embassy->id ? "selected" : ""}}>{{$val->name}}</option>
                 @endforeach
               </select>
           </div>
           <div class="in-text">In</div>
           <div class="select-country-dropdown">
               <select id="embassy_in">
-                <option value="">Select Country</option>
-                @foreach($embassyList as $key => $val)
-                  <option value="{{$val->embassy_in}}">{{$val->embassy_in}}</option>
+                <option value="0">Select Country</option>
+                @foreach($embassyListData as $key => $val)
+                  <option value="{{$key}}">{{$val}}</option>
                 @endforeach
               </select>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-8" id="dataSetArea">
 
           @foreach($embassyList as $key => $val)
             <div class="apply-box">
@@ -164,6 +164,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+  let mainData = <?php echo json_encode($mainDataSet); ?>;
   $("#applyBtn").click(function(){
       let url = $("#secondDropdown").val();
 
@@ -181,6 +182,38 @@ $(document).ready(function(){
       if(url.length > 0)
         window.location = window.location.origin + '/'+ url;
 
+  });
+  $("#embassy_of").change(function(){
+       let id = $(this).val();
+       let temp = "<option value='0'>Select Country</option>";
+       let tempSet = '';
+       for (var key in mainData[id]) {
+          temp += "<option val='"+key+"'>"+key+"</option>";
+          for (var val in mainData[id][key]) {
+              tempSet += '<div class="apply-box"> <div class="apply-box-header"> <h2>'+mainData[id][key][val]['heading']+'</h2> <a href="#">REPORT CHANGES</a> </div> <div class="apply-box-info"> <div class="_cont"> <span>Address</span> <span>'+mainData[id][key][val]['address']+'</span> </div> <div class="_cont"> <span>Contact Us</span> <a href="tel:'+mainData[id][key][val]['contact_us']+'">'+mainData[id][key][val]['contact_us']+'</a> </div> <div class="_cont"> <span>Website</span> <a href="'+mainData[id][key][val]['website']+'">'+mainData[id][key][val]['website']+'</a> </div> <div class="_cont"> <span>Email Address</span> <a href="'+mainData[id][key][val]['email_id']+'">'+mainData[id][key][val]['email_id']+'</a> </div> <div class="_cont"> <span>Map location</span> <a href="'+mainData[id][key][val]['map_location']+'">click here</a> </div> </div> </div>';
+          }
+       }
+       $("#embassy_in").html(temp);
+       $("#dataSetArea").html(tempSet);
+
+
+  });
+  $("#embassy_in").change(function(){
+    let id = $("#embassy_of").val();
+    let key = $(this).val();
+    let tempSet = '';
+    if(key != 0){
+       for (var val in mainData[id][key]) {
+           tempSet += '<div class="apply-box"> <div class="apply-box-header"> <h2>'+mainData[id][key][val]['heading']+'</h2> <a href="#">REPORT CHANGES</a> </div> <div class="apply-box-info"> <div class="_cont"> <span>Address</span> <span>'+mainData[id][key][val]['address']+'</span> </div> <div class="_cont"> <span>Contact Us</span> <a href="tel:'+mainData[id][key][val]['contact_us']+'">'+mainData[id][key][val]['contact_us']+'</a> </div> <div class="_cont"> <span>Website</span> <a href="'+mainData[id][key][val]['website']+'">'+mainData[id][key][val]['website']+'</a> </div> <div class="_cont"> <span>Email Address</span> <a href="'+mainData[id][key][val]['email_id']+'">'+mainData[id][key][val]['email_id']+'</a> </div> <div class="_cont"> <span>Map location</span> <a href="'+mainData[id][key][val]['map_location']+'">click here</a> </div> </div> </div>';
+       }
+     }else{
+       for (let key in mainData[id]) {
+          for (var val in mainData[id][key]) {
+              tempSet += '<div class="apply-box"> <div class="apply-box-header"> <h2>'+mainData[id][key][val]['heading']+'</h2> <a href="#">REPORT CHANGES</a> </div> <div class="apply-box-info"> <div class="_cont"> <span>Address</span> <span>'+mainData[id][key][val]['address']+'</span> </div> <div class="_cont"> <span>Contact Us</span> <a href="tel:'+mainData[id][key][val]['contact_us']+'">'+mainData[id][key][val]['contact_us']+'</a> </div> <div class="_cont"> <span>Website</span> <a href="'+mainData[id][key][val]['website']+'">'+mainData[id][key][val]['website']+'</a> </div> <div class="_cont"> <span>Email Address</span> <a href="'+mainData[id][key][val]['email_id']+'">'+mainData[id][key][val]['email_id']+'</a> </div> <div class="_cont"> <span>Map location</span> <a href="'+mainData[id][key][val]['map_location']+'">click here</a> </div> </div> </div>';
+          }
+       }
+     }
+    $("#dataSetArea").html(tempSet);
   });
 });
 </script>

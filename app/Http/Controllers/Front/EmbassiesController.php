@@ -48,7 +48,22 @@ class EmbassiesController extends Controller
       $data = DB::table('embassies')->get();
       $embassyList = DB::table('embassies_detail')->where('embassies_id',$embassy->id)->get();
 
+      $embassyListData = [];
+      foreach ($embassyList as $key => $value) {
+        // code...
+        $embassyListData[$value->embassy_in] = $value->embassy_in;
+      }
 
+      $mainDataSet = [];
+      foreach ($data as $key => $value) {
+          $temp = DB::table('embassies_detail')->where('embassies_id',$value->id)->get();
+          $tempData = [];
+          foreach ($temp as $key1 => $value1) {
+            $tempData[$value1->embassy_in][] = $value1;
+          }
+          $mainDataSet[$value->id] = $tempData;
+      }
+      // exit(print_r($mainDataSet));
       $secondDropdown = DB::table('country')
       ->select(
           'country.id as id',
@@ -82,7 +97,7 @@ class EmbassiesController extends Controller
       ->first();
 
 
-      return view('front.embassies.detail',compact('embassyList','data','embassy','secondDropdown','homeData','footerData'));
+      return view('front.embassies.detail',compact('embassyList','data','embassy','secondDropdown','homeData','footerData','mainDataSet','embassyListData'));
 
     }
 
