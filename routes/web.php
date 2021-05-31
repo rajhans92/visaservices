@@ -60,6 +60,13 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/services/apply/{services_id}', 'Admin\ServicesController@applyDetailList')->name('services.applyDetailList');
     Route::post('/services/apply/{services_id}', 'Admin\ServicesController@applyDetailSave')->name('services.applyDetailSave');
 
+    Route::get('/faq', 'Admin\FaqController@list')->name('faq.list');
+    Route::get('/faq/create', 'Admin\FaqController@create')->name('faq.create');
+    Route::post('/faq/create', 'Admin\FaqController@save')->name('faq.save');
+    Route::get('/faq/edit/{id}', 'Admin\FaqController@edit')->name('faq.edit');
+    Route::put('/faq/edit/{id}', 'Admin\FaqController@update')->name('faq.update');
+    Route::delete('/faq/delete/{id}', 'Admin\FaqController@delete')->name('faq.delete');
+
 
     Route::get('/services/faq/{id}', 'Admin\ServicesController@faqServices')->name('services.faqList');
     Route::get('/services/faq-create/{id}', 'Admin\ServicesController@faqCreateServices')->name('services.faqCreate');

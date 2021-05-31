@@ -31,6 +31,7 @@ class FaqController extends Controller
 
       $data = [];
 
+      $data = DB::table('faq_section')->where('language_id',env('APP_LANG'))->get();
       // exit(print_r($mainDataSet));
       $secondDropdown = DB::table('country')
       ->select(
