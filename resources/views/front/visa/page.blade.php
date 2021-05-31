@@ -27,7 +27,7 @@
             @endif
           @endif
          </div>
-         <h1 style="margin-top: 80px;">{{$visaData->visa_faqs}}</h1>
+         <h1 style="margin-top: 80px;" id="faq-section">{{$visaData->visa_faqs}}</h1>
          <div class="accordion faq-section" id="accordionExample">
            <?php
             $faq = [];
