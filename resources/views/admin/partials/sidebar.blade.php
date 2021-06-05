@@ -13,7 +13,7 @@
             </li>
 
 
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(1) == '' ? 'active' : '' }}">
                 <a href="#">
                     <i class="fa fa-users"></i>
                     <span class="title">Content Management</span>
@@ -51,7 +51,7 @@
                 </ul>
             </li>
 
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(2) == 'country' ? 'active' : '' }}">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span class="title">Country Management</span>
@@ -70,7 +70,7 @@
                 </li>
               </ul>
             </li>
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(2) == 'services' ? 'active' : '' }}">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span class="title">Services Management</span>
@@ -108,7 +108,7 @@
             </li>
 
 
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(2) == 'visa' ? 'active' : '' }}">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span class="title">Visa Management</span>
@@ -145,7 +145,7 @@
               </ul>
             </li>
 
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(2) == 'embassies' ? 'active' : '' }}">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span class="title">Embassies Management</span>
@@ -165,7 +165,7 @@
               </ul>
             </li>
 
-            <li class="treeview active">
+            <li class="treeview {{ $request->segment(2) == 'faq' ? 'active' : '' }}">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span class="title">Faq Management</span>
@@ -179,6 +179,34 @@
                         <i class="fa fa-user"></i>
                         <span class="title">
                             Faq List
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview {{ $request->segment(2) == 'blog' ? 'active' : '' }}">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span class="title">Blog Management</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="{{ $request->segment(2) == 'blog' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.blog.categoryList')}}">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Category
+                        </span>
+                    </a>
+                </li>
+                <li class="{{ $request->segment(2) == 'blog' ? 'active active-sub' : '' }}">
+                    <a href="{{route('admin.blog.index')}}">
+                        <i class="fa fa-user"></i>
+                        <span class="title">
+                            Pages
                         </span>
                     </a>
                 </li>

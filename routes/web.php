@@ -91,6 +91,21 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::put('/visa/edit/{id}', 'Admin\VisaController@updateVisa')->name('visa.edit');
     Route::delete('/visa/destroy/{id}', 'Admin\VisaController@destroyVisa')->name('visa.destroy');
 
+    Route::get('/blog', 'Admin\BlogController@index')->name('blog.index');
+    Route::get('/blog/add', 'Admin\BlogController@create')->name('blog.create');
+    Route::post('/blog/add', 'Admin\BlogController@store')->name('blog.create');
+    Route::get('/blog/edit/{id}', 'Admin\BlogController@edit')->name('blog.edit');
+    Route::put('/blog/edit/{id}', 'Admin\BlogController@update')->name('blog.update');
+    Route::delete('/blog/destroy/{id}', 'Admin\BlogController@destroy')->name('blog.destroy');
+
+    Route::get('/blog/category', 'Admin\BlogController@categoryList')->name('blog.categoryList');
+    Route::get('/blog/category/add', 'Admin\BlogController@categoryAdd')->name('blog.categoryAdd');
+    Route::post('/blog/category/add', 'Admin\BlogController@categoryStore')->name('blog.categoryStore');
+    Route::get('/blog/category/edit/{id}', 'Admin\BlogController@categoryEdit')->name('blog.categoryEdit');
+    Route::put('/blog/category/edit/{id}', 'Admin\BlogController@categoryUpdate')->name('blog.categoryUpdate');
+    Route::delete('/blog/category/destroy/{id}', 'Admin\BlogController@categoryDestroy')->name('blog.categoryDestroy');
+
+
     Route::get('/visa/apply/{visa_id}', 'Admin\VisaController@applyDetailList')->name('visa.applyDetailList');
     Route::post('/visa/apply/{visa_id}', 'Admin\VisaController@applyDetailSave')->name('visa.applyDetailSave');
 
