@@ -2,6 +2,7 @@
 <html>
 <head>
   @include('front.partials.head')
+  @yield('styles')
 </head>
 <body>
 
