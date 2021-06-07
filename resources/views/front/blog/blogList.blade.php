@@ -58,6 +58,7 @@ padding: 24px 20px;
 
                   </div>
                   <hr>
+                @if(isset($data[$categoryId]))
                   @foreach($data[$categoryId] as $key => $val)
                       <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -69,6 +70,7 @@ padding: 24px 20px;
                         </div>
                         <hr>
                   @endforeach
+              @endif
                 </div>
       </div>
       <div class="col-sm-4">
