@@ -43,7 +43,7 @@ padding: 24px 20px;
               <select id="category">
                   <option>Choose Category</option>
                   @foreach($blogCategory as $key => $val)
-                    <option value="{{$val->id}}" data="{{$val->id}}">{{$val->name}}</option>
+                    <option value="{{$val->id}}" {{$categoryId == $val->id ? "selected" : ""}} data="{{$val->id}}">{{$val->name}}</option>
                   @endforeach
               </select>
           </div>
@@ -58,7 +58,7 @@ padding: 24px 20px;
 
                   </div>
                   <hr>
-                  @foreach($data[$blogCategory[0]->id] as $key => $val)
+                  @foreach($data[$categoryId] as $key => $val)
                       <div class="accordion-item">
                         <h2 class="accordion-header">
                           <a class="accordion-button collapsed" href="{{url($val['visa_url'])}}" >

@@ -91,9 +91,83 @@ class BlogController extends Controller
       ->where('footer_detail.language_id',env('APP_LANG'))
       ->first();
 
+      $categoryId = isset($blogCategory[0]->id) ? $blogCategory[0]->id : 0;
 
-      return view('front.blog.blogList',compact('data','secondDropdown','homeData','footerData','countryData','blogCategory'));
+      if ($request->has('id')) {
+
+        $check = DB::table('blog_category')->where('language_id',env('APP_LANG'))->where('id',$request->input('id'))->first();
+
+        if(isset($check->id)){
+          $categoryId = $request->input('id');
+        }
+
+      }
+
+      return view('front.blog.blogList',compact('data','secondDropdown','homeData','footerData','countryData','blogCategory','categoryId'));
 
     }
 
+    public function pages(Request $request)
+    {
+      $uri = $request->path();
+      $blogData = DB::table('blog_pages')
+      ->select(
+        'blog_pages.id as id',
+        'blog_pages.category_id as category_id',
+        'blog_pages.blog_name as blog_name',
+        'blog_pages.blog_heading as blog_heading',
+        'blog_pages.landing_img as landing_img',
+        'blog_pages.main_button_url as main_button_url',
+        'blog_pages.content_1 as content_1',
+        'blog_pages.content_2 as content_2',
+        'blog_pages.meta_title as meta_title',
+        'blog_pages.meta_description as meta_description',
+        'blog_pages.meta_keywords as meta_keywords',
+        'blog_pages.whatsapp_number as whatsapp_number',
+        'blog_pages.whatsapp_status as whatsapp_status',
+        'blog_pages.call_number as call_number',
+        'blog_pages.call_status as call_status',
+        'blog_pages.whatsapp_text as whatsapp_text',
+        'route_visa.visa_url as visa_url'
+        )
+      ->where('blog_pages.language_id',env('APP_LANG'))
+      ->where('route_visa.visa_url',$uri)
+      ->where("route_visa.type_of_url","blog")
+      ->join("route_visa","route_visa.visa_id","=","blog_pages.id")
+      ->first();
+
+      if(!isset($blogData->id)){
+        return redirect("/");
+      }
+      $blogCategory = DB::table('blog_category')->get();
+
+      $blogPages = DB::table('blog_pages')
+      ->select(
+        'blog_pages.id as id',
+        'blog_pages.category_id as category_id',
+        'blog_pages.blog_name as blog_name',
+        'blog_pages.blog_heading as blog_heading',
+        'blog_pages.landing_img as landing_img',
+        'blog_pages.main_button_url as main_button_url',
+        'blog_pages.content_1 as content_1',
+        'blog_pages.content_2 as content_2',
+        'blog_pages.meta_title as meta_title',
+        'blog_pages.meta_description as meta_description',
+        'blog_pages.meta_keywords as meta_keywords',
+        'blog_pages.whatsapp_number as whatsapp_number',
+        'blog_pages.whatsapp_status as whatsapp_status',
+        'blog_pages.call_number as call_number',
+        'blog_pages.call_status as call_status',
+        'blog_pages.whatsapp_text as whatsapp_text',
+        'route_visa.visa_url as visa_url'
+        )
+      ->where('blog_pages.language_id',env('APP_LANG'))
+      ->where('blog_pages.category_id',$blogData->category_id)
+      ->where("route_visa.type_of_url","blog")
+      ->join("route_visa","route_visa.visa_id","=","blog_pages.id")
+      ->get();
+
+      return view('front.blog.pages',compact('blogData','blogPages','blogCategory'));
+
+    }
 }
