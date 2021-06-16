@@ -163,6 +163,8 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
 
     Route::get('/visa-application/list', 'Admin\ApplicationController@index')->name('application.index');
     Route::get('/visa-application/detail/{application_id}', 'Admin\ApplicationController@applicationDetail')->name('application.detail');
+    Route::get('/visa-application/tracking/{application_id}', 'Admin\ApplicationController@trackingDetail')->name('application.trackingDetail');
+    Route::post('/visa-application/tracking/{application_id}', 'Admin\ApplicationController@trackingDetailUpdate')->name('application.trackingDetailUpdate');
 
     Route::get('/visa-contact/list', 'Admin\ApplicationController@contactList')->name('application.contactList');
 

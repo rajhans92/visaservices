@@ -39,6 +39,7 @@
                         <td>{{$val->payment_status == 1 ? "Paid": $val->payment_status == 2 ? "Contact Us" : "Panding"}}</td>
                         <td>
                           <a href="{{ route('admin.application.detail',[$val->id]) }}" class="btn btn-xs btn-info">Show DetailS</a>
+                          <a href="{{ route('admin.application.trackingDetail',[$val->id]) }}" class="btn btn-xs btn-warning">Tacking DetailS</a>
                         </td>
                     </tr>
                   @endforeach
