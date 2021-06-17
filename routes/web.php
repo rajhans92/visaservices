@@ -14,6 +14,8 @@ $this->get("/apply-online/{url}/{slug}", 'Front\VisaController@applyOnlineEdit')
 $this->get("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReview')->name('apply.review');
 $this->post("/apply-online-review/{slug}", 'Front\VisaController@applyOnlineReviewSave')->name('apply.reviewSave');
 $this->post("/apply-contact-us", 'Front\VisaController@applyContactUs')->name('apply.cotactUs');
+$this->get("/tracking-status", 'Front\TrackingController@tracking')->name('tracking.status');
+$this->post("/tracking-status", 'Front\TrackingController@statusDetail')->name('tracking.statusDetail');
 
 $this->post("/services-contact-us", 'Front\ServicesController@serviceContactUs')->name('service.cotactUs');
 
