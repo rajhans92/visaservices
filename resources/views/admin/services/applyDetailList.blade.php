@@ -32,7 +32,7 @@
             </div>
             <div class="col-xs-4 form-group">
                 {!! Form::label('thank_you_content', 'Thank You Content*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('thank_you_content', old('thank_you_content'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                {!! Form::textarea('thank_you_content', old('thank_you_content'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('thank_you_content'))
                     <p class="help-block">

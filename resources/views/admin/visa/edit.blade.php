@@ -280,7 +280,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
                 {!! Form::label('visa_content_1', 'Visa Page Content 1*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('visa_content_1', old('visa_content_1'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                {!! Form::textarea('visa_content_1', old('visa_content_1'), ['class' => 'form-control tinymceEditor', 'placeholder' => '', 'required' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('visa_content_1'))
                     <p class="help-block">
@@ -290,7 +290,7 @@
             </div>
             <div class="col-xs-6 form-group">
                 {!! Form::label('visa_content_2', 'Visa Page Content 2*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('visa_content_2', old('visa_content_2'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                {!! Form::textarea('visa_content_2', old('visa_content_2'), ['class' => 'form-control tinymceEditor', 'placeholder' => '', 'required' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('visa_content_2'))
                     <p class="help-block">

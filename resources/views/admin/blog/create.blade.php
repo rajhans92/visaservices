@@ -172,7 +172,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
                 {!! Form::label('content_1', 'Page Content 1*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('content_1', old('content_1'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                {!! Form::textarea('content_1', old('content_1'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('content_1'))
                     <p class="help-block">
@@ -182,7 +182,7 @@
             </div>
             <div class="col-xs-6 form-group">
                 {!! Form::label('content_2', 'Page Content 2*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('content_2', old('content_2'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                {!! Form::textarea('content_2', old('content_2'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('content_2'))
                     <p class="help-block">

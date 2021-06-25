@@ -441,4 +441,33 @@ class ServicesController extends Controller
 
         return view('admin.services.applicationDetail',compact('visaData'));
     }
+
+
+        public function trackingDetail($application_id){
+            $visaData = DB::table("services_apply_detail")
+            ->where("services_apply_detail.id",$application_id)
+            ->first();
+
+            if(!isset($visaData->id)){
+               return redirect()->back()->with('success', 'No Data available');
+            }
+
+            return view('admin.services.trackingDetail',compact('visaData'));
+        }
+
+        public function trackingDetailUpdate(Request $request,$application_id){
+            $visaData = DB::table("services_apply_detail")
+            ->where("services_apply_detail.id",$application_id)
+            ->first();
+
+            if(!isset($visaData->id)){
+               return redirect()->back()->with('success', 'No Data available');
+            }
+             DB::table('services_apply_detail')->where('id',$application_id)->update([
+               "tracking_status" => $request['tracking_status'],
+               "tracking_status_desc" => $request['tracking_status_desc']
+             ]);
+
+            return redirect()->route('admin.services.applicationList');
+        }
 }

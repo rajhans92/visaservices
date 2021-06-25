@@ -85,6 +85,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::get('/service-application/list', 'Admin\ServicesController@applicationList')->name('services.applicationList');
     Route::get('/service-application/detail/{application_id}', 'Admin\ServicesController@applicationDetail')->name('services.applicationDetail');
 
+    Route::get('/services/tracking/{application_id}', 'Admin\ServicesController@trackingDetail')->name('services.trackingDetail');
+    Route::post('/services/tracking/{application_id}', 'Admin\ServicesController@trackingDetailUpdate')->name('services.trackingDetailUpdate');
+
 
     Route::get('/visa', 'Admin\VisaController@index')->name('visa.index');
     Route::get('/visa/add', 'Admin\VisaController@createVisa')->name('visa.create');

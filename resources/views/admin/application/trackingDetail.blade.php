@@ -27,7 +27,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
               {!! Form::label('tracking_status_desc', 'Tracking Status Description*', ['class' => 'control-label']) !!}
-              {!! Form::textarea('tracking_status_desc', old('answer'), ['class' => 'form-control', 'placeholder' => '']) !!}
+              {!! Form::textarea('tracking_status_desc', old('answer'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
               <p class="help-block"></p>
               @if($errors->has('tracking_status_desc'))
               <p class="help-block">

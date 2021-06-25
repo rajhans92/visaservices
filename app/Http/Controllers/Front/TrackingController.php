@@ -34,7 +34,10 @@ class TrackingController extends Controller
        $responseData = ["status"=>true];
        $responseData['data'] = DB::table("visa_apply_detail")->where("order_id",$request->orderNumber)->first();
        if(!isset($responseData['data']->id)){
-         $responseData["status"] =false;
+         $responseData['data'] = DB::table("services_apply_detail")->where("order_id",$request->orderNumber)->first();
+         if(!isset($responseData['data']->id)){
+           $responseData["status"] =false;
+         }
        }
        $responseData['subSet'] = DB::table("visa_apply_applicant")->where("order_id",$request->orderNumber)->get();
 

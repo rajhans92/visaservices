@@ -21,11 +21,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<!-- <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-<script type="text/javascript">
+
+<script src="https://cdn.tiny.cloud/1/kpf78f5bb1dglanr4feykjk44926xfu7lh0s1oo06vupk83e/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '.tinymceEditor'
+  });
+</script>
+<!-- <script type="text/javascript">
        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-  </script>
+  </script> -->
 <script>
     window._token = '{{ csrf_token() }}';
     $(document).ready(function(){

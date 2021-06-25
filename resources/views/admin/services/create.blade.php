@@ -275,7 +275,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
                 {!! Form::label('services_content_1', 'Services Page Content 1*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('services_content_1', old('services_content_1'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                {!! Form::textarea('services_content_1', old('services_content_1'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('services_content_1'))
                     <p class="help-block">
@@ -285,7 +285,7 @@
             </div>
             <div class="col-xs-6 form-group">
                 {!! Form::label('services_content_2', 'Services Page Content 2*', ['class' => 'control-label']) !!}
-                {!! Form::textarea('services_content_2', old('services_content_2'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                {!! Form::textarea('services_content_2', old('services_content_2'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('services_content_2'))
                     <p class="help-block">

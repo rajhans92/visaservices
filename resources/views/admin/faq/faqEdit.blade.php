@@ -27,7 +27,7 @@
           <div class="row">
             <div class="col-xs-6 form-group">
               {!! Form::label('answer', 'Faq Answer*', ['class' => 'control-label']) !!}
-              {!! Form::textarea('answer', old('answer'), ['class' => 'form-control', 'placeholder' => '']) !!}
+              {!! Form::textarea('answer', old('answer'), ['class' => 'form-control tinymceEditor', 'placeholder' => '']) !!}
               <p class="help-block"></p>
               @if($errors->has('answer'))
               <p class="help-block">
